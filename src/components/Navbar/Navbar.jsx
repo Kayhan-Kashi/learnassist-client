@@ -3,13 +3,13 @@ import ImageBoys1 from "../../assets/logo-boys1.jpg";
 import ImageBoys2 from "../../assets/logo-boys2.jpg";
 import { GiChocolateBar } from "react-icons/gi";
 
-import { FaRegUser, FaSignInAlt } from "react-icons/fa";
+import { FaRegUser } from "react-icons/fa";
 
 import { useState } from "react";
 import NavImageIcon from "./NavImageIcon/NavImageIcon";
 import NavBarLink from "./NavBarLink/NavBarLink";
 import NavMenuButton from "./NavMenuButton/NavMenuButton";
-import NavButton from "./NavButton/NavButton";
+import NavAccountButton from "./NavAccountButton/NavAccountButton";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -41,9 +41,9 @@ const Navbar = () => {
             );
           })}
           <li className="md:ml-8 text-xl md:my-0 my-7 mx-8 relative">
-            <NavButton onDropHandler={setDrop} drop={drop}>
+            <NavAccountButton onDropHandler={setDrop} drop={drop}>
               <FaRegUser />
-            </NavButton>
+            </NavAccountButton>
           </li>
         </ul>
         <NavImageIcon image={ImageBoys2} />
