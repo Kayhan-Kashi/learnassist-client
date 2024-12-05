@@ -2,113 +2,160 @@ import React, { useState } from "react";
 import image from "../../assets/login-vector-transformed.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { Helmet } from "react-helmet";
+
+const loginSchema = z.object({
+  email: z
+    .string()
+    .min(1, "نام کاربری باید وارد باشد")
+    .nonempty("ورود نام کاربری الزامی است"),
+  password: z.string().min(1, "رمز عبور باید وارد شود"),
+});
 
 const Login = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({ resolver: zodResolver(loginSchema) });
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const [passToggle, setPassToggle] = useState(false);
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
+  // const togglePasswordVisibility = () => {
+  //   setPasswordVisible(!passwordVisible);
+  // };
+
+  const togglePassword = () => {
+    setPassToggle(!passToggle);
+  };
+
+  const login = (data) => {
+    console.log("Form Data:", data);
+    navigate("/success");
   };
 
   return (
-    <div
-      className="bg-cover bg-center h-screen flex justify-center items-center"
-      style={{ backgroundImage: `url(${image})` }}
-    >
-      <div className="bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative">
-        <div>
-          <h1 className="text-5xl font-bold text-white mb-6 text-center">
-            ورود
-          </h1>
-          <form
-            action=""
-            className="flex flex-col"
-            onSubmit={() => console.log("login")}
-          >
-            <div className="my-4 relative">
-              <input
-                type="email"
-                required
-                className="block w-72 py-2.3 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer"
-                placeholder=""
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <label className="absolute text-lg text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark-text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-4 peer-focus:scale-75 peer-focus:-translate-y-6">
-                نام کاربری
-              </label>
-              <BiUser className="absolute top-0 right-4" />
-            </div>
-            <div className="my-4 relative">
-              <input
-                type={passwordVisible ? "text" : "password"}
-                placeholder=""
-                required
-                className="block w-72 py-2.3 px-0 text-lg text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-              <label className="absolute text-lg text-white duration-300 transform -translate-y-8 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark-text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-4 peer-focus:scale-75 peer-focus:-translate-y-6">
-                رمز عبور
-              </label>
-              {passwordVisible ? (
-                <AiOutlineEye
-                  className="absolute top-0 right-4 cursor-pointer"
-                  onClick={togglePasswordVisibility}
-                />
-              ) : (
-                <AiOutlineEyeInvisible
-                  className="absolute top-0 right-4 cursor-pointer"
-                  onClick={togglePasswordVisibility}
-                />
-              )}
-            </div>
-            <div className="flex justify-between items-center">
-              <div className="flex gap-2 items-center">
-                <input type="checkbox" name="" id="" className="mr-2" />
-                <label htmlFor="Remember Me" className="text-white">
-                  مرا به خاطر بس‍‍‍‍‍پار
+    <>
+      <Helmet>
+        <title>ورود - LearnAssist</title>
+        <meta
+          name="description"
+          content="login an account for learnAssist web application"
+        />
+      </Helmet>
+      <div
+        className="bg-cover bg-center h-screen flex justify-center items-center"
+        style={{ backgroundImage: `url(${image})` }}
+      >
+        <div className="bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative w-2/5">
+          <div>
+            <h1 className="text-5xl font-bold text-white mb-6 text-center mt-5">
+              ورود
+            </h1>
+            <form
+              action=""
+              className="flex flex-col"
+              onSubmit={handleSubmit(login)}
+            >
+              <div className="flex my-4 relative">
+                <label className={`flex-[1_1_20%] text-white text-lg`}>
+                  نام کاربری :
                 </label>
+                <input
+                  {...register("email")}
+                  type="email"
+                  className={`flex-[4_1_80%] py-2.3 px-2 
+                    text-xl text-white font-bold
+                    bg-transparent border-0 border-b-2 border-gray-300 
+                    appearance-none dark:focus:border-blue-500 
+                    focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
+                />
+                <BiUser className="absolute top-0 right-4" />
               </div>
-              <Link to="/reset" className="text-white border-2 rounded-md p-2">
-                فراموشی رمز عبور
-              </Link>
-            </div>
-            <button
-              type="submit"
-              disabled={loading}
-              className="w-full mb-4 text-[18px] mt-6 rounded-full bg-white text-emerald-800 hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300"
-            >
-              {loading ? "Logging in..." : "ورود"}
-            </button>
-            {/* <button
-              type="button"
-              onClick={() => alert()}
-              disabled={loading}
-              className="w-full mb-4 text-[18px] mt-6 rounded-full bg-white text-emerald-800 hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300"
-            >
-              {loading ? "Logging in..." : "ورود میهمان"}
-            </button> */}
-            <br />
-            <div className="text-center mt-3">
-              <span className="m-8">
-                <Link
-                  to="/register"
-                  className="text-white border-2 rounded-md p-3 px-8 border-yellow-400"
+              {errors.email && (
+                <p className="text-red-600 text-lg text-center">
+                  {errors.email.message}
+                </p>
+              )}
+              <div className="my-4 relative flex">
+                <label
+                  className={`text-white flex-[1_1_20%] text-lg text-left`}
                 >
-                  ثبت نام کنید
+                  رمز عبور :
+                </label>
+                <input
+                  type={passToggle ? "text" : "password"}
+                  {...register("password")}
+                  className={`flex-[4_1_55%] py-2.3 px-2 
+                      text-xl text-white font-bold
+                      bg-transparent border-0 border-b-2 border-gray-300 
+                      appearance-none dark:focus:border-blue-500 
+                      focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
+                  placeholder=""
+                />
+
+                <button
+                  type="button"
+                  onClick={togglePassword}
+                  className="absolute top-3 right-4 focus:outline-none text-white"
+                >
+                  {passToggle ? <FaRegEyeSlash /> : <FaRegEye />}
+                </button>
+                <div className="flex-[4_1_15%]"></div>
+              </div>
+              {errors.password && (
+                <p className="text-red-600 text-lg text-center">
+                  {errors.password.message}
+                </p>
+              )}
+
+              <button
+                type="submit"
+                disabled={loading}
+                className="block w-full h-12 mb-4 text-[18px] mt-6 rounded-full bg-white text-emerald-800 hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300"
+              >
+                {loading ? "Logging in..." : "ورود"}
+              </button>
+              <div className="flex justify-around items-center mt-12">
+                <div className="flex gap-2 items-center">
+                  <input type="checkbox" name="" id="" className="mr-2" />
+                  <label htmlFor="Remember Me" className="text-white">
+                    مرا به خاطر بس‍‍‍‍‍پار
+                  </label>
+                </div>
+                <Link
+                  to="/reset"
+                  className="text-white rounded-md p-2 hover:bg-amber-600 duration-300"
+                >
+                  فراموشی رمز عبور
                 </Link>
-              </span>
-            </div>
-          </form>
+              </div>
+              <br />
+              <div className="text-center mt-3">
+                <span className="m-8">
+                  <Link
+                    to="/register"
+                    className="text-white border-2 rounded-md p-3 px-8 hover:bg-amber-600"
+                  >
+                    ثبت نام کنید
+                  </Link>
+                </span>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
 
