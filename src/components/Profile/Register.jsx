@@ -123,7 +123,10 @@ const Register = () => {
                 <div className="flex justify-around items-center text-center text-xl">
                   <span className="m-4">
                     قبلا عضو شده اید ؟
-                    <Link to="/login" className="text-blue-600 mr-2">
+                    <Link
+                      to="/login"
+                      className="text-blue-600 mr-2 hover:text-amber-600"
+                    >
                       ورود
                     </Link>
                   </span>
