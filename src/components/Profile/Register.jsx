@@ -3,6 +3,18 @@ import { BiUser } from "react-icons/bi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import image from "../../assets/login-vector-transformed.jpeg";
 import { Link, useNavigate } from "react-router-dom";
+import { z } from 'zod'
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const registrationSchema = z.object({
+  username: z.string().min(3,'نام کاربری باید حداقل ۳ کاراکتر باشد').nonempty('ورود نام کاربری الزامی است'),
+  email: z.string().email('ایمیل باید مجاز باشد').nonempty('ورود ایمیل الزامی است'),
+  password: z.string().min(6, 'رمز عبور باید حداقل ۶ کاراکتر باشد')
+})
+
+const {register, handleSubmit, formState: {errors}, reset} = useForm(
+  {resolver: zodResolver(registrationSchema)})
 
 const Register = () => {
   const [username, setUsername] = useState("");
@@ -54,6 +66,7 @@ const Register = () => {
               <form action="" className="flex flex-col" onSubmit={registerUser}>
                 <div className="my-4 relative">
                   <input
+                    {...register('username')}
                     type="text"
                     className="block w-72 py-2.3 px-0 text-sm text-white bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer"
                     placeholder=""
@@ -61,6 +74,7 @@ const Register = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                   />
+                  {errors.username && <p>{errors.username.message}</p>}
                   <label className="absolute text-lg text-white duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark-text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:-translate-y-4 peer-focus:scale-75 peer-focus:-translate-y-6">
                     نام کاربری
                   </label>
