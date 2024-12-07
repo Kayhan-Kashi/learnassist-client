@@ -9,7 +9,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
-import { registerUser }  from '../../services/authService'
+import { registerUser } from "../../services/authService";
 
 const registrationSchema = z
   .object({
@@ -17,10 +17,10 @@ const registrationSchema = z
       .string()
       .min(3, "نام کاربری باید حداقل ۳ کاراکتر باشد")
       .nonempty("ورود نام کاربری الزامی است"),
-    email: z
-      .string()
-      .email("ایمیل باید مجاز باشد")
-      .nonempty("ورود ایمیل الزامی است"),
+    // email: z
+    //   .string()
+    //   .email("ایمیل باید مجاز باشد")
+    //   .nonempty("ورود ایمیل الزامی است"),
     password: z.string().min(6, "رمز عبور باید حداقل ۶ کاراکتر باشد"),
     confirmPassword: z.string(),
   })
@@ -42,27 +42,27 @@ const Register = () => {
   const [passToggle, setPassToggle] = useState(false);
   const [cnfrmPassToggle, setCnfrmPassToggle] = useState(false);
 
-
   const navigate = useNavigate();
 
   const submitUser = (formData) => {
-    registerUser({username: formData.username, password: formData.password})
-    .then(response => {
-      toast.success("ثبت نام با موفقیت انجام شد", {
-        position: "top-center",
-        autoClose: 3000, 
-        style: { fontSize: "14px", padding: "10px" }, 
-        onClose: () => {
-          navigate("/login"); 
-        },
+    registerUser({ username: formData.username, password: formData.password })
+      .then((response) => {
+        toast.success("ثبت نام با موفقیت انجام شد", {
+          position: "top-center",
+          autoClose: 500,
+          style: { fontSize: "14px", padding: "10px" },
+          onClose: () => {
+            navigate("/userInfo");
+          },
+        });
+      })
+      .catch((err) => {
+        toast.error("ثبت نام انجام نشد", {
+          position: "top-center",
+          autoClose: 3000,
+          style: { fontSize: "14px", padding: "10px" },
+        });
       });
-    }).catch(err=> {
-      toast.error("ثبت نام انجام نشد", {
-        position: "top-center",
-        autoClose: 3000,
-        style: { fontSize: "14px", padding: "10px" },
-      });
-    })
   };
 
   const togglePassword = () => {
@@ -83,11 +83,11 @@ const Register = () => {
         />
       </Helmet>
       <div>
-        <ToastContainer />
         <div
           className="bg-cover bg-center h-screen flex justify-center items-center"
           style={{ backgroundImage: `url(${image})` }}
         >
+          <ToastContainer />
           <div className="w-1/2 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
             <div>
               <h1 className="text-4xl font-bold text-white mb-6 text-center">
@@ -117,7 +117,7 @@ const Register = () => {
                     {errors.username.message}
                   </p>
                 )}
-                <div className="my-4 relative flex">
+                {/* <div className="my-4 relative flex">
                   <label
                     className={`text-white flex-[1_1_20%] text-lg text-left`}
                   >
@@ -137,7 +137,7 @@ const Register = () => {
                   <p className="text-red-600 text-lg text-center">
                     {errors.email.message}
                   </p>
-                )}
+                )} */}
                 <div className="my-4 relative flex">
                   <label
                     className={`text-white flex-[1_1_30%] text-lg text-left`}

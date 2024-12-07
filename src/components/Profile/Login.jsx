@@ -44,21 +44,24 @@ const Login = () => {
   };
 
   const login = (formData) => {
+    setLoading(true);
     loginUser({ username: formData.email, password: formData.password })
       .then((response) => {
         toast.success("ورود با موفقیت انجام شد", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 500,
           style: { fontSize: "14px", padding: "10px" },
           onClose: () => {
+            setLoading(false);
             navigate("/dashboard");
           },
         });
       })
       .catch((err) => {
+        setLoading(false);
         toast.error("ورود  انجام نشد", {
           position: "top-center",
-          autoClose: 3000,
+          autoClose: 1000,
           style: { fontSize: "14px", padding: "10px" },
         });
       });
@@ -147,7 +150,7 @@ const Login = () => {
                   mt-6 rounded-full bg-white text-emerald-800
                    hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300`}
               >
-                {loading ? "Logging in..." : "ورود"}
+                {loading ? "... در حال ورود " : "ورود"}
               </button>
               <div className="flex justify-around items-center mt-12">
                 <div className="flex gap-2 items-center">
