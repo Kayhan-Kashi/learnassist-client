@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import { BiUser } from "react-icons/bi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import image from "../../assets/login-vector-transformed.jpeg";
@@ -7,6 +9,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
+import { registerUser }  from '../../services/authService'
 
 const registrationSchema = z
   .object({
@@ -34,18 +37,32 @@ const Register = () => {
   } = useForm({ resolver: zodResolver(registrationSchema) });
 
   const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [cnfrmPass, setCnfrmPass] = useState("");
-  const [isSpecialMember, setIsSpecialMember] = useState(false);
+  const [email, setEmail] = useState("");
   const [passToggle, setPassToggle] = useState(false);
   const [cnfrmPassToggle, setCnfrmPassToggle] = useState(false);
 
+
   const navigate = useNavigate();
 
-  const registerUser = (data) => {
-    console.log("Form Data:", data);
-    navigate("/success");
+  const submitUser = (formData) => {
+    registerUser({username: formData.username, password: formData.password})
+    .then(response => {
+      toast.success("ثبت نام با موفقیت انجام شد", {
+        position: "top-center",
+        autoClose: 3000, 
+        style: { fontSize: "14px", padding: "10px" }, 
+        onClose: () => {
+          navigate("/login"); 
+        },
+      });
+    }).catch(err=> {
+      toast.error("ثبت نام انجام نشد", {
+        position: "top-center",
+        autoClose: 3000,
+        style: { fontSize: "14px", padding: "10px" },
+      });
+    })
   };
 
   const togglePassword = () => {
@@ -66,12 +83,12 @@ const Register = () => {
         />
       </Helmet>
       <div>
-        {/* <ToastContainer /> */}
+        <ToastContainer />
         <div
           className="bg-cover bg-center h-screen flex justify-center items-center"
           style={{ backgroundImage: `url(${image})` }}
         >
-          <div className="w-2/5 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
+          <div className="w-1/2 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
             <div>
               <h1 className="text-4xl font-bold text-white mb-6 text-center">
                 ثبت نام
@@ -79,7 +96,7 @@ const Register = () => {
               <form
                 action=""
                 className="flex flex-col"
-                onSubmit={handleSubmit(registerUser)}
+                onSubmit={handleSubmit(submitUser)}
               >
                 <div className="my-4 relative flex">
                   <label className={`flex-[1_1_20%] text-white text-lg`}>
