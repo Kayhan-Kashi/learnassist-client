@@ -1,17 +1,17 @@
 import React, { useState } from "react";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import image from "../../assets/login-vector-transformed.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+
+import { login, loginUser } from "../../services/authService";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
-
-import {loginUser} from '../../services/authService'
 
 const loginSchema = z.object({
   email: z
@@ -44,22 +44,24 @@ const Login = () => {
   };
 
   const login = (formData) => {
-    loginUser({username: formData.username, password: formData.password}).then(response => {
-      toast.success("ورود با موفقیت انجام شد", {
-        position: "top-center",
-        autoClose: 3000, 
-        style: { fontSize: "14px", padding: "10px" }, 
-        onClose: () => {
-          navigate("/dashboard"); 
-        },
+    loginUser({ username: formData.email, password: formData.password })
+      .then((response) => {
+        toast.success("ورود با موفقیت انجام شد", {
+          position: "top-center",
+          autoClose: 3000,
+          style: { fontSize: "14px", padding: "10px" },
+          onClose: () => {
+            navigate("/dashboard");
+          },
+        });
+      })
+      .catch((err) => {
+        toast.error("ورود  انجام نشد", {
+          position: "top-center",
+          autoClose: 3000,
+          style: { fontSize: "14px", padding: "10px" },
+        });
       });
-    }).catch(err=> {
-      toast.error("ورود با موفقیت انجام نشد", {
-        position: "top-center",
-        autoClose: 3000,
-        style: { fontSize: "14px", padding: "10px" },
-      });
-    })
   };
 
   return (
@@ -75,8 +77,8 @@ const Login = () => {
         className="bg-cover bg-center h-screen flex justify-center items-center"
         style={{ backgroundImage: `url(${image})` }}
       >
+        <div className="bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative w-2/5">
           <ToastContainer />
-        <div className="w-2/3 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative w-2/5">
           <div>
             <h1 className="text-5xl font-bold text-white mb-6 text-center mt-5">
               ورود
@@ -99,8 +101,7 @@ const Login = () => {
                     appearance-none dark:focus:border-blue-500 
                     focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
                 />
-                  <div className="flex-[4_1_15%]"></div>
-                {/* <BiUser className="absolute top-0 right-4" /> */}
+                <BiUser className="absolute top-0 right-4" />
               </div>
               {errors.email && (
                 <p className="text-red-600 text-lg text-center">
@@ -142,13 +143,9 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-<<<<<<< HEAD
                 className={`block w-full h-12 text-2xl mb-4 
                   mt-6 rounded-full bg-white text-emerald-800
                    hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300`}
-=======
-                className="block w-2/3 mx-auto h-12 mb-4 text-[18px] mt-6 rounded-full bg-white text-emerald-800 hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300"
->>>>>>> de6e74da1273f8420b421ecae5fef2190a86c612
               >
                 {loading ? "Logging in..." : "ورود"}
               </button>
