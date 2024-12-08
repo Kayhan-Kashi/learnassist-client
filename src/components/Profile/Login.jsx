@@ -6,12 +6,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
-import { login, loginUser } from "../../services/authService";
+import { loginUser } from "../../services/authService";
+import { login as loginSlice} from '../../redux/slices/loginSlice'
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
+import { useDispatch } from "react-redux";
 
 const loginSchema = z.object({
   email: z
@@ -22,6 +24,17 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
+  const [formUserData, setFormUserData] = useState({
+    firstName: '',
+    lastName: '',
+    nationalCode: '',
+    grade: '',
+    schoolName: '',
+    username: '',
+  });
+
+  const dispatch = useDispatch();
+
   const {
     register,
     handleSubmit,
@@ -45,6 +58,8 @@ const Login = () => {
 
   const login = (formData) => {
     setLoading(true);
+    setFormUserData({...formData});
+    alert(JSON.stringify(formUserData));
     loginUser({ username: formData.email, password: formData.password })
       .then((response) => {
         toast.success("ورود با موفقیت انجام شد", {
@@ -56,6 +71,7 @@ const Login = () => {
             navigate("/dashboard");
           },
         });
+        dispatch(loginSlice(formUserData));
       })
       .catch((err) => {
         setLoading(false);
