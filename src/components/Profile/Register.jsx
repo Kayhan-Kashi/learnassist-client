@@ -9,7 +9,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
-import { registerUser } from "../../services/authService";
+import { validateUsername } from "../../services/authService";
 
 const registrationSchema = z
   .object({
@@ -38,6 +38,7 @@ const Register = () => {
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [passToggle, setPassToggle] = useState(false);
   const [cnfrmPassToggle, setCnfrmPassToggle] = useState(false);
@@ -45,14 +46,16 @@ const Register = () => {
   const navigate = useNavigate();
 
   const submitUser = (formData) => {
-    registerUser({ username: formData.username, password: formData.password })
+    setLoading(true);
+    validateUsername({ username: formData.username, password: formData.password })
       .then((response) => {
-        toast.success("ثبت نام با موفقیت انجام شد", {
+        toast.success("نام کاربری و رمز عبور قابل قبول است", {
           position: "top-center",
           autoClose: 500,
           style: { fontSize: "14px", padding: "10px" },
           onClose: () => {
             navigate("/userInfo");
+            setLoading(true);
           },
         });
       })
@@ -216,7 +219,7 @@ const Register = () => {
                      bg-white text-emerald-800
                       hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300`}
                 >
-                  ثبت نام
+                {loading ? "... در حال بررسی " : "ثبت نام"}
                 </button>
               </form>
             </div>

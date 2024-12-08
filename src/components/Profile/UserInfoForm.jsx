@@ -26,12 +26,14 @@ const UserInfoForm = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(registrationSchema) });
 
+  const [loading, setLoading] = useState(false);
   const [passToggle, setPassToggle] = useState(false);
   const [cnfrmPassToggle, setCnfrmPassToggle] = useState(false);
 
   const navigate = useNavigate();
 
   const finalizeRegistration = (formData) => {
+    setLoading(true);
     registerUser({
       firstName: formData.firstName,
       lastName: formData.lastName,
@@ -81,7 +83,7 @@ const UserInfoForm = () => {
           style={{ backgroundImage: `url(${image})` }}
         >
           <ToastContainer />
-          <div className="w-1/2 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
+          <div className="w-2/3 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
             <div>
               <h1 className="text-4xl font-bold text-white mb-6 text-center">
                 ورود اطلاعات
@@ -208,7 +210,7 @@ const UserInfoForm = () => {
                      bg-white text-emerald-800
                       hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300`}
                 >
-                  تکمیل ثبت نام
+                {loading ? "... در حال بررسی " : "تکمیل ثبت نام"}
                 </button>
               </form>
             </div>

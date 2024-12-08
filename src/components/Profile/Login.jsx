@@ -80,7 +80,7 @@ const Login = () => {
         className="bg-cover bg-center h-screen flex justify-center items-center"
         style={{ backgroundImage: `url(${image})` }}
       >
-        <div className="bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative w-2/5">
+        <div className="w-3/5 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative w-2/5">
           <ToastContainer />
           <div>
             <h1 className="text-5xl font-bold text-white mb-6 text-center mt-5">
@@ -104,7 +104,7 @@ const Login = () => {
                     appearance-none dark:focus:border-blue-500 
                     focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
                 />
-                <BiUser className="absolute top-0 right-4" />
+                {/* <BiUser className="absolute top-0 right-4" /> */}
               </div>
               {errors.email && (
                 <p className="text-red-600 text-lg text-center">
