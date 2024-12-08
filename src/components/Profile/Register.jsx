@@ -54,7 +54,8 @@ const Register = () => {
           autoClose: 500,
           style: { fontSize: "14px", padding: "10px" },
           onClose: () => {
-            navigate("/userInfo");
+            navigate("/userInfo",
+               { state: { username: formData.username, password: formData.password}});
             setLoading(true);
           },
         });

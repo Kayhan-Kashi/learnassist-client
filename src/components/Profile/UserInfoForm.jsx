@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
 import { registerUser } from "../../services/authService";
+import { useLocation } from "react-router-dom";
 
 const registrationSchema = z.object({
   firstName: z.string().min(1, "ورود نام  الزامی است"),
@@ -20,6 +21,9 @@ const registrationSchema = z.object({
 });
 
 const UserInfoForm = () => {
+  const location = useLocation();
+  const { username, password } = location.state || {};
+
   const {
     register,
     handleSubmit,
@@ -40,6 +44,8 @@ const UserInfoForm = () => {
       nationalCode: formData.nationalCode,
       grade: formData.grade,
       schoolName: formData.schoolName,
+      username: username,
+      password: password
     })
       .then((response) => {
         toast.success("ثبت نام با موفقیت انجام شد", {
