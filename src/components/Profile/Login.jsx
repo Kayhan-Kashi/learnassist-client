@@ -7,7 +7,7 @@ import { BiUser } from "react-icons/bi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import { loginUser } from "../../services/authService";
-import { login as loginSlice} from '../../redux/slices/loginSlice'
+import { login as loginSlice } from "../../redux/slices/loginSlice";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -25,12 +25,12 @@ const loginSchema = z.object({
 
 const Login = () => {
   const [formUserData, setFormUserData] = useState({
-    firstName: '',
-    lastName: '',
-    nationalCode: '',
-    grade: '',
-    schoolName: '',
-    username: '',
+    firstName: "",
+    lastName: "",
+    nationalCode: "",
+    grade: "",
+    schoolName: "",
+    username: "",
   });
 
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const Login = () => {
 
   const login = (formData) => {
     setLoading(true);
-    setFormUserData({...formData});
+    setFormUserData({ ...formData });
     alert(JSON.stringify(formUserData));
     loginUser({ username: formData.email, password: formData.password })
       .then((response) => {
@@ -96,7 +96,7 @@ const Login = () => {
         className="bg-cover bg-center h-screen flex justify-center items-center"
         style={{ backgroundImage: `url(${image})` }}
       >
-        <div className="w-3/5 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative w-2/5">
+        <div className="w-3/5 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative ">
           <ToastContainer />
           <div>
             <h1 className="text-5xl font-bold text-white mb-6 text-center mt-5">
@@ -108,19 +108,22 @@ const Login = () => {
               onSubmit={handleSubmit(login)}
             >
               <div className="flex my-4 relative">
-                <label className={`flex-[1_1_20%] text-white text-lg`}>
+                <label
+                  className={`flex-[1_1_20%] text-white text-lg text-right pr-5`}
+                >
                   نام کاربری :
                 </label>
                 <input
                   {...register("email")}
                   type="email"
-                  className={`flex-[4_1_80%] py-2.3 px-2 
+                  className={`flex-[1_1_50%] py-2.3 px-2 
                     text-xl text-white font-bold
                     bg-transparent border-0 border-b-2 border-gray-300 
                     appearance-none dark:focus:border-blue-500 
                     focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
                 />
                 {/* <BiUser className="absolute top-0 right-4" /> */}
+                <div className="flex-[4_1_20%]"></div>
               </div>
               {errors.email && (
                 <p className="text-red-600 text-lg text-center">
@@ -129,14 +132,14 @@ const Login = () => {
               )}
               <div className="my-4 relative flex">
                 <label
-                  className={`text-white flex-[1_1_20%] text-lg text-left`}
+                  className={`text-white flex-[1_1_20%] text-lg text-right pr-5`}
                 >
                   رمز عبور :
                 </label>
                 <input
                   type={passToggle ? "text" : "password"}
                   {...register("password")}
-                  className={`flex-[4_1_55%] py-2.3 px-2 
+                  className={`flex-[4_1_50%] py-2.3 px-2 
                       text-xl text-white font-bold
                       bg-transparent border-0 border-b-2 border-gray-300 
                       appearance-none dark:focus:border-blue-500 
@@ -147,11 +150,11 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={togglePassword}
-                  className="absolute top-3 right-4 focus:outline-none text-white"
+                  className="absolute top-3 right-20 focus:outline-none text-white"
                 >
                   {passToggle ? <FaRegEyeSlash /> : <FaRegEye />}
                 </button>
-                <div className="flex-[4_1_15%]"></div>
+                <div className="flex-[4_1_20%]"></div>
               </div>
               {errors.password && (
                 <p className="text-red-600 text-lg text-center">
