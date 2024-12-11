@@ -85,7 +85,7 @@ const Login = () => {
 
   return (
     <>
-      <Helmet>
+      <Helmet>  
         <title>ورود - LearnAssist</title>
         <meta
           name="description"
@@ -96,7 +96,7 @@ const Login = () => {
         className="bg-cover bg-center h-screen flex justify-center items-center"
         style={{ backgroundImage: `url(${image})` }}
       >
-        <div className="w-3/5 bg-slate-800 border border-slate-400 rounded-md p-20 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative ">
+        <div className="w-3/5 bg-slate-800 border border-slate-400 rounded-md md:p-20 sm:shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative ">
           <ToastContainer />
           <div>
             <h1 className="text-5xl font-bold text-white mb-6 text-center mt-5">
@@ -107,17 +107,17 @@ const Login = () => {
               className="flex flex-col"
               onSubmit={handleSubmit(login)}
             >
-              <div className="flex my-4 relative">
+              <div className="flex flex-col sm:flex-row my-4 relative">
                 <label
-                  className={`flex-[1_1_20%] text-white text-lg text-right pr-5`}
+                  className={`sm:flex-[1_1_20%] text-white sm:text-sm md:text-lg text-center sm:text-right pr-5 whitespace-nowrap flex-shrink-0`}
                 >
-                  نام کاربری :
+                  نام کاربری <span className={'hidden sm:inline'}>:</span>
                 </label>
                 <input
                   {...register("email")}
                   type="email"
-                  className={`flex-[1_1_50%] py-2.3 px-2 
-                    text-xl text-white font-bold
+                  className={`flex-[1_1_60%] py-2.3 px-2 
+                    text-sm sm:text-xl text-white font-bold
                     bg-transparent border-0 border-b-2 border-gray-300 
                     appearance-none dark:focus:border-blue-500 
                     focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
@@ -130,17 +130,17 @@ const Login = () => {
                   {errors.email.message}
                 </p>
               )}
-              <div className="my-4 relative flex">
-                <label
-                  className={`text-white flex-[1_1_20%] text-lg text-right pr-5`}
+              <div className="flex flex-col sm:flex-row my-4 relative">
+              <label
+                  className={`flex-[1_1_20%] text-white sm:text-sm md:text-lg text-center sm:text-right pr-5 whitespace-nowrap flex-shrink-0`}
                 >
-                  رمز عبور :
+                  رمز عبور <span className={'hidden sm:inline'}>:</span>
                 </label>
                 <input
                   type={passToggle ? "text" : "password"}
                   {...register("password")}
                   className={`flex-[4_1_50%] py-2.3 px-2 
-                      text-xl text-white font-bold
+                      text-sm sm:text-xl text-white font-bold
                       bg-transparent border-0 border-b-2 border-gray-300 
                       appearance-none dark:focus:border-blue-500 
                       focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
@@ -150,7 +150,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={togglePassword}
-                  className="absolute top-3 right-20 focus:outline-none text-white"
+                  className="hidden lg:block absolute top-3 sm:right-20 focus:outline-none text-white "
                 >
                   {passToggle ? <FaRegEyeSlash /> : <FaRegEye />}
                 </button>
@@ -171,26 +171,26 @@ const Login = () => {
               >
                 {loading ? "... در حال ورود " : "ورود"}
               </button>
-              <div className="flex justify-around items-center mt-12">
-                <div className="flex gap-2 items-center">
+              <div className="flex justify-around items-center mt-3">
+                <div className="flex flex-col sm:flex-row gap-2 items-center">
                   <input type="checkbox" name="" id="" className="mr-2" />
-                  <label htmlFor="Remember Me" className="text-white">
+                  <label htmlFor="Remember Me" className="text-white text-sm sm:text-md text-center">
                     مرا به خاطر بس‍‍‍‍‍پار
                   </label>
                 </div>
                 <Link
                   to="/reset"
-                  className="text-white rounded-md p-2 hover:bg-amber-600 duration-300"
+                  className="text-white text-center rounded-md p-2 hover:bg-amber-600 duration-300"
                 >
                   فراموشی رمز عبور
                 </Link>
               </div>
               <br />
-              <div className="text-center mt-3">
-                <span className="m-8">
+              <div className="text-center mt-3 ">
+                <span className="sm:m-8">
                   <Link
                     to="/register"
-                    className="text-white border-2 rounded-md p-3 px-8 hover:bg-amber-600"
+                    className="text-white border-2 rounded-md py-2 px-8 hover:bg-amber-600"
                   >
                     ثبت نام کنید
                   </Link>

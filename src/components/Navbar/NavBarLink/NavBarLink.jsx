@@ -5,8 +5,9 @@ const NavBarLink = ({ link }) => {
   return (
     <div
       className={
-        "md:ml-8 text-2xl md:my-0 my-7 mx-8 border-x-2 border-yellow-600 px-4 "
-      }
+        `md:ml-8 text-md lg:text-2xl md:my-0  text-center sm:text-left
+        my-7 mx-8 border-x-2 border-yellow-600 px-4 `
+      } 
     >
       <NavLink
         to={link.link}

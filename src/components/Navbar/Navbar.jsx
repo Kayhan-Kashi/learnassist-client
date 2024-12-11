@@ -24,12 +24,14 @@ const Navbar = () => {
   return (
     <div className="sticky z-50 shadow-md w-full top-0 left-0">
       <nav className="md:flex items-center justify-between bg-white md:px-10 px-7">
-        <NavImageIcon image={ImageBoys1} />
+        <NavImageIcon image={ImageBoys1} className={`hidden sm:block sm:w-[5rem] lg:w-[9rem]`}/>
         <NavMenuButton onClickHandler={setOpen} status={open}>
           <GiChocolateBar />
         </NavMenuButton>
         <ul
-          className={`md:flex md:items-center absolute md:static text-amber-600 bg-white z-50 left-0 w-full md:w-auto transition-all duration-200 ease-in-out ${
+          className={`md:flex md:items-center 
+            absolute md:static text-amber-600 bg-white z-50 
+            left-0 w-full md:w-auto transition-all duration-200 ease-in-out ${
             open ? "top-20" : "top-[-490px]"
           }`}
         >
@@ -46,7 +48,7 @@ const Navbar = () => {
             </NavAccountButton>
           </li>
         </ul>
-        <NavImageIcon image={ImageBoys2} />
+        <NavImageIcon image={ImageBoys2} className={`hidden md:block sm:w-[5rem] lg:w-[9rem]`}/>
       </nav>
     </div>
   );
