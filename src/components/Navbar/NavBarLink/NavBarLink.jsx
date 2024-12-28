@@ -5,7 +5,7 @@ const NavBarLink = ({ link }) => {
   return (
     <div
       className={
-        `md:ml-8 text-md lg:text-2xl md:my-0  text-center sm:text-left
+        `md:ml-8 sm:text-sm md:text-lg lg:text-2xl md:my-0  text-center whitespace-nowrap
         my-7 mx-8 border-x-2 border-yellow-600 px-4 `
       } 
     >
