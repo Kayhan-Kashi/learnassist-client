@@ -11,4 +11,12 @@
 
 body {
   font-family: "B Koodak", sans-serif;
+  min-width: 615px;
 }
+
+@media (max-width: 615px) {
+  body {
+    overflow-x: auto; /* Allow scrolling if content is wider */
+  }
+}
+

@@ -8,7 +8,7 @@ const Header = () => {
   const isLandingPage = location.pathname === "/";
 
   return (
-    <header>
+    <header> 
       <Navbar />
       {isLandingPage && <Carousel />}
     </header>
