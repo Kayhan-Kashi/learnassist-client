@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import image from "../../assets/login-vector-transformed.jpeg";
@@ -7,13 +7,13 @@ import { BiUser } from "react-icons/bi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 import { loginUser } from "../../services/authService";
-import { login as loginSlice } from "../../redux/slices/loginSlice";
+import { login as loginAction } from "../../redux/slices/loginSlice";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const loginSchema = z.object({
   email: z
@@ -56,10 +56,14 @@ const Login = () => {
     setPassToggle(!passToggle);
   };
 
+  const userInfo = useSelector((state) => state.login.userInfo);
+
+  useEffect(() => {
+    alert(JSON.stringify(userInfo));
+  }, [userInfo]);
+
   const login = (formData) => {
     setLoading(true);
-    setFormUserData({ ...formData });
-    alert(JSON.stringify(formUserData));
     loginUser({ username: formData.email, password: formData.password })
       .then((response) => {
         toast.success("ورود با موفقیت انجام شد", {
@@ -71,10 +75,11 @@ const Login = () => {
             navigate("/dashboard");
           },
         });
-        dispatch(loginSlice(formUserData));
+        dispatch(loginAction(formData));
       })
       .catch((err) => {
         setLoading(false);
+        console.log(err.message);
         toast.error("ورود  انجام نشد", {
           position: "top-center",
           autoClose: 1000,
@@ -85,7 +90,7 @@ const Login = () => {
 
   return (
     <>
-      <Helmet>  
+      <Helmet>
         <title>ورود - LearnAssist</title>
         <meta
           name="description"
@@ -111,7 +116,7 @@ const Login = () => {
                 <label
                   className={`sm:flex-[1_1_20%] text-white sm:text-sm md:text-lg text-center sm:text-right pr-5 whitespace-nowrap flex-shrink-0`}
                 >
-                  نام کاربری <span className={'hidden sm:inline'}>:</span>
+                  نام کاربری <span className={"hidden sm:inline"}>:</span>
                 </label>
                 <input
                   {...register("email")}
@@ -131,10 +136,10 @@ const Login = () => {
                 </p>
               )}
               <div className="flex flex-col sm:flex-row my-4 relative">
-              <label
+                <label
                   className={`flex-[1_1_20%] text-white sm:text-sm md:text-lg text-center sm:text-right pr-5 whitespace-nowrap flex-shrink-0`}
                 >
-                  رمز عبور <span className={'hidden sm:inline'}>:</span>
+                  رمز عبور <span className={"hidden sm:inline"}>:</span>
                 </label>
                 <input
                   type={passToggle ? "text" : "password"}
@@ -174,7 +179,10 @@ const Login = () => {
               <div className="flex justify-around items-center mt-3">
                 <div className="flex flex-col sm:flex-row gap-2 items-center">
                   <input type="checkbox" name="" id="" className="mr-2" />
-                  <label htmlFor="Remember Me" className="text-white text-sm sm:text-md text-center">
+                  <label
+                    htmlFor="Remember Me"
+                    className="text-white text-sm sm:text-md text-center"
+                  >
                     مرا به خاطر بس‍‍‍‍‍پار
                   </label>
                 </div>
