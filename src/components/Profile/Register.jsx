@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BiUser } from "react-icons/bi";
@@ -9,7 +9,7 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
-import { validateUsername } from "../../services/authService";
+import { getAccessToken, validateUsername } from "../../services/authService";
 
 const registrationSchema = z
   .object({
@@ -31,6 +31,10 @@ const Register = () => {
     handleSubmit,
     formState: { errors },
   } = useForm({ resolver: zodResolver(registrationSchema) });
+
+  useEffect(() => {
+    alert(getAccessToken())
+  },[]);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

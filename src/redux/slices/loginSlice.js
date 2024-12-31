@@ -21,6 +21,7 @@ const loginSlice = createSlice({
       state.userInfo = action.payload; // Payload contains userInfo
     },
     logout: (state) => {
+      alert("logged out")
       state.isLoggedIn = false;
       state.userInfo = initialState.userInfo;
     },

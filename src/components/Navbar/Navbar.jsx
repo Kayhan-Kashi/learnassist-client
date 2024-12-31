@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ImageBoys1 from "../../assets/logo-boys1.jpg";
 import ImageBoys2 from "../../assets/logo-boys2.jpg";
 import { GiChocolateBar } from "react-icons/gi";
@@ -10,6 +10,8 @@ import NavImageIcon from "./NavImageIcon/NavImageIcon";
 import NavBarLink from "./NavBarLink/NavBarLink";
 import NavMenuButton from "./NavMenuButton/NavMenuButton";
 import NavAccountButton from "./NavAccountButton/NavAccountButton";
+import { useSelector } from "react-redux";
+import { getUserInfo } from "../../services/authService";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -20,6 +22,15 @@ const Navbar = () => {
     { name: "دوره های آموزشی", link: "/courses" },
     { name: "تماس با ما", link: "/contact-us" },
   ];
+
+  const userInfo = getUserInfo();
+  const isLogged = useSelector(state => state.login.isLoggedIn);
+  alert(isLogged)
+  
+
+  // useEffect(() => {
+  //   alert(userInfo);
+  // },[userInfo]);
 
   return (
     <div className="sticky items-center z-50 shadow-md w-full top-0 left-0 \">
@@ -48,6 +59,7 @@ const Navbar = () => {
               <FaRegUser />
             </NavAccountButton>
           </li>
+          { isLogged || userInfo?.isLoggedIn && <li><p className="text-red-500">سلام {userInfo.firstname} خوش آمدی</p></li>}
         </ul>
         <NavImageIcon image={ImageBoys2} className={`hidden md:block sm:w-[5rem] lg:w-[9rem]`}/>
       </nav>

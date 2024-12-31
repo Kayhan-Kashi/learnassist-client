@@ -2,6 +2,9 @@ import React from "react";
 import { FaSignInAlt, FaSignOutAlt  } from "react-icons/fa";
 import NavAnimatedButton from "../NavAnimatedButton/NavAnimatedButton";
 import { useNavigate } from "react-router-dom";
+import { getUserInfo, logoutFromStorage } from "../../../services/authService";
+import { useDispatch } from "react-redux";
+import { logout } from '../../../redux/slices/loginSlice'
 
 const NavAccountButton = ({
   onDropHandler,
@@ -11,6 +14,8 @@ const NavAccountButton = ({
   handleLogout,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const auth = { currentUser: null };
   return (
     <>
@@ -25,18 +30,18 @@ const NavAccountButton = ({
       drop ? "opacity-100 scale-110" : "opacity-0 scale-95 pointer-events-none"
     }`}
   >
-    {auth.currentUser ? (
-      <NavAnimatedButton text={"خروج"} 
-        onClickHandler={() => console.log("clicked")} 
-        onMouseLeaveHandler={() => navigate("/logout")} drop={drop}>
-        <FaSignOutAlt />
-      </NavAnimatedButton>  
+    { getUserInfo() != null ? (
+            <NavAnimatedButton text={"خروج"} 
+            onClickHandler={() => { logoutFromStorage(); dispatch(logout) }} 
+            onMouseLeaveHandler={() => onDropHandler(!drop)} drop={drop}>
+            <FaSignOutAlt />
+          </NavAnimatedButton>  
     ) : (
       <NavAnimatedButton text={"ورود"}  
-        onClickHandler={() => navigate("/login")} 
-        onMouseLeaveHandler={() => onDropHandler(!drop)} drop={drop}>
-        <FaSignInAlt />
-      </NavAnimatedButton>   
+      onClickHandler={() => navigate("/login")} 
+      onMouseLeaveHandler={() => onDropHandler(!drop)} drop={drop}>
+      <FaSignInAlt />
+    </NavAnimatedButton>  
     )}
   </div>
 </>

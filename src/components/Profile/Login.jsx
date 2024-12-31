@@ -9,6 +9,8 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { loginUser } from "../../services/authService";
 import { login as loginAction } from "../../redux/slices/loginSlice";
 
+import {getAccessToken } from '../../services/authService'
+
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -24,6 +26,7 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
+
   const [formUserData, setFormUserData] = useState({
     firstName: "",
     lastName: "",
@@ -58,26 +61,28 @@ const Login = () => {
 
   const userInfo = useSelector((state) => state.login.userInfo);
 
-  useEffect(() => {
-    alert(JSON.stringify(userInfo));
-  }, [userInfo]);
-
   const login = (formData) => {
     setLoading(true);
     loginUser({ username: formData.email, password: formData.password })
       .then((response) => {
+        const { accessToken } = response.data;
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("userInfo", JSON.stringify({username: "kayhan.kashi", firstname: "کیهان", lastname:'کاشی', isLoggedIn : true}))
+        dispatch(loginAction(formData));
+
         toast.success("ورود با موفقیت انجام شد", {
           position: "top-center",
           autoClose: 500,
           style: { fontSize: "14px", padding: "10px" },
           onClose: () => {
             setLoading(false);
-            navigate("/dashboard");
+            navigate("/");
           },
         });
-        dispatch(loginAction(formData));
+
       })
       .catch((err) => {
+        console.log(JSON.stringify(err));
         setLoading(false);
         console.log(err.message);
         toast.error("ورود  انجام نشد", {
