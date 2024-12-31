@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import ImageBoys1 from "../../assets/logo-boys1.jpg";
-import ImageBoys2 from "../../assets/logo-boys2.jpg";
+import ImageBoys1 from "../../../../assets/logo-boys1.jpg";
+import ImageBoys2 from "../../../../assets/logo-boys2.jpg";
 import { GiChocolateBar } from "react-icons/gi";
 
 import { FaRegUser } from "react-icons/fa";
@@ -11,7 +11,7 @@ import NavBarLink from "./NavBarLink/NavBarLink";
 import NavMenuButton from "./NavMenuButton/NavMenuButton";
 import NavAccountButton from "./NavAccountButton/NavAccountButton";
 import { useSelector } from "react-redux";
-import { getUserInfo } from "../../services/authService";
+import { getUserInfo } from "../../../../services/authService";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -24,9 +24,8 @@ const Navbar = () => {
   ];
 
   const userInfo = getUserInfo();
-  const isLogged = useSelector(state => state.login.isLoggedIn);
-  alert(isLogged)
-  
+  const isLogged = useSelector((state) => state.login.isLoggedIn);
+  //alert(isLogged);
 
   // useEffect(() => {
   //   alert(userInfo);
@@ -34,18 +33,20 @@ const Navbar = () => {
 
   return (
     <div className="sticky items-center z-50 shadow-md w-full top-0 left-0 \">
-      <nav className={`flex items-center 
-        justify-between bg-white px-7 border-4 border-red-600 `}>
-        <NavImageIcon image={ImageBoys1} className={`hidden sm:block sm:w-[5rem] lg:w-[9rem]`}/>
-        {/* <NavMenuButton onClickHandler={setOpen} status={open}>
-          <GiChocolateBar />
-        </NavMenuButton> */}
+      <nav
+        className={`flex items-center 
+        justify-between bg-white px-7 border-4 border-red-600 `}
+      >
+        <NavImageIcon
+          image={ImageBoys1}
+          className={`hidden sm:block sm:w-[5rem] lg:w-[9rem]`}
+        />
         <ul
           className={`flex items-center 
             static text-amber-600 bg-white z-50 
             left-0 w-auto transition-all duration-200 ease-in-out ${
-            open ? "top-20" : "top-[-490px]"
-          }`}
+              open ? "top-20" : "top-[-490px]"
+            }`}
         >
           {links.map((link, idx) => {
             return (
@@ -59,9 +60,16 @@ const Navbar = () => {
               <FaRegUser />
             </NavAccountButton>
           </li>
-          { isLogged || userInfo?.isLoggedIn && <li><p className="text-red-500">سلام {userInfo.firstname} خوش آمدی</p></li>}
+          {userInfo?.isLoggedIn && (
+            <li>
+              <p className="text-red-500">سلام {userInfo.firstname} خوش آمدی</p>
+            </li>
+          )}
         </ul>
-        <NavImageIcon image={ImageBoys2} className={`hidden md:block sm:w-[5rem] lg:w-[9rem]`}/>
+        <NavImageIcon
+          image={ImageBoys2}
+          className={`hidden md:block sm:w-[5rem] lg:w-[9rem]`}
+        />
       </nav>
     </div>
   );

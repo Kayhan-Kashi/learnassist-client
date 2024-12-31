@@ -9,7 +9,7 @@ import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { loginUser } from "../../services/authService";
 import { login as loginAction } from "../../redux/slices/loginSlice";
 
-import {getAccessToken } from '../../services/authService'
+import { getAccessToken } from "../../services/authService";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";
@@ -26,7 +26,6 @@ const loginSchema = z.object({
 });
 
 const Login = () => {
-
   const [formUserData, setFormUserData] = useState({
     firstName: "",
     lastName: "",
@@ -67,7 +66,15 @@ const Login = () => {
       .then((response) => {
         const { accessToken } = response.data;
         localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("userInfo", JSON.stringify({username: "kayhan.kashi", firstname: "کیهان", lastname:'کاشی', isLoggedIn : true}))
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify({
+            username: "kayhan.kashi",
+            firstname: "کیهان",
+            lastname: "کاشی",
+            isLoggedIn: true,
+          })
+        );
         dispatch(loginAction(formData));
 
         toast.success("ورود با موفقیت انجام شد", {
@@ -79,7 +86,6 @@ const Login = () => {
             navigate("/");
           },
         });
-
       })
       .catch((err) => {
         console.log(JSON.stringify(err));

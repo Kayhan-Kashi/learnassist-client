@@ -17,11 +17,12 @@ const loginSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
+      console.log("inside login store");
       state.isLoggedIn = true;
       state.userInfo = action.payload; // Payload contains userInfo
     },
     logout: (state) => {
-      alert("logged out")
+      console.log("inside logout store");
       state.isLoggedIn = false;
       state.userInfo = initialState.userInfo;
     },
