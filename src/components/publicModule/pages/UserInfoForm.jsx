@@ -3,13 +3,13 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BiUser } from "react-icons/bi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
-import image from "../../assets/login-vector-transformed.jpeg";
+import image from "../../../assets/login-vector-transformed.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
-import { registerUser } from "../../services/authService";
+import { registerUser } from "../../../services/authService";
 import { useLocation } from "react-router-dom";
 
 const registrationSchema = z.object({

@@ -1,11 +1,11 @@
 import logo from "./logo.svg";
 import "./App.css";
 import { Route, Routes, Router } from "react-router-dom";
-import Layout from "./components/Layout/Layout";
-import Courses from "./components/Courses/Courses";
-import Login from "./components/Profile/Login";
-import Register from "./components/Profile/Register";
-import UserInfoForm from "./components/Profile/UserInfoForm";
+import Layout from "./components/publicModule/Layout/Layout";
+import Courses from "./components/publicModule/Courses/Courses";
+import Login from "./components/publicModule/pages/Login";
+import Register from "./components/publicModule/pages/Register";
+import UserInfoForm from "./components/publicModule/pages/UserInfoForm";
 import { store } from "../src/redux/store"; // Import your Redux store
 import { Provider } from "react-redux";
 

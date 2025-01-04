@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import {
   getUserInfo,
   logoutFromStorage,
-} from "../../../../../services/authService";
+} from "../../../../../../services/authService";
 
 const NavAccountButton = ({
   onDropHandler,

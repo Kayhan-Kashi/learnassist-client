@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-import ImageBoys1 from "../../../../assets/logo-boys1.jpg";
-import ImageBoys2 from "../../../../assets/logo-boys2.jpg";
+import ImageBoys1 from "../../../../../assets/logo-boys1.jpg";
+import ImageBoys2 from "../../../../../assets/logo-boys2.jpg";
 import { GiChocolateBar } from "react-icons/gi";
 
 import { FaRegUser } from "react-icons/fa";
@@ -11,7 +11,7 @@ import NavBarLink from "./NavBarLink/NavBarLink";
 import NavMenuButton from "./NavMenuButton/NavMenuButton";
 import NavAccountButton from "./NavAccountButton/NavAccountButton";
 import { useSelector } from "react-redux";
-import { getUserInfo } from "../../../../services/authService";
+import { getUserInfo } from "../../../../../services/authService";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);

@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import image from "../../assets/login-vector-transformed.jpeg";
+import image from "../../../assets/login-vector-transformed.jpeg";
 import { Link, useNavigate } from "react-router-dom";
 import { BiUser } from "react-icons/bi";
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
-import { loginUser } from "../../services/authService";
-import { login as loginAction } from "../../redux/slices/loginSlice";
+import { loginUser } from "../../../services/authService";
+import { login as loginAction } from "../../../redux/slices/loginSlice";
 
-import { getAccessToken } from "../../services/authService";
+import { getAccessToken } from "../../../services/authService";
 
 import { z } from "zod";
 import { useForm } from "react-hook-form";

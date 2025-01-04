@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import CourseCard from "./CourseCard/CourseCard";
-import eLearningCarousel from "../../assets/course-music.png";
-import courseHarmonyImage from "../../assets/course-2.webp";
-import advancedTheoryImage from "../../assets/course-3.png";
+import eLearningCarousel from "../../../assets/course-music.png";
+import courseHarmonyImage from "../../../assets/course-2.webp";
+import advancedTheoryImage from "../../../assets/course-3.png";
 import { useSelector } from "react-redux";
 
 const Courses = () => {
