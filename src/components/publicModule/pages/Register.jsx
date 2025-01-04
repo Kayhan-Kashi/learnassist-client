@@ -32,9 +32,9 @@ const Register = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(registrationSchema) });
 
-  useEffect(() => {
-    alert(getAccessToken())
-  },[]);
+  // useEffect(() => {
+  //   alert(getAccessToken())
+  // },[]);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");

@@ -6,11 +6,11 @@ import advancedTheoryImage from "../../../assets/course-3.png";
 import { useSelector } from "react-redux";
 
 const Courses = () => {
-  const userInfo = useSelector((state) => state.login.userInfo);
+  // const userInfo = useSelector((state) => state.login.userInfo);
 
-  useEffect(() => {
-    alert(JSON.stringify(userInfo));
-  }, [userInfo]);
+  // useEffect(() => {
+  //   alert(JSON.stringify(userInfo));
+  // }, [userInfo]);
 
   return (
     <div className="min-h-screen">
