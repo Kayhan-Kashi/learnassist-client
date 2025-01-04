@@ -22,15 +22,14 @@ function App() {
   return (
     <Provider store={store}>
       <Routes>
-        {/* <Route path="/" element={<Layout />}> */}
-        <Route path="/" element={<DefaultLayout />}>
-          {/* <Route path="/courses" element={<Courses />}></Route>
+        <Route path="/" element={<Layout />}>
+          <Route path="/courses" element={<Courses />}></Route>
           <Route path="/contact-us" element={<Layout />}></Route>
           <Route path="/login" element={<Login />}></Route>
           <Route path="/register" element={<Register />}></Route>
           <Route path="/userInfo" element={<UserInfoForm />}></Route>
-          <Route path="/elearning" name="Home" element={<DefaultLayout />} /> */}
         </Route>
+        <Route path="/elearning" name="ELearning" element={<DefaultLayout />} />
       </Routes>
     </Provider>
   );
