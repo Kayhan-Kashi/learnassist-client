@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import videojs from "video.js";
 import AppHeader from "../AppHeader/AppHeader.jsx";
 import AppSidebar from "../AppSidebar/AppSidebar.jsx";
 import ChatBox from "../ChatBox/ChatBox.jsx";
-import VideoJS from "../VideoPlayer/VideoJS.jsx";
+import VideoPlayer from "../VideoPlayer/VideoPlayer.jsx";
 
 const DefaultLayout = () => {
+  const videoTitle = "مبحث فیزیک صوت : جلسه اول";
   const playerRef = React.useRef(null);
 
   const videoJsOptions = {
@@ -24,7 +25,7 @@ const DefaultLayout = () => {
   const handlePlayerReady = (player) => {
     playerRef.current = player;
 
-    // You can handle player events here, for example:
+    // Handle player events if needed
     player.on("waiting", () => {
       videojs.log("player is waiting");
     });
@@ -34,46 +35,49 @@ const DefaultLayout = () => {
     });
   };
 
+  const handleHelpButtonClick = () => {
+    document.getElementById("chat-box-section").scrollIntoView({
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div>
       <AppSidebar />
       <div className="wrapper d-flex flex-column min-vh-100">
         <AppHeader />
-        <div className="flex justify-center items-center h-full">
-          <div className="w-3/5">
-            <p>This is the Video player</p>
-            <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
+        <main>
+          <div className="flex flex-col">
+            <div className="flex flex-row justify-center items-center h-full">
+              <div className="w-3/5 relative">
+                <h2 className="text-center pb-3">{videoTitle}</h2>
+                <VideoPlayer
+                  options={videoJsOptions}
+                  onReady={handlePlayerReady}
+                />
+              </div>
+              <div className="flex flex-col">
+                <button
+                  onClick={handleHelpButtonClick}
+                  className="transform -translate-y-1/2 bg-green-400 text-white px-6 py-3 ml-10 mb-4 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+                >
+                  کمک کن
+                </button>
+                <button
+                  onClick={handleHelpButtonClick}
+                  className="transform -translate-y-1/2 bg-yellow-400 text-white px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+                >
+                  سوال دارم
+                </button>
+              </div>
+            </div>
+            <div id="chat-box-section">
+              <ChatBox />
+            </div>
           </div>
-        </div>
-        <div>
-          <ChatBox />
-        </div>
+        </main>
       </div>
     </div>
-    // <div>
-    //   <AppSidebar />
-    //   <div className="wrapper d-flex flex-column min-vh-100">
-    //     <AppHeader />
-
-    //     <div className="body flex-grow-1">
-    //       <div className="flex flex-row"></div>
-    //       <div className="flex justify-center items-center h-full">
-    //         <div className="w-3/5">
-    //           <p>This is the Video player</p>
-    //           <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-    //         </div>
-    //       </div>
-    //       <div>
-    //         <ChatBox />
-    //     <div className="flex justify-center items-center h-full">
-    //       <div className="w-3/5">
-    //         <p>This is the Video player</p>
-    //         <VideoJS options={videoJsOptions} onReady={handlePlayerReady} />
-    //       </div>
-    //     </div>
-    //   </div>
-    // </div>
-    // </div>
   );
 };
 

@@ -2,7 +2,7 @@ import React from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-const VideoJS = ({ options, onReady }) => {
+const VideoPlayer = ({ options, onReady }) => {
   const videoRef = React.useRef(null);
   const playerRef = React.useRef(null);
 
@@ -49,4 +49,4 @@ const VideoJS = ({ options, onReady }) => {
   );
 };
 
-export default VideoJS;
+export default VideoPlayer;

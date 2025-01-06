@@ -2,8 +2,7 @@ import axios from "axios";
 
 // Configure your API endpoint and headers
 const API_URL = "https://api.openai.com/v1/chat/completions"; // Update this based on the specific endpoint
-const SECRET_KEY = "";
-
+const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
 // Function to interact with ChatGPT API
 export const callChatGPT = async (messages) => {
   try {
