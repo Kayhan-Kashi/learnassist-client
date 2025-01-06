@@ -1,17 +1,15 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-const VideoPlayer = ({ options, onReady }) => {
-  const videoRef = React.useRef(null);
-  const playerRef = React.useRef(null);
+const VideoPlayer = ({ options, onReady, onTimeUpdate }) => {
+  const videoRef = useRef(null);
+  const playerRef = useRef(null);
 
-  React.useEffect(() => {
-    // Make sure Video.js player is only initialized once
+  useEffect(() => {
     if (!playerRef.current) {
-      // The Video.js player needs to be _inside_ the component el for React 18 Strict Mode.
+      // Initialize Video.js player
       const videoElement = document.createElement("video-js");
-
       videoElement.classList.add("vjs-big-play-centered");
       videoRef.current.appendChild(videoElement);
 
@@ -20,18 +18,25 @@ const VideoPlayer = ({ options, onReady }) => {
         onReady && onReady(player);
       }));
 
-      // You could update an existing player in the `else` block here
-      // on prop change, for example:
+      // Set up timeupdate event listener
+      player.on("timeupdate", () => {
+        if (player && player.currentTime) {
+          const timeInSeconds = player.currentTime();
+          const minutes = Math.floor(timeInSeconds / 60);
+          const seconds = Math.floor(timeInSeconds % 60);
+          onTimeUpdate && onTimeUpdate({ minutes, seconds });
+        }
+      });
     } else {
       const player = playerRef.current;
 
       player.autoplay(options.autoplay);
       player.src(options.sources);
     }
-  }, [options, videoRef]);
+  }, [options, onReady, onTimeUpdate]);
 
-  // Dispose the Video.js player when the functional component unmounts
-  React.useEffect(() => {
+  // Dispose the Video.js player when the component unmounts
+  useEffect(() => {
     const player = playerRef.current;
 
     return () => {
@@ -40,7 +45,7 @@ const VideoPlayer = ({ options, onReady }) => {
         playerRef.current = null;
       }
     };
-  }, [playerRef]);
+  }, []);
 
   return (
     <div data-vjs-player>
