@@ -1,11 +1,11 @@
 import React from "react";
 import { FaSignInAlt, FaSignOutAlt } from "react-icons/fa";
-import NavAnimatedButton from "../NavAnimatedButton/NavAnimatedButton";
 import { useNavigate } from "react-router-dom";
 import {
   getUserInfo,
   logoutFromStorage,
 } from "../../../../../../services/authService";
+import NavAnimatedButton from "../NavAnimatedButton/NavAnimatedButton";
 
 const NavAccountButton = ({
   onDropHandler,
@@ -37,7 +37,6 @@ const NavAccountButton = ({
             text={"خروج"}
             onClickHandler={() => {
               logoutFromStorage();
-              navigate("/");
             }}
             onMouseLeaveHandler={() => onDropHandler(!drop)}
             drop={drop}

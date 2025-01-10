@@ -1,21 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import image from "../../../assets/login-vector-transformed.jpeg";
-import { Link, useNavigate } from "react-router-dom";
-import { BiUser } from "react-icons/bi";
-import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
-import { loginUser } from "../../../services/authService";
 import { login as loginAction } from "../../../redux/slices/loginSlice";
+import { loginUser } from "../../../services/authService";
 
-import { getAccessToken } from "../../../services/authService";
-
-import { z } from "zod";
-import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
-import { useSelector, useDispatch } from "react-redux";
+import { useForm } from "react-hook-form";
+import { useDispatch, useSelector } from "react-redux";
+import { z } from "zod";
 
 const loginSchema = z.object({
   email: z
@@ -83,7 +80,7 @@ const Login = () => {
           style: { fontSize: "14px", padding: "10px" },
           onClose: () => {
             setLoading(false);
-            navigate("/");
+            navigate("/elearning");
           },
         });
       })

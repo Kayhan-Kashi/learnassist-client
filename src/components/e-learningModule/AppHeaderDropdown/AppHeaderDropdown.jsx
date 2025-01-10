@@ -1,47 +1,51 @@
-import React from 'react'
+import { cilAccountLogout, cilUser } from "@coreui/icons";
+import CIcon from "@coreui/icons-react";
 import {
   CAvatar,
-  CBadge,
   CDropdown,
-  CDropdownDivider,
   CDropdownHeader,
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-} from '@coreui/react'
-import {
-  cilBell,
-  cilCreditCard,
-  cilCommentSquare,
-  cilEnvelopeOpen,
-  cilFile,
-  cilLockLocked,
-  cilSettings,
-  cilTask,
-  cilUser,
-} from '@coreui/icons'
-import CIcon from '@coreui/icons-react'
+} from "@coreui/react";
+import React from "react";
 
-import avatar8 from '../../../assets/images/avatars/8.jpg'
+import { logoutFromStorage } from "../../../services/authService.js";
+
+import avatar8 from "../../../assets/images/avatars/avatar-blue.jpg";
 
 const AppHeaderDropdown = () => {
   return (
     <CDropdown variant="nav-item">
-      <CDropdownToggle placement="bottom-end" className="py-0 pe-0" caret={false}>
-        <CAvatar src={avatar8} size="md" />
+      <CDropdownToggle
+        placement="bottom-end"
+        className="py-0 pe-0 mb-3"
+        caret={false}
+      >
+        <CAvatar src={avatar8} />
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
-        <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">Account</CDropdownHeader>
+        <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">
+          حساب کاربری
+        </CDropdownHeader>
         <CDropdownItem href="#">
+          <CIcon icon={cilUser} className="me-2 text-success" />
+          مشاهده پروفایل
+        </CDropdownItem>
+        <CDropdownItem href="#" onClick={() => logoutFromStorage()}>
+          <CIcon icon={cilAccountLogout} className="me-2 text-primary" />
+          خروج
+        </CDropdownItem>
+        {/* <CDropdownItem href="#">
           <CIcon icon={cilBell} className="me-2" />
-          Updates
+          مشاهده پروفایل
           <CBadge color="info" className="ms-2">
             42
           </CBadge>
         </CDropdownItem>
         <CDropdownItem href="#">
           <CIcon icon={cilEnvelopeOpen} className="me-2" />
-          Messages
+          خروج
           <CBadge color="success" className="ms-2">
             42
           </CBadge>
@@ -60,14 +64,16 @@ const AppHeaderDropdown = () => {
             42
           </CBadge>
         </CDropdownItem>
-        <CDropdownHeader className="bg-body-secondary fw-semibold my-2">Settings</CDropdownHeader>
+        <CDropdownHeader className="bg-body-secondary fw-semibold my-2">
+          Settings
+        </CDropdownHeader>
         <CDropdownItem href="#">
           <CIcon icon={cilUser} className="me-2" />
-          Profile
+          مشاهده پروفایل
         </CDropdownItem>
         <CDropdownItem href="#">
           <CIcon icon={cilSettings} className="me-2" />
-          Settings
+          خروج
         </CDropdownItem>
         <CDropdownItem href="#">
           <CIcon icon={cilCreditCard} className="me-2" />
@@ -87,10 +93,10 @@ const AppHeaderDropdown = () => {
         <CDropdownItem href="#">
           <CIcon icon={cilLockLocked} className="me-2" />
           Lock Account
-        </CDropdownItem>
+        </CDropdownItem> */}
       </CDropdownMenu>
     </CDropdown>
-  )
-}
+  );
+};
 
-export default AppHeaderDropdown
+export default AppHeaderDropdown;

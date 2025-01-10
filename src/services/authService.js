@@ -42,6 +42,7 @@ export const getUserInfo = () => {
 export const logoutFromStorage = () => {
   localStorage.removeItem("userInfo");
   localStorage.removeItem("accessToken");
+  window.location.href = "/";
 };
 
 export const registerUser = register;

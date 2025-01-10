@@ -9,6 +9,10 @@
   font-family: "B Koodak", sans-serif;
 } */
 
+.font-bKoodak.antialiased a {
+  text-decoration: none;
+}
+
 body {
   font-family: "B Koodak", sans-serif;
   min-width: 615px;
@@ -19,4 +23,3 @@ body {
     overflow-x: auto; /* Allow scrolling if content is wider */
   }
 }
-

@@ -1,22 +1,15 @@
-import logo from "./logo.svg";
+import { Provider } from "react-redux";
+import { Route, Routes } from "react-router-dom";
+import { store } from "../src/redux/store"; // Import your Redux store
 import "./App.css";
-import { Route, Routes, Router } from "react-router-dom";
-import Layout from "./components/publicModule/Layout/Layout";
+import DefaultLayout from "./components/e-learningModule/Layout/DefaultLayout";
 import Courses from "./components/publicModule/Courses/Courses";
+import Layout from "./components/publicModule/Layout/Layout";
 import Login from "./components/publicModule/pages/Login";
 import Register from "./components/publicModule/pages/Register";
 import UserInfoForm from "./components/publicModule/pages/UserInfoForm";
-import { store } from "../src/redux/store"; // Import your Redux store
-import { Provider } from "react-redux";
-import DefaultLayout from "./components/e-learningModule/Layout/DefaultLayout";
 
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
-
-import './scss/style.scss'
-
-// We use those styles to show code examples, you should remove them in your application.
-import './scss/examples.scss'
-
 
 function App() {
   return (

@@ -4,6 +4,11 @@ import AppHeader from "../AppHeader/AppHeader.jsx";
 import AppSidebar from "../AppSidebar/AppSidebar.jsx";
 import WatchAndAskComponent from "../WatchAndAskComponent/WatchAndAskComponent.jsx";
 
+import "../../../scss/style.scss";
+
+// We use those styles to show code examples, you should remove them in your application.
+import "../../../scss/examples.scss";
+
 const DefaultLayout = () => {
   const videoTitle = "مبحث فیزیک صوت : جلسه اول";
   const playerRef = React.useRef(null);

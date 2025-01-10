@@ -53,7 +53,7 @@ const ChatBox = () => {
   };
 
   return (
-    <div className="max-w-5xl mx-auto mt-10 p-6 mb-4 bg-white rounded-lg shadow-lg flex flex-col h-[80vh]">
+    <div className="max-w-5xl mx-auto mt-10 p-6 mb-4 bg-white rounded-2xl shadow-lg flex flex-col h-[80vh]">
       {/* Chat Header with Title */}
       <div className="mb-4">
         <h1 className="text-2xl font-bold text-center text-gray-800">
