@@ -1,4 +1,10 @@
-import { cilDrop, cilPencil, cilPuzzle, cilSpeedometer } from "@coreui/icons";
+import {
+  cilMonitor,
+  cilPencil,
+  cilPuzzle,
+  cibCodepen,
+  cilSpeedometer,
+} from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import { CNavGroup, CNavItem, CNavTitle } from "@coreui/react";
 import React from "react";
@@ -22,7 +28,7 @@ const _nav = [
     component: CNavItem,
     name: "مشاهده دوره",
     to: "/theme/colors",
-    icon: <CIcon icon={cilDrop} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilMonitor} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
@@ -38,7 +44,7 @@ const _nav = [
     component: CNavGroup,
     name: "دوره های ثبت نام شده",
     to: "/base",
-    icon: <CIcon icon={cilPuzzle} customClassName="nav-icon" />,
+    icon: <CIcon icon={cibCodepen} customClassName="nav-icon" />,
     items: [
       {
         component: CNavItem,

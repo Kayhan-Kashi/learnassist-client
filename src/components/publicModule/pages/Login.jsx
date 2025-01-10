@@ -131,9 +131,9 @@ const Login = () => {
                   type="email"
                   className={`flex-[1_1_60%] py-2.3 px-2 
                     text-sm sm:text-xl text-white font-bold
-                    bg-transparent border-0 border-b-2 border-gray-300 
-                    appearance-none dark:focus:border-blue-500 
-                    focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
+                    bg-transparent !border-0 !border-b-2 !border-gray-300 
+                    appearance-none dark:focus:!border-blue-500 
+                    focus:outline-none focus:ring-0 focus:text-white focus:!border-blue-600 peer`}
                 />
                 {/* <BiUser className="absolute top-0 right-4" /> */}
                 <div className="flex-[4_1_20%]"></div>
@@ -154,8 +154,8 @@ const Login = () => {
                   {...register("password")}
                   className={`flex-[4_1_50%] py-2.3 px-2 
                       text-sm sm:text-xl text-white font-bold
-                      bg-transparent border-0 border-b-2 border-gray-300 
-                      appearance-none dark:focus:border-blue-500 
+                      bg-transparent !border-0 !border-b-2 !border-gray-300 
+                      appearance-none dark:focus:!border-blue-500 
                       focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
                   placeholder=""
                 />
@@ -178,13 +178,13 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`block w-full h-12 text-2xl mb-4 
+                className={`block w-2/5 h-12 text-2xl mb-4 text-center items-center mx-auto
                   mt-6 rounded-full bg-white text-emerald-800
-                   hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300`}
+                   hover:!bg-amber-600 hover:!text-white py-2 transition-colors duration-300`}
               >
                 {loading ? "... در حال ورود " : "ورود"}
               </button>
-              <div className="flex justify-around items-center mt-3">
+              {/* <div className="flex justify-around items-center mt-3">
                 <div className="flex flex-col sm:flex-row gap-2 items-center">
                   <input type="checkbox" name="" id="" className="mr-2" />
                   <label
@@ -200,7 +200,7 @@ const Login = () => {
                 >
                   فراموشی رمز عبور
                 </Link>
-              </div>
+              </div> */}
               <br />
               <div className="text-center mt-3 ">
                 <span className="sm:m-8">

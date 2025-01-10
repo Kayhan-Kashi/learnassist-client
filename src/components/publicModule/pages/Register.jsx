@@ -9,7 +9,10 @@ import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
-import { getAccessToken, validateUsername } from "../../../services/authService";
+import {
+  getAccessToken,
+  validateUsername,
+} from "../../../services/authService";
 
 const registrationSchema = z
   .object({
@@ -120,9 +123,9 @@ const Register = () => {
                     type="text"
                     className={`flex-[1_1_50%] py-2.3 px-2 
                     text-sm sm:text-xl text-white font-bold
-                    bg-transparent border-0 border-b-2 border-gray-300 
-                    appearance-none dark:focus:border-blue-500 
-                    focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
+                    bg-transparent !border-0 !border-b-2 !border-gray-300 
+                    appearance-none dark:focus:!border-blue-500 
+                    focus:!outline-none focus:!ring-0 focus:text-white focus:border-blue-600 peer`}
                   />
                   <div className="flex-[4_1_20%]"></div>
                 </div>
@@ -143,9 +146,9 @@ const Register = () => {
                     {...register("password")}
                     className={`flex-[4_1_50%] py-2.3 px-2 
                       text-sm sm:text-xl text-white font-bold
-                      bg-transparent border-0 border-b-2 border-gray-300 
-                      appearance-none dark:focus:border-blue-500 
-                      focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
+                      bg-transparent !border-0 !border-b-2 !border-gray-300 
+                      appearance-none dark:focus:!border-blue-500 
+                      focus:!outline-none focus:!ring-0 focus:text-white focus:!border-blue-600 peer`}
                     placeholder=""
                   />
 
@@ -174,9 +177,9 @@ const Register = () => {
                     {...register("confirmPassword")}
                     className={`flex-[4_1_50%] py-2.3 px-2 
                       text-sm sm:text-xl text-white font-bold
-                      bg-transparent border-0 border-b-2 border-gray-300 
-                      appearance-none dark:focus:border-blue-500 
-                      focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
+                      bg-transparent !border-0 !border-b-2 !border-gray-300 
+                      appearance-none dark:focus:!border-blue-500 
+                      focus:!outline-none focus:!ring-0 focus:text-white focus:!border-blue-600 peer`}
                     placeholder=""
                   />
                   <button
@@ -206,9 +209,9 @@ const Register = () => {
                 </div>
                 <button
                   type="submit"
-                  className={`block mx-auto mb-4 text-[18px] mt-6 rounded-full text-center w-4/5
-                     bg-white text-emerald-800
-                      hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300`}
+                  className={`block mx-auto mb-4 text-[18px] mt-6 rounded-full text-center w-2/5
+                     bg-white !text-emerald-800
+                      hover:!bg-amber-600 hover:!text-white py-2 transition-colors duration-300`}
                 >
                   {loading ? "... در حال بررسی " : "ثبت نام"}
                 </button>

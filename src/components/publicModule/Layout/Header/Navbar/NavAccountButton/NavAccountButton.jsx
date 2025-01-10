@@ -26,7 +26,7 @@ const NavAccountButton = ({
         {children}
       </button>
       <div
-        className={`absolute z-50 mt-2 right-0 top-10 w-40 bg-yellow-100 rounded-2xl shadow-lg transition-all duration-400 ease-in-out transform ${
+        className={`absolute z-50 mt-2 right-0 top-10 w-44 bg-yellow-100 rounded-2xl shadow-lg transition-all duration-400 ease-in-out transform ${
           drop
             ? "opacity-100 scale-110"
             : "opacity-0 scale-95 pointer-events-none"
@@ -45,7 +45,7 @@ const NavAccountButton = ({
           </NavAnimatedButton>
         ) : (
           <NavAnimatedButton
-            text={"ورود"}
+            text={"ورود/ثبت نام"}
             onClickHandler={() => navigate("/login")}
             onMouseLeaveHandler={() => onDropHandler(!drop)}
             drop={drop}
