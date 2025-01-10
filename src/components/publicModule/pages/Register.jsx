@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet";
 import {
   getAccessToken,
   validateUsername,
+  isUserExisted,
 } from "../../../services/authService";
 
 const registrationSchema = z
@@ -50,25 +51,34 @@ const Register = () => {
 
   const submitUser = (formData) => {
     setLoading(true);
-    validateUsername({
+    isUserExisted({
       username: formData.username,
-      password: formData.password,
     })
       .then((response) => {
-        toast.success("نام کاربری و رمز عبور قابل قبول است", {
-          position: "top-center",
-          autoClose: 500,
-          style: { fontSize: "14px", padding: "10px" },
-          onClose: () => {
-            navigate("/userInfo", {
-              state: {
-                username: formData.username,
-                password: formData.password,
-              },
-            });
-            setLoading(true);
-          },
-        });
+        const isUserExisted = response.IsUserExisted;
+        if (isUserExisted) {
+          toast.error("نام کاربری قبلا وارد شده است", {
+            position: "top-center",
+            autoClose: 3000,
+            style: { fontSize: "14px", padding: "10px" },
+          });
+          setLoading(false);
+        } else {
+          toast.success("نام کاربری و رمز عبور قابل قبول است", {
+            position: "top-center",
+            autoClose: 3000,
+            style: { fontSize: "14px", padding: "10px" },
+            onClose: () => {
+              navigate("/userInfo", {
+                state: {
+                  username: formData.username,
+                  password: formData.password,
+                },
+              });
+              setLoading(true);
+            },
+          });
+        }
       })
       .catch((err) => {
         toast.error("ثبت نام انجام نشد", {

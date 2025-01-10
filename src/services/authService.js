@@ -45,6 +45,19 @@ export const logoutFromStorage = () => {
   window.location.href = "/";
 };
 
+export const isUserExisted = async (username) => {
+  // return await axios.post(`${API_BASE_URL}/isUserExisted`, {
+  //   username: username,
+  // });
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        IsUserExisted: false, // Simulating the C# object
+      });
+    }, 1000); // Simulate network delay
+  });
+};
+
 export const registerUser = register;
 export const loginUser = login;
 export const validateUsername = isUsernameValid;
