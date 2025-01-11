@@ -89,7 +89,7 @@ const UserInfoForm = () => {
       </Helmet>
       <div>
         <div
-          className="bg-cover bg-center h-2/5 flex justify-center items-center"
+          className="bg-cover bg-center h-screen flex justify-center items-center"
           style={{ backgroundImage: `url(${image})` }}
         >
           <ToastContainer />
@@ -234,7 +234,7 @@ const UserInfoForm = () => {
                 </div>
                 <button
                   type="submit"
-                  className={`block mx-auto mb-4 text-[18px] mt-6 rounded-full text-center w-4/5
+                  className={`block mx-auto mb-4 text-[18px] mt-6 rounded-full text-center w-2/5
                      bg-white !text-emerald-800
                       hover:!bg-amber-600 hover:!text-white py-2 transition-colors duration-300`}
                 >
