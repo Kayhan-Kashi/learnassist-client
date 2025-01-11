@@ -11,15 +11,7 @@ const isUsernameValid = async (userData) => {
   });
 };
 
-const register = async (userData) => {
-  // return await axios.post(`${API_BASE_URL}/posts`, userData);
-  return await axios.post(`${API_BASE_URL}/register`, {
-    email: userData.username,
-    password: userData.password,
-  });
-};
-
-const login = async (userData) => {
+export const loginUser = async (userData) => {
   return await axios.post(`${API_BASE_URL}/login`, {
     email: userData.username,
     password: userData.password,
@@ -58,6 +50,15 @@ export const isUserExisted = async (username) => {
   });
 };
 
-export const registerUser = register;
-export const loginUser = login;
+export const registerUser = async (registerData) => {
+  // return await axios.post(`${API_BASE_URL}/Register`, registerData);
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        isSuccessfull: true, // Simulating the C# object
+      });
+    }, 1000); // Simulate network delay
+  });
+};
+
 export const validateUsername = isUsernameValid;

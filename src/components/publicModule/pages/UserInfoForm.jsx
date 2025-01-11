@@ -18,6 +18,8 @@ const registrationSchema = z.object({
   nationalCode: z.string().min(10, "کد ملی باید حتما ۱۰ رقم باشد"),
   grade: z.string().refine((value) => value !== "-1", "پایه تحصیلی الزامی است"),
   schoolName: z.string().min(3, "نام مدرسه باید حداقل ۳ کاراکتر باشد"),
+  interests: z.string().min(3),
+  description: z.string().min(3),
 });
 
 const UserInfoForm = () => {
@@ -44,6 +46,8 @@ const UserInfoForm = () => {
       nationalCode: formData.nationalCode,
       grade: formData.grade,
       schoolName: formData.schoolName,
+      interests: formData.interests,
+      description: formData.description,
       username: username,
       password: password,
     })
@@ -85,11 +89,11 @@ const UserInfoForm = () => {
       </Helmet>
       <div>
         <div
-          className="bg-cover bg-center h-screen flex justify-center items-center"
+          className="bg-cover bg-center h-2/5 flex justify-center items-center"
           style={{ backgroundImage: `url(${image})` }}
         >
           <ToastContainer />
-          <div className="w-2/3 bg-slate-800 border border-slate-400 rounded-md p-24 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
+          <div className="w-2/3 bg-slate-800 border border-slate-400 rounded-md p-5 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
             <div>
               <h1 className="text-4xl font-bold text-white mb-6 text-center">
                 ورود اطلاعات
@@ -112,9 +116,9 @@ const UserInfoForm = () => {
                         type="text"
                         className={`flex-[1_1_50%] py-2.3 px-2 
                         text-sm sm:text-xl text-white font-bold text-center
-                        bg-transparent border-0 border-b-2 border-gray-300 
-                        appearance-none dark:focus:border-blue-500 
-                        focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer lg:ml-10`}
+                        bg-transparent !border-0 !border-b-2 !border-gray-300 
+                        appearance-none dark:focus:!border-blue-500 
+                        focus:outline-none focus:!ring-0 focus:text-white focus:!border-blue-600 peer lg:ml-10`}
                       />
                     </div>
                   </div>
@@ -130,9 +134,9 @@ const UserInfoForm = () => {
                       type="text"
                       className={`flex-[1_1_50%] py-2.3 px-2 
                         text-sm sm:text-xl text-white font-bold text-center
-                        bg-transparent border-0 border-b-2 border-gray-300 
-                        appearance-none dark:focus:border-blue-500 
-                        focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer `}
+                        bg-transparent !border-0 !border-b-2 !border-gray-300 
+                        appearance-none dark:!focus:border-blue-500 
+                        focus:outline-none focus:!ring-0 focus:text-white focus:!border-blue-600 peer `}
                     />
                   </div>
                 </div>
@@ -148,14 +152,14 @@ const UserInfoForm = () => {
                       type="text"
                       className={`flex-[1_1_50%] py-2.3 px-2 
                         text-sm sm:text-xl text-white font-bold text-center
-                        bg-transparent border-0 border-b-2 border-gray-300 
-                        appearance-none dark:focus:border-blue-500 
-                        focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer lg:ml-10`}
+                        bg-transparent !border-0 !border-b-2 !border-gray-300 
+                        appearance-none dark:!focus:border-blue-500 
+                        focus:outline-none focus:!!ring-0 focus:!text-white focus:!border-blue-600 peer lg:ml-10`}
                     />
                   </div>
                   <div className="flex flex-col lg:flex-row-reverse my-4 relative ">
                     <label
-                      className={`flex-[1_1_3۰%] text-white sm:text-sm md:text-lg text-center lg:text-right pr-5 whitespace-nowrap flex-shrink-0`}
+                      className={`flex-[1_1_3۰%] text-white ml-2 sm:text-sm md:text-lg text-center lg:text-right pr-5 whitespace-nowrap flex-shrink-0`}
                     >
                       <span className={"hidden lg:inline"}>:</span> پایه تحصیلی
                     </label>
@@ -186,17 +190,53 @@ const UserInfoForm = () => {
                       type="text"
                       className={`flex-[1_1_50%] py-2.3 px-2 
                         text-sm sm:text-xl text-white font-bold text-center
-                        bg-transparent border-0 border-b-2 border-gray-300 
-                        appearance-none dark:focus:border-blue-500 
-                        focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer lg:ml-10`}
+                        bg-transparent !border-0 !border-b-2 !border-gray-300 
+                        appearance-none dark:focus:!border-blue-500 
+                        focus:outline-none focus:!ring-0 focus:!text-white focus:!border-blue-600 peer lg:ml-10`}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col lg:flex-row-reverse justify-items-center">
+                  <div className="flex flex-col lg:flex-row-reverse my-4 relative">
+                    <label
+                      className={`flex-[1_1_20%] text-white sm:text-sm md:text-lg text-center lg:text-right pr-5 whitespace-nowrap flex-shrink-0`}
+                    >
+                      <span className={"hidden lg:inline"}>:</span> علاقه
+                    </label>
+                    <textarea
+                      {...register("interests")}
+                      className={`flex-[1_1_80%] py-2.3 px-2 !w-[600px] !h-32
+                        text-sm sm:text-xl text-white font-bold text-right
+                        bg-transparent !border-2 !border-blue-300 
+                        appearance-none dark:focus:!border-blue-500 
+                        focus:outline-none focus:!ring-0 focus:!text-white
+                         focus:!border-blue-600 peer lg:ml-10`}
+                    />
+                  </div>
+                </div>
+                <div className="flex flex-col lg:flex-row-reverse justify-items-center">
+                  <div className="flex flex-col lg:flex-row-reverse my-4 relative">
+                    <label
+                      className={`flex-[1_1_20%] text-white sm:text-sm md:text-lg text-center lg:text-right pr-5 whitespace-nowrap flex-shrink-0`}
+                    >
+                      <span className={"hidden lg:inline"}>:</span> شرح حال
+                    </label>
+                    <textarea
+                      {...register("description")}
+                      className={`flex-[1_1_80%] py-2.3 px-2 !w-[600px] !h-32
+                        text-sm sm:text-xl text-white font-bold text-right
+                        bg-transparent !border-2 !border-blue-300 
+                        appearance-none dark:focus:!border-blue-500 
+                        focus:outline-none focus:!ring-0 focus:!text-white
+                         focus:!border-blue-600 peer lg:ml-10`}
                     />
                   </div>
                 </div>
                 <button
                   type="submit"
                   className={`block mx-auto mb-4 text-[18px] mt-6 rounded-full text-center w-4/5
-                     bg-white text-emerald-800
-                      hover:bg-amber-600 hover:text-white py-2 transition-colors duration-300`}
+                     bg-white !text-emerald-800
+                      hover:!bg-amber-600 hover:!text-white py-2 transition-colors duration-300`}
                 >
                   {loading ? "... در حال بررسی " : "تکمیل ثبت نام"}
                 </button>
