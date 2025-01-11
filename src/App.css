@@ -23,3 +23,16 @@ body {
     overflow-x: auto; /* Allow scrolling if content is wider */
   }
 }
+
+input:-webkit-autofill {
+  background-color: transparent !important;
+  color: inherit !important;
+  font-size: inherit;
+  transition: background-color 5000s ease-in-out 0s; /* Prevent sudden changes */
+}
+
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+  background-color: transparent !important;
+  color: inherit !important;
+}

@@ -201,7 +201,7 @@ const UserInfoForm = () => {
                     <label
                       className={`flex-[1_1_20%] text-white sm:text-sm md:text-lg text-center lg:text-right pr-5 whitespace-nowrap flex-shrink-0`}
                     >
-                      <span className={"hidden lg:inline"}>:</span> علاقه
+                      <span className={"hidden lg:inline"}>:</span> علاقه ها
                     </label>
                     <textarea
                       {...register("interests")}
