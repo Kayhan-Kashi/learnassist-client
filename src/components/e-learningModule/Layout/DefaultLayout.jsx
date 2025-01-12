@@ -1,5 +1,6 @@
 import React from "react";
 import videojs from "video.js";
+import { Outlet } from "react-router-dom";
 import AppHeader from "../AppHeader/AppHeader.jsx";
 import AppSidebar from "../AppSidebar/AppSidebar.jsx";
 import WatchAndAskComponent from "../WatchAndAskComponent/WatchAndAskComponent.jsx";
@@ -51,7 +52,7 @@ const DefaultLayout = () => {
       <div className="wrapper d-flex flex-column min-vh-100">
         <AppHeader />
         <main>
-          <WatchAndAskComponent />
+          <Outlet />
         </main>
       </div>
     </div>

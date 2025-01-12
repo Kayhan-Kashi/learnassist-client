@@ -1,7 +1,19 @@
 import React from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
+import { getAccessToken } from "../../../../services/authService";
 
-const CourseCard = ({ image, title, price, isRegisterable }) => {
+const CourseCard = ({ id, image, title, price, isRegisterable }) => {
+  const navigate = useNavigate();
+
+  const registerCourseHandler = (id) => {
+    const token = getAccessToken();
+    if (token) {
+      navigate("/elearning/watch-course/1-1");
+    } else {
+      navigate("/login");
+    }
+  };
+
   const { brand } = useParams();
   return (
     <div className="flex justify-center items-center mx-8 my-0 mt-16">
@@ -27,13 +39,18 @@ const CourseCard = ({ image, title, price, isRegisterable }) => {
               {title}
             </span>
             <span className="text-lg text-center font-bold text-amber-600">
-              {price}
+              {price == 0 ? "رایگان" : price}
             </span>
           </div>
         </Link>
         {isRegisterable && (
           <div className="w-full flex justify-center mt-4">
-            <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 sm:py-2 sm:px-6 rounded text-sm">
+            <button
+              className={
+                "bg-blue-500 hover:bg-blue-700 text-white font-bold py-1 px-4 sm:py-2 sm:px-6 rounded text-sm"
+              }
+              onClick={() => registerCourseHandler(id)}
+            >
               ثبت نام
             </button>
           </div>

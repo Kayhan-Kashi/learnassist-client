@@ -80,7 +80,7 @@ const Login = () => {
           style: { fontSize: "14px", padding: "10px" },
           onClose: () => {
             setLoading(false);
-            navigate("/elearning");
+            navigate("/elearning/watch-course/1-1");
           },
         });
       })

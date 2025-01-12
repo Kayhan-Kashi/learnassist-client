@@ -15,6 +15,7 @@ import { AppSidebarNav } from "../AppSidebarNav/AppSidebarNav";
 
 // sidebar nav config
 import navigation from "../_nav";
+import { Link } from "react-router-dom";
 
 const AppSidebar = () => {
   const dispatch = useDispatch();
@@ -35,7 +36,9 @@ const AppSidebar = () => {
       <CSidebarHeader className="border-bottom">
         <CSidebarBrand to="/">
           {/* <h4>دستیار آموزشی</h4> */}
-          <h4 className="text-center ml-7 text-">LearnAssist.ir</h4>
+          <h4 className="text-center ml-7 text-">
+            <Link to={"/"}>LearnAssist.ir</Link>
+          </h4>
           <img src={pic} className="sm:w-36 ml-7" />
 
           {/* <CIcon customClassName="sidebar-brand-full" icon={logo} height={32} />

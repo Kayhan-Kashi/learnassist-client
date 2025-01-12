@@ -5,6 +5,30 @@ import courseHarmonyImage from "../../../assets/course-2.webp";
 import advancedTheoryImage from "../../../assets/course-3.png";
 import { useSelector } from "react-redux";
 
+const courses = [
+  {
+    id: 1,
+    image: eLearningCarousel,
+    title: "آموزش مقدماتی تئوری موسیقی",
+    price: 0,
+    isRegisterable: true,
+  },
+  {
+    id: 2,
+    image: advancedTheoryImage,
+    title: " آموزش تئوری موسیقی پیشرفته",
+    price: 0,
+    isRegisterable: false,
+  },
+  {
+    id: 3,
+    image: courseHarmonyImage,
+    title: "آموزش هارمونی",
+    price: "به زودی",
+    isRegisterable: false,
+  },
+];
+
 const Courses = () => {
   // const userInfo = useSelector((state) => state.login.userInfo);
 
@@ -20,30 +44,18 @@ const Courses = () => {
         </h1>
         <div className="flex justify-center items-center">
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-4 pb-10">
-            <div className="flex justify-end items-center my-0">
-              <CourseCard
-                image={eLearningCarousel}
-                title="آموزش مقدماتی تئوری موسیقی"
-                price="رایگان"
-                isRegisterable={true}
-              />
-            </div>
-            <div className="flex justify-end items-center my-0">
-              <CourseCard
-                image={advancedTheoryImage}
-                title=" آموزش تئوری موسیقی پیشرفته"
-                price="رایگان"
-                isRegisterable={false}
-              />
-            </div>
-            <div className="flex justify-end items-center my-0">
-              <CourseCard
-                image={courseHarmonyImage}
-                title="آموزش هارمونی"
-                price="به زودی"
-                isRegisterable={false}
-              />
-            </div>
+            {courses.map((c) => (
+              <div className="flex justify-end items-center my-0">
+                {" "}
+                <CourseCard
+                  id={c.id}
+                  image={c.image}
+                  title={c.title}
+                  price={c.price}
+                  isRegisterable={c.isRegisterable}
+                />
+              </div>
+            ))}
           </div>
         </div>
       </div>
