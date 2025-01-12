@@ -89,11 +89,11 @@ const UserInfoForm = () => {
       </Helmet>
       <div>
         <div
-          className="bg-cover bg-center h-screen flex justify-center items-center"
+          className="bg-cover bg-center h-full flex justify-center items-center"
           style={{ backgroundImage: `url(${image})` }}
         >
           <ToastContainer />
-          <div className="w-2/3 bg-slate-800 border border-slate-400 rounded-md p-5 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
+          <div className="w-2/3 mt-12 bg-slate-800 border border-slate-400 rounded-md p-5 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
             <div>
               <h1 className="text-4xl font-bold text-white mb-6 text-center">
                 ورود اطلاعات

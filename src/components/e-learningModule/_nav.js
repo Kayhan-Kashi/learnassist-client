@@ -13,7 +13,7 @@ const _nav = [
   {
     component: CNavItem,
     name: "داشبورد",
-    to: "/dashboard",
+    to: "/elearning/dashboard",
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     // badge: {
     //   color: "info",
@@ -27,13 +27,13 @@ const _nav = [
   {
     component: CNavItem,
     name: "مشاهده دوره",
-    to: "/theme/colors",
+    to: "/elearning/watch-course/1-1",
     icon: <CIcon icon={cilMonitor} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: "ارزیابی دوره جاری",
-    to: "/theme/typography",
+    to: "/elearning/assessment/1-1",
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
   },
   {
@@ -49,7 +49,7 @@ const _nav = [
       {
         component: CNavItem,
         name: "دوره مبانی مقدماتی موسیقی",
-        to: "/base/accordion",
+        to: "/elearning/watch-course/1-1",
       },
       // {
       //   component: CNavItem,

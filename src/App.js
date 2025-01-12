@@ -9,6 +9,8 @@ import Login from "./components/publicModule/pages/Login";
 import Register from "./components/publicModule/pages/Register";
 import UserInfoForm from "./components/publicModule/pages/UserInfoForm";
 import WatchAndAskComponent from "./components/e-learningModule/WatchAndAskComponent/WatchAndAskComponent";
+import Assessment from "./components/e-learningModule/Assessment/Assessment";
+import Dashboard from "./components/e-learningModule/Dashboard/Dashboard";
 
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
@@ -28,6 +30,11 @@ function App() {
             path="/elearning/watch-course/1-1"
             element={<WatchAndAskComponent />}
           ></Route>
+          <Route
+            path="/elearning/assessment/1-1"
+            element={<Assessment />}
+          ></Route>
+          <Route path="/elearning/Dashboard" element={<Dashboard />}></Route>
         </Route>
       </Routes>
     </Provider>
