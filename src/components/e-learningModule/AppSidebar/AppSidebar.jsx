@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import pic from "../../../assets/logo-boys2-transparent.png";
+import { sideBarState } from "../../../redux/slices/elearningSlice";
 
 import {
   CCloseButton,
@@ -19,8 +20,10 @@ import { Link } from "react-router-dom";
 
 const AppSidebar = () => {
   const dispatch = useDispatch();
-  const unfoldable = useSelector((state) => state.sidebarUnfoldable);
-  const sidebarShow = useSelector((state) => state.sidebarShow);
+  const unfoldable = useSelector((state) => {
+    return state.sideBarState.sidebarUnfoldable;
+  });
+  const sidebarShow = useSelector((state) => state.sideBarState.sidebarShow);
 
   return (
     <CSidebar
@@ -30,7 +33,7 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch({ type: "set", sidebarShow: visible });
+        dispatch(sideBarState({ type: "set", sidebarShow: visible }));
       }}
     >
       <CSidebarHeader className="border-bottom">
@@ -57,9 +60,11 @@ const AppSidebar = () => {
       <AppSidebarNav items={navigation} />
       <CSidebarFooter className="border-top d-none d-lg-flex">
         <CSidebarToggler
-          onClick={() =>
-            dispatch({ type: "set", sidebarUnfoldable: !unfoldable })
-          }
+          onClick={() => {
+            dispatch(
+              sideBarState({ type: "set", sidebarUnfoldable: !unfoldable })
+            );
+          }}
         />
       </CSidebarFooter>
     </CSidebar>

@@ -1,15 +1,25 @@
-import { legacy_createStore as createStore } from "redux";
+import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   sidebarShow: true,
   theme: "light",
 };
 
-export const changeState = (state = initialState, { type, ...rest }) => {
-  switch (type) {
-    case "set":
-      return { ...state, ...rest };
-    default:
-      return state;
-  }
-};
+const sideBarSlice = createSlice({
+  name: "sideBar",
+  initialState,
+  reducers: {
+    sideBarState: (state, action) => {
+      const { type, ...rest } = action.payload;
+      switch (type) {
+        case "set":
+          return { ...state, ...rest };
+        default:
+          return state;
+      }
+    },
+  },
+});
+
+export const { sideBarState } = sideBarSlice.actions;
+export default sideBarSlice.reducer;
