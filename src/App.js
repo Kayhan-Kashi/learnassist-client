@@ -11,6 +11,7 @@ import UserInfoForm from "./components/publicModule/pages/UserInfoForm";
 import WatchAndAskComponent from "./components/e-learningModule/WatchAndAskComponent/WatchAndAskComponent";
 import Assessment from "./components/e-learningModule/Assessment/Assessment";
 import Dashboard from "./components/e-learningModule/Dashboard/Dashboard";
+import Profile from "./components/e-learningModule/Profile/Profile";
 
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
@@ -35,6 +36,7 @@ function App() {
             element={<Assessment />}
           ></Route>
           <Route path="/elearning/Dashboard" element={<Dashboard />}></Route>
+          <Route path="/elearning/profile/1" element={<Profile />}></Route>
         </Route>
       </Routes>
     </Provider>

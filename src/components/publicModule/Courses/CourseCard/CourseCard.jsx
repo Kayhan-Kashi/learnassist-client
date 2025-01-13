@@ -51,7 +51,7 @@ const CourseCard = ({ id, image, title, price, isRegisterable }) => {
               }
               onClick={() => registerCourseHandler(id)}
             >
-              ثبت نام
+              شروع
             </button>
           </div>
         )}

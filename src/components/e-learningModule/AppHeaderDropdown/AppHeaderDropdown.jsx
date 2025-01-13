@@ -13,6 +13,7 @@ import React from "react";
 import { logoutFromStorage } from "../../../services/authService.js";
 
 import avatar8 from "../../../assets/images/avatars/avatar-blue.jpg";
+import { Link } from "react-router-dom";
 
 const AppHeaderDropdown = () => {
   return (
@@ -30,7 +31,7 @@ const AppHeaderDropdown = () => {
         </CDropdownHeader>
         <CDropdownItem href="#">
           <CIcon icon={cilUser} className="me-2 text-success" />
-          مشاهده پروفایل
+          <Link to={"/elearning/profile/1"}>مشاهده پروفایل</Link>
         </CDropdownItem>
         <CDropdownItem href="#" onClick={() => logoutFromStorage()}>
           <CIcon icon={cilAccountLogout} className="me-2 text-primary" />
