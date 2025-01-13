@@ -2,8 +2,11 @@ import React, { useRef } from "react";
 import videojs from "video.js";
 import ChatBox from "../ChatBox/ChatBox";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
+import { useDispatch } from "react-redux";
+import { timeClicked } from "../../../redux/slices/elearningSlice.js";
 
 const WatchAndAskComponent = () => {
+  const dispatch = useDispatch();
   const videoTitle = "مبحث فیزیک صوت : جلسه اول";
   const playerRef = useRef(null);
   const currentTimeRef = useRef({ minutes: 0, seconds: 0 });
@@ -55,6 +58,7 @@ const WatchAndAskComponent = () => {
     document.getElementById("chat-box-section").scrollIntoView({
       behavior: "smooth",
     });
+    dispatch(timeClicked(currentTimeRef.current));
   };
 
   const handleAskButtonClick = () => {

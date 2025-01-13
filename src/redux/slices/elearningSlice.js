@@ -5,7 +5,7 @@ const initialState = {
   theme: "light",
 };
 
-const sideBarSlice = createSlice({
+const elearningSlice = createSlice({
   name: "sideBar",
   initialState,
   reducers: {
@@ -18,8 +18,11 @@ const sideBarSlice = createSlice({
           return state;
       }
     },
+    timeClicked: (state, action) => {
+      state.timeClicked = action.payload;
+    },
   },
 });
 
-export const { sideBarState } = sideBarSlice.actions;
-export default sideBarSlice.reducer;
+export const { sideBarState, timeClicked } = elearningSlice.actions;
+export default elearningSlice.reducer;

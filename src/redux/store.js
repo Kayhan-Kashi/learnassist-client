@@ -1,6 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import loginReducer from "../redux/slices/loginSlice";
-import sideBarReducer from "../redux/slices/elearningSlice";
+import elearningReducer from "../redux/slices/elearningSlice";
 
 const initialState = {
   sidebarShow: true,
@@ -10,6 +10,6 @@ const initialState = {
 export const store = configureStore({
   reducer: {
     login: loginReducer,
-    sideBarState: sideBarReducer,
+    elearningState: elearningReducer,
   },
 });

@@ -1,11 +1,17 @@
 import React, { useRef, useState } from "react";
 import { callChatGPT } from "../../../services/chatGPTService.js";
+import { useSelector } from "react-redux";
 
 const ChatBox = () => {
   const [userMessage, setUserMessage] = useState("");
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
   const textAreaRef = useRef(null);
+  const currentTime = useSelector((state) => {
+    alert("time is :");
+    alert(JSON.stringify(state));
+    return state.elearningState.timeClicked;
+  });
 
   const handleSendMessage = async () => {
     if (!userMessage.trim()) {
@@ -23,6 +29,7 @@ const ChatBox = () => {
         ...conversation,
         userMessageObj,
       ];
+      alert(JSON.stringify(currentTime));
       const response = await callChatGPT(messages);
       const assistantMessageObj = {
         role: "assistant",

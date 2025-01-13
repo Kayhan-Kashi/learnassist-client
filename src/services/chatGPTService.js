@@ -26,3 +26,5 @@ export const callChatGPT = async (messages) => {
     throw error;
   }
 };
+
+export const HelpMe = async (time) => {};

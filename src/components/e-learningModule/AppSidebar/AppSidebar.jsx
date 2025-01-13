@@ -21,9 +21,9 @@ import { Link } from "react-router-dom";
 const AppSidebar = () => {
   const dispatch = useDispatch();
   const unfoldable = useSelector((state) => {
-    return state.sideBarState.sidebarUnfoldable;
+    return state.elearningState.sidebarUnfoldable;
   });
-  const sidebarShow = useSelector((state) => state.sideBarState.sidebarShow);
+  const sidebarShow = useSelector((state) => state.elearningState.sidebarShow);
 
   return (
     <CSidebar
