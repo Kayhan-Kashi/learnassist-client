@@ -8,8 +8,8 @@ const ChatBox = () => {
   const [loading, setLoading] = useState(false);
   const textAreaRef = useRef(null);
   const currentTime = useSelector((state) => {
-    alert("time is :");
-    alert(JSON.stringify(state));
+    // alert("time is :");
+    // alert(JSON.stringify(state));
     return state.elearningState.timeClicked;
   });
 

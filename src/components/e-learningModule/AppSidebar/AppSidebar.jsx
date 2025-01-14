@@ -1,7 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import pic from "../../../assets/logo-boys2-transparent.png";
-import { sideBarState } from "../../../redux/slices/elearningSlice";
+import { setSideBarState } from "../../../redux/slices/elearningSlice";
 
 import {
   CCloseButton,
@@ -33,7 +33,7 @@ const AppSidebar = () => {
       unfoldable={unfoldable}
       visible={sidebarShow}
       onVisibleChange={(visible) => {
-        dispatch(sideBarState({ type: "set", sidebarShow: visible }));
+        dispatch(setSideBarState({ type: "set", sidebarShow: visible }));
       }}
     >
       <CSidebarHeader className="border-bottom">
@@ -55,7 +55,7 @@ const AppSidebar = () => {
         <CSidebarToggler
           onClick={() => {
             dispatch(
-              sideBarState({ type: "set", sidebarUnfoldable: !unfoldable })
+              setSideBarState({ type: "set", sidebarUnfoldable: !unfoldable })
             );
           }}
         />

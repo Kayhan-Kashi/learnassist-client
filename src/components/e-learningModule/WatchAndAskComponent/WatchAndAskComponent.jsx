@@ -3,12 +3,13 @@ import videojs from "video.js";
 import ChatBox from "../ChatBox/ChatBox";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import { useDispatch } from "react-redux";
-import { timeClicked } from "../../../redux/slices/elearningSlice.js";
+import { setVideoTimeStoped } from "../../../redux/slices/elearningSlice.js";
 
 const WatchAndAskComponent = () => {
   const dispatch = useDispatch();
   const videoTitle = "مبحث فیزیک صوت : جلسه اول";
   const playerRef = useRef(null);
+  const playerOperationRef = useRef(null);
   const currentTimeRef = useRef({ minutes: 0, seconds: 0 });
 
   // A separate ref for the element that displays the time
@@ -58,7 +59,8 @@ const WatchAndAskComponent = () => {
     document.getElementById("chat-box-section").scrollIntoView({
       behavior: "smooth",
     });
-    dispatch(timeClicked(currentTimeRef.current));
+    dispatch(setVideoTimeStoped(currentTimeRef.current));
+    playerOperationRef.current.pause();
   };
 
   const handleAskButtonClick = () => {
@@ -78,6 +80,7 @@ const WatchAndAskComponent = () => {
             options={videoJsOptions}
             onReady={handlePlayerReady}
             onTimeUpdate={handleTimeUpdate}
+            ref={playerOperationRef}
           />
         </div>
 

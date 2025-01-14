@@ -9,7 +9,7 @@ const elearningSlice = createSlice({
   name: "sideBar",
   initialState,
   reducers: {
-    sideBarState: (state, action) => {
+    setSideBarState: (state, action) => {
       const { type, ...rest } = action.payload;
       switch (type) {
         case "set":
@@ -18,11 +18,11 @@ const elearningSlice = createSlice({
           return state;
       }
     },
-    timeClicked: (state, action) => {
+    setVideoTimeStoped: (state, action) => {
       state.timeClicked = action.payload;
     },
   },
 });
 
-export const { sideBarState, timeClicked } = elearningSlice.actions;
+export const { setSideBarState, setVideoTimeStoped } = elearningSlice.actions;
 export default elearningSlice.reducer;

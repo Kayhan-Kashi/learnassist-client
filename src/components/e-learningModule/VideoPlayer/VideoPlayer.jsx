@@ -1,8 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, {
+  useEffect,
+  useRef,
+  forwardRef,
+  useImperativeHandle,
+} from "react";
 import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
-const VideoPlayer = ({ options, onReady, onTimeUpdate }) => {
+const VideoPlayer = forwardRef(({ options, onReady, onTimeUpdate }, ref) => {
   const videoRef = useRef(null);
   const playerRef = useRef(null);
 
@@ -47,11 +52,24 @@ const VideoPlayer = ({ options, onReady, onTimeUpdate }) => {
     };
   }, []);
 
+  useImperativeHandle(ref, () => ({
+    pause: () => {
+      if (playerRef.current) {
+        playerRef.current.pause();
+      }
+    },
+    play: () => {
+      if (playerRef.current) {
+        playerRef.current.play();
+      }
+    },
+  }));
+
   return (
     <div data-vjs-player>
       <div ref={videoRef} />
     </div>
   );
-};
+});
 
 export default VideoPlayer;
