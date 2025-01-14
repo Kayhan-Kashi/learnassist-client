@@ -13,7 +13,7 @@ const isUsernameValid = async (userData) => {
 
 export const loginUser = async (userData) => {
   return await axios.post(`${API_BASE_URL}/login`, {
-    email: userData.username,
+    username: userData.username,
     password: userData.password,
   });
 };
@@ -38,27 +38,28 @@ export const logoutFromStorage = () => {
 };
 
 export const isUserExisted = async (username) => {
-  // return await axios.post(`${API_BASE_URL}/isUserExisted`, {
-  //   username: username,
+  alert(JSON.stringify(username));
+  return await axios.post(`${API_BASE_URL}/IsUserExisted`, username);
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     resolve({
+  //       IsUserExisted: false, // Simulating the C# object
+  //     });
+  //   }, 1000); // Simulate network delay
   // });
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        IsUserExisted: false, // Simulating the C# object
-      });
-    }, 1000); // Simulate network delay
-  });
 };
 
 export const registerUser = async (registerData) => {
-  // return await axios.post(`${API_BASE_URL}/Register`, registerData);
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        isSuccessfull: true, // Simulating the C# object
-      });
-    }, 1000); // Simulate network delay
-  });
+  console.log(JSON.stringify({ registerData }));
+  alert(JSON.stringify({ registerData }));
+  return await axios.post(`${API_BASE_URL}/register`, registerData);
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     resolve({
+  //       isSuccessfull: true, // Simulating the C# object
+  //     });
+  //   }, 1000); // Simulate network delay
+  // });
 };
 
 export const validateUsername = isUsernameValid;

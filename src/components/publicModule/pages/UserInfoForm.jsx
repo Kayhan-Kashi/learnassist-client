@@ -41,13 +41,14 @@ const UserInfoForm = () => {
   const finalizeRegistration = (formData) => {
     setLoading(true);
     registerUser({
+      email: "123@13.com",
       firstName: formData.firstName,
       lastName: formData.lastName,
       nationalCode: formData.nationalCode,
       grade: formData.grade,
       schoolName: formData.schoolName,
       interests: formData.interests,
-      description: formData.description,
+      userDescription: formData.description,
       username: username,
       password: password,
     })
@@ -62,6 +63,8 @@ const UserInfoForm = () => {
         });
       })
       .catch((err) => {
+        alert(JSON.stringify(err.message));
+        setLoading(false);
         toast.error("ثبت نام انجام نشد", {
           position: "top-center",
           autoClose: 3000,

@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { z } from "zod";
 
 const loginSchema = z.object({
-  email: z
+  username: z
     .string()
     .min(1, "نام کاربری باید وارد باشد")
     .nonempty("ورود نام کاربری الزامی است"),
@@ -40,7 +40,7 @@ const Login = () => {
     formState: { errors },
   } = useForm({ resolver: zodResolver(loginSchema) });
 
-  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -59,16 +59,18 @@ const Login = () => {
 
   const login = (formData) => {
     setLoading(true);
-    loginUser({ username: formData.email, password: formData.password })
+    loginUser({ username: formData.username, password: formData.password })
       .then((response) => {
-        const { accessToken } = response.data;
+        const { accessToken, firstName, lastName, username } = response.data;
+        console.log(JSON.stringify(accessToken));
+        console.log(JSON.stringify(response.data));
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem(
           "userInfo",
           JSON.stringify({
-            username: "kayhan.kashi",
-            firstname: "کیهان",
-            lastname: "کاشی",
+            username,
+            firstname: firstName,
+            lastname: lastName,
             isLoggedIn: true,
           })
         );
@@ -127,8 +129,8 @@ const Login = () => {
                   نام کاربری <span className={"hidden sm:inline"}>:</span>
                 </label>
                 <input
-                  {...register("email")}
-                  type="email"
+                  {...register("username")}
+                  type="text"
                   className={`flex-[1_1_60%] py-2.3 px-2 
                     text-sm sm:text-xl !text-white font-bold
                     bg-transparent !border-0 !border-b-2 !border-gray-300 
@@ -138,9 +140,9 @@ const Login = () => {
                 {/* <BiUser className="absolute top-0 right-4" /> */}
                 <div className="flex-[4_1_20%]"></div>
               </div>
-              {errors.email && (
+              {errors.username && (
                 <p className="text-red-600 text-lg text-center">
-                  {errors.email.message}
+                  {errors.username.message}
                 </p>
               )}
               <div className="flex flex-col sm:flex-row my-4 relative">

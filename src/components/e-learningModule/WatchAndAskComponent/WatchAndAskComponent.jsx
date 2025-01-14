@@ -74,8 +74,8 @@ const WatchAndAskComponent = () => {
     <div className="flex flex-col">
       <div className="flex flex-row justify-center items-center h-full">
         {/* Video Player Section */}
-        <div className="w-3/5 relative">
-          <h2 className="text-center pb-3">{videoTitle}</h2>
+        <div className="w-3/5 relative ">
+          <h2 className="text-center pb-3 ">{videoTitle}</h2>
           <VideoPlayer
             options={videoJsOptions}
             onReady={handlePlayerReady}
@@ -102,11 +102,11 @@ const WatchAndAskComponent = () => {
       </div>
 
       {/* Display Current Time Beneath the Video */}
-      <div className="text-center mt-4">
+      {/* <div className="text-center mt-4">
         <span ref={timeDisplayRef} className="text-xl font-medium">
           0:00
         </span>
-      </div>
+      </div> */}
 
       {/* Chat Box Section */}
       <div id="chat-box-section" className="mt-8">

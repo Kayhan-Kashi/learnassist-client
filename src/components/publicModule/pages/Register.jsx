@@ -81,6 +81,7 @@ const Register = () => {
         }
       })
       .catch((err) => {
+        setLoading(false);
         toast.error("ثبت نام انجام نشد", {
           position: "top-center",
           autoClose: 3000,
