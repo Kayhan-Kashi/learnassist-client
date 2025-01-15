@@ -62,4 +62,16 @@ export const registerUser = async (registerData) => {
   // });
 };
 
+export const getJWTHeader = () => {
+  const jwtToken = getAccessToken();
+  if (jwtToken) {
+    const headers = {
+      Authorization: `Bearer ${jwtToken}`,
+      "Content-Type": "application/json", // Adjust content type as needed
+    };
+    return headers;
+  }
+  return null;
+};
+
 export const validateUsername = isUsernameValid;

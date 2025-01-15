@@ -1,14 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { getAccessToken } from "../../../../services/authService";
+import {
+  isCourseRegistered,
+  registerCourse,
+} from "../../../../services/courseService";
+import { ToastContainer, toast } from "react-toastify";
 
 const CourseCard = ({ id, image, title, price, isRegisterable }) => {
   const navigate = useNavigate();
-
-  const registerCourseHandler = (id) => {
+  const [loading, setLoading] = useState(false);
+  const registerCourseHandler = (courseId) => {
     const token = getAccessToken();
+
     if (token) {
-      navigate("/elearning/watch-course/1-1");
+      setLoading(true);
+      isCourseRegistered(courseId).then((res) => {
+        const isCourseRegistered = res.isCourseRegistered;
+        if (isCourseRegistered) {
+          setLoading(false);
+          navigate("/elearning/watch-course/1-1");
+        } else {
+          registerCourse(courseId).then((res) => {
+            const { courseRegistrationId } = res;
+
+            if (courseRegistrationId) {
+              setLoading(false);
+              toast.success("ثبت نام با موفقیت انجام شد", {
+                position: "top-center",
+                autoClose: 1000,
+                style: { fontSize: "14px", padding: "10px" },
+                onClose: () => {
+                  navigate("/elearning/watch-course/1-1");
+                },
+              });
+            } else {
+              toast.error("ثبت نام موفقیت آمیز نبود", {
+                position: "top-center",
+                autoClose: 3000,
+                style: { fontSize: "14px", padding: "10px" },
+              });
+            }
+          });
+        }
+        setLoading(false);
+      });
     } else {
       navigate("/login");
     }
@@ -17,6 +53,7 @@ const CourseCard = ({ id, image, title, price, isRegisterable }) => {
   const { brand } = useParams();
   return (
     <div className="flex justify-center items-center mx-8 my-0 mt-16">
+      <ToastContainer />
       <div className="bg-gray-100 p-4 md:p-6 lg:p-8 w-full sm:w-[220px] md:w-[180px] lg:w-[300px] rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
         <Link
           to={`/`}
@@ -51,7 +88,7 @@ const CourseCard = ({ id, image, title, price, isRegisterable }) => {
               }
               onClick={() => registerCourseHandler(id)}
             >
-              شروع
+              {loading ? "...در حال بررسی" : "شروع دوره / ثبت نام"}
             </button>
           </div>
         )}

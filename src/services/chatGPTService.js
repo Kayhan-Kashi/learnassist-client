@@ -1,5 +1,7 @@
 import axios from "axios";
 
+const API_BASE_URL = "https://learnassist.ir/api/v1";
+
 // Configure your API endpoint and headers
 const API_URL = "https://api.openai.com/v1/chat/completions"; // Update this based on the specific endpoint
 const SECRET_KEY = process.env.REACT_APP_SECRET_KEY;
@@ -25,6 +27,17 @@ export const callChatGPT = async (messages) => {
     console.error("Error calling ChatGPT API:", error);
     throw error;
   }
+};
+
+export const sendPrompt = async (prompt) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        answer: "این جواب است", // Simulating the C# object
+      });
+    }, 1000); // Simulate network delay
+  });
+  // return await axios.post(`${API_BASE_URL}/sendPrompt`, prompt);
 };
 
 export const HelpMe = async (time) => {};

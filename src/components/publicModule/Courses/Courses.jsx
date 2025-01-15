@@ -7,21 +7,21 @@ import { useSelector } from "react-redux";
 
 const courses = [
   {
-    id: 1,
+    id: "1234-12343-123432-12343243-111",
     image: eLearningCarousel,
     title: "آموزش مقدماتی تئوری موسیقی",
     price: 0,
     isRegisterable: true,
   },
   {
-    id: 2,
+    id: "1234-12343-123432-12343243-222",
     image: advancedTheoryImage,
     title: " آموزش تئوری موسیقی پیشرفته",
     price: 0,
     isRegisterable: false,
   },
   {
-    id: 3,
+    id: "1234-12343-123432-12343243-333",
     image: courseHarmonyImage,
     title: "آموزش هارمونی",
     price: "به زودی",
