@@ -29,7 +29,11 @@ export const callChatGPT = async (messages) => {
   }
 };
 
-export const sendPrompt = async (prompt) => {
+export const sendPrompt = async (prompt, helpNeeded, currentTime) => {
+  // alert(JSON.stringify(prompt));
+  //alert(JSON.stringify(helpNeeded));
+  // alert(JSON.stringify(currentTime));
+
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve({

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useCallback, useMemo, useRef, useState } from "react";
 import videojs from "video.js";
 import ChatBox from "../ChatBox/ChatBox";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
@@ -16,20 +16,23 @@ const WatchAndAskComponent = () => {
   // A separate ref for the element that displays the time
   const timeDisplayRef = useRef(null);
 
-  const videoJsOptions = {
-    autoplay: true,
-    controls: true,
-    responsive: true,
-    fluid: true,
-    sources: [
-      {
-        src: "/sample_video.mp4",
-        type: "video/mp4",
-      },
-    ],
-  };
+  const videoJsOptions = useMemo(
+    () => ({
+      autoplay: true,
+      controls: true,
+      responsive: true,
+      fluid: true,
+      sources: [
+        {
+          src: "/sample_video.mp4",
+          type: "video/mp4",
+        },
+      ],
+    }),
+    []
+  ); // Empty dependency array ensures the object is only created once
 
-  const handlePlayerReady = (player) => {
+  const handlePlayerReady = useCallback((player) => {
     playerRef.current = player;
 
     // Handle player events if needed
@@ -40,9 +43,9 @@ const WatchAndAskComponent = () => {
     player.on("dispose", () => {
       videojs.log("player will dispose");
     });
-  };
+  }, []);
 
-  const handleTimeUpdate = (currentTime) => {
+  const handleTimeUpdate = useCallback((currentTime) => {
     // Store the current time in the ref
     currentTimeRef.current = currentTime;
 
@@ -54,9 +57,9 @@ const WatchAndAskComponent = () => {
           : currentTime.seconds
       }`;
     }
-  };
+  }, []);
 
-  const handleHelpButtonClick = () => {
+  const handleHelpButtonClick = useCallback(() => {
     setHelpNeeded(true);
     document.getElementById("chat-box-section").scrollIntoView({
       behavior: "smooth",
@@ -64,7 +67,7 @@ const WatchAndAskComponent = () => {
 
     dispatch(setVideoTimeStoped(currentTimeRef.current));
     playerOperationRef.current.pause();
-  };
+  }, [dispatch, currentTimeRef, setHelpNeeded]);
 
   const handleAskButtonClick = () => {
     document.getElementById("chat-box-section").scrollIntoView({
