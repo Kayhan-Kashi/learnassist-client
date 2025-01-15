@@ -1,8 +1,9 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, memo } from "react";
 import { callChatGPT, sendPrompt } from "../../../services/chatGPTService.js";
 import { useSelector } from "react-redux";
+import { current } from "@reduxjs/toolkit";
 
-const ChatBox = () => {
+const ChatBox = memo(({ helpNeeded, setHelpNeeded }) => {
   const [userMessage, setUserMessage] = useState("");
   const [conversation, setConversation] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -10,12 +11,24 @@ const ChatBox = () => {
   const lastMessageRef = useRef(null);
   const currentTime = useSelector((state) => state.elearningState.timeClicked);
 
+  useEffect(() => {
+    if (helpNeeded) {
+      setUserMessage("این دقیقه را بیشتر توضیح بده");
+      //alert(userMessage);
+      handleSendMessage();
+    }
+  }, [helpNeeded]);
+
   const handleSendMessage = async () => {
+    if (helpNeeded) {
+      alert(userMessage);
+      alert(helpNeeded);
+    }
     if (!userMessage.trim()) return;
 
     const userMessageObj = { role: "user", content: userMessage };
     setConversation((prev) => [...prev, userMessageObj]);
-    setUserMessage("");
+    if (!helpNeeded) setUserMessage("");
     setLoading(true);
 
     try {
@@ -24,7 +37,7 @@ const ChatBox = () => {
         ...conversation,
         userMessageObj,
       ];
-      const response = await sendPrompt(userMessage);
+      const response = await sendPrompt(userMessage, helpNeeded);
       const assistantMessageObj = {
         role: "assistant",
         content: response.answer,
@@ -39,6 +52,7 @@ const ChatBox = () => {
       setConversation((prev) => [...prev, errorMessageObj]);
     } finally {
       setLoading(false);
+      setHelpNeeded(false);
     }
   };
 
@@ -121,6 +135,6 @@ const ChatBox = () => {
       </div>
     </div>
   );
-};
+});
 
 export default ChatBox;

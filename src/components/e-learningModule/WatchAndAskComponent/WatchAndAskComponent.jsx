@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import videojs from "video.js";
 import ChatBox from "../ChatBox/ChatBox";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
@@ -11,6 +11,7 @@ const WatchAndAskComponent = () => {
   const playerRef = useRef(null);
   const playerOperationRef = useRef(null);
   const currentTimeRef = useRef({ minutes: 0, seconds: 0 });
+  const [helpNeeded, setHelpNeeded] = useState(false);
 
   // A separate ref for the element that displays the time
   const timeDisplayRef = useRef(null);
@@ -56,9 +57,11 @@ const WatchAndAskComponent = () => {
   };
 
   const handleHelpButtonClick = () => {
+    setHelpNeeded(true);
     document.getElementById("chat-box-section").scrollIntoView({
       behavior: "smooth",
     });
+
     dispatch(setVideoTimeStoped(currentTimeRef.current));
     playerOperationRef.current.pause();
   };
@@ -110,7 +113,7 @@ const WatchAndAskComponent = () => {
 
       {/* Chat Box Section */}
       <div id="chat-box-section" className="mt-8">
-        <ChatBox />
+        <ChatBox helpNeeded={helpNeeded} setHelpNeeded={setHelpNeeded} />
       </div>
     </div>
   );
