@@ -34,3 +34,19 @@ export const registerCourse = async ({ courseId }) => {
   //     });
   //   return null;
 };
+
+export const startWatchCourseVideo = async ({ courseVideoId }) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        CourseVideoWatchId: "3233-123-3232-2323",
+      });
+    }, 1000);
+  });
+  // const authHeaders = getJWTHeader();
+  // if (authHeaders)
+  //   return await axios.post(`${API_BASE_URL}/StartCourseVideoWatch`, courseId, {
+  //     authHeaders,
+  //   });
+  // return null;
+};

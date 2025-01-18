@@ -8,7 +8,7 @@ import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
 const VideoPlayer = React.memo(
-  forwardRef(({ options, onReady, onTimeUpdate }, ref) => {
+  forwardRef(({ options, onReady, onTimeUpdate, onPlayClicked }, ref) => {
     const videoRef = useRef(null);
     const playerRef = useRef(null);
 
@@ -27,6 +27,12 @@ const VideoPlayer = React.memo(
             onReady && onReady(player);
           }
         ));
+
+        player.on("play", () => {
+          if (onPlayClicked) {
+            onPlayClicked();
+          }
+        });
 
         // Set up timeupdate event listener
         player.on("timeupdate", () => {
@@ -66,6 +72,8 @@ const VideoPlayer = React.memo(
       play: () => {
         if (playerRef.current) {
           playerRef.current.play();
+          alert();
+          onPlayClicked();
         }
       },
     }));

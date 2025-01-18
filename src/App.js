@@ -28,7 +28,7 @@ function App() {
         </Route>
         <Route path="/elearning" element={<DefaultLayout />}>
           <Route
-            path="/elearning/watch-course/1-1"
+            path="/elearning/watch-course/:courseVideoId"
             element={<WatchAndAskComponent />}
           ></Route>
           <Route
