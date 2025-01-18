@@ -8,13 +8,21 @@ import React, {
 import videojs from "video.js";
 import ChatBox from "../ChatBox/ChatBox";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
-import { useDispatch } from "react-redux";
-import { setVideoTimeStoped } from "../../../redux/slices/elearningSlice.js";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setVideoTimeStoped,
+  updateLastSeenCourseVideoTime,
+} from "../../../redux/slices/elearningSlice.js";
 import { startWatchCourseVideo } from "../../../services/courseService.js";
 import { useParams } from "react-router-dom";
 
 const WatchAndAskComponent = () => {
   const { courseVideoId } = useParams();
+  const videoData = useSelector((state) => {
+    alert("inside selector");
+    alert(JSON.stringify(state.elearningState.courseVideos[courseVideoId]));
+    return state.elearningState.courseVideos[courseVideoId];
+  });
 
   const dispatch = useDispatch();
   const videoTitle = "مبحث فیزیک صوت : جلسه اول";
@@ -23,6 +31,10 @@ const WatchAndAskComponent = () => {
   const currentTimeRef = useRef({ minutes: 0, seconds: 0 });
   const [helpNeeded, setHelpNeeded] = useState(false);
   const [courseVideoWatchId, setCourseVideoWatchId] = useState(null);
+  const timerRef = useRef({ timeElapsed: 0, intervalId: null });
+
+  // A separate ref for the element that displays the time
+  const timeDisplayRef = useRef(null);
 
   useEffect(() => {
     startWatchCourseVideo(courseVideoId)
@@ -31,8 +43,9 @@ const WatchAndAskComponent = () => {
         console.log("courseVideoWatch started");
       })
       .catch((err) => {
-        console.log("course video cannot be played");
-      });
+        console.log("course video can not be played");
+      })
+      .finally(() => {});
   }, [courseVideoId]);
 
   const videoJsOptions = useMemo(
@@ -49,11 +62,12 @@ const WatchAndAskComponent = () => {
       ],
     }),
     []
-  );
+  ); // Empty dependency array ensures the object is only created once
 
   const handlePlayerReady = useCallback((player) => {
     playerRef.current = player;
 
+    // Handle player events if needed
     player.on("waiting", () => {
       videojs.log("player is waiting");
     });
@@ -61,6 +75,20 @@ const WatchAndAskComponent = () => {
     player.on("dispose", () => {
       videojs.log("player will dispose");
     });
+  }, []);
+
+  const handleTimeUpdate = useCallback((currentTime) => {
+    // Store the current time in the ref
+    currentTimeRef.current = currentTime;
+
+    // Manually update the time display without causing a re-render
+    if (timeDisplayRef.current) {
+      timeDisplayRef.current.textContent = `${currentTime.minutes}:${
+        currentTime.seconds < 10
+          ? `0${currentTime.seconds}`
+          : currentTime.seconds
+      }`;
+    }
   }, []);
 
   const handleHelpButtonClick = useCallback(() => {
@@ -71,7 +99,7 @@ const WatchAndAskComponent = () => {
 
     dispatch(setVideoTimeStoped(currentTimeRef.current));
     playerOperationRef.current.pause();
-  }, [dispatch]);
+  }, [dispatch, currentTimeRef, setHelpNeeded]);
 
   const handleAskButtonClick = () => {
     document.getElementById("chat-box-section").scrollIntoView({
@@ -81,53 +109,33 @@ const WatchAndAskComponent = () => {
   };
 
   const createWatchSessionHandler = useCallback(() => {
-    console.log("session created");
-  }, [courseVideoId]);
-
-  useEffect(() => {
-    let interval = null;
-
-    const handlePlay = () => {
-      //alert();
-      interval = setInterval(() => {
-        createWatchSessionHandler();
-      }, 10000);
-    };
-
-    const handlePause = () => {
-      clearInterval(interval);
-    };
-
-    const player = playerRef.current;
-
-    if (player) {
-      player.on("play", handlePlay);
-      player.on("pause", handlePause);
-      player.on("ended", handlePause);
-    }
-
-    return () => {
-      if (player) {
-        player.off("play", handlePlay);
-        player.off("pause", handlePause);
-        player.off("ended", handlePause);
-      }
-      clearInterval(interval);
-    };
-  }, [createWatchSessionHandler]);
+    setInterval(() => {
+      dispatch(
+        updateLastSeenCourseVideoTime({
+          courseVideoId: courseVideoId,
+          time: currentTimeRef.current,
+        })
+      );
+      alert(JSON.stringify(videoData));
+    }, 5000);
+  });
 
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-center items-center h-full">
+        {/* Video Player Section */}
         <div className="w-3/5 relative ">
           <h2 className="text-center pb-3 ">{videoTitle}</h2>
           <VideoPlayer
             options={videoJsOptions}
             onReady={handlePlayerReady}
+            onTimeUpdate={handleTimeUpdate}
             ref={playerOperationRef}
+            onPlay={createWatchSessionHandler}
           />
         </div>
 
+        {/* Buttons Section */}
         <div className="flex flex-col">
           <button
             onClick={handleHelpButtonClick}
@@ -144,6 +152,14 @@ const WatchAndAskComponent = () => {
         </div>
       </div>
 
+      {/* Display Current Time Beneath the Video */}
+      {/* <div className="text-center mt-4">
+        <span ref={timeDisplayRef} className="text-xl font-medium">
+          0:00
+        </span>
+      </div> */}
+
+      {/* Chat Box Section */}
       <div id="chat-box-section" className="mt-8">
         <ChatBox helpNeeded={helpNeeded} setHelpNeeded={setHelpNeeded} />
       </div>

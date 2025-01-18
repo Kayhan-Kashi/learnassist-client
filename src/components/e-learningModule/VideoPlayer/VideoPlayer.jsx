@@ -8,7 +8,7 @@ import videojs from "video.js";
 import "video.js/dist/video-js.css";
 
 const VideoPlayer = React.memo(
-  forwardRef(({ options, onReady, onTimeUpdate, onPlayClicked }, ref) => {
+  forwardRef(({ options, onReady, onTimeUpdate, onPlay, onPause }, ref) => {
     const videoRef = useRef(null);
     const playerRef = useRef(null);
 
@@ -29,8 +29,14 @@ const VideoPlayer = React.memo(
         ));
 
         player.on("play", () => {
-          if (onPlayClicked) {
-            onPlayClicked();
+          if (onPlay) {
+            onPlay();
+          }
+        });
+
+        player.on("pause", () => {
+          if (onPause) {
+            onPause();
           }
         });
 
@@ -72,8 +78,6 @@ const VideoPlayer = React.memo(
       play: () => {
         if (playerRef.current) {
           playerRef.current.play();
-          alert();
-          onPlayClicked();
         }
       },
     }));
