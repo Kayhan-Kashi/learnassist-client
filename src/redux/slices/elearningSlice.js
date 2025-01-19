@@ -23,9 +23,13 @@ const elearningSlice = createSlice({
       state.timeClicked = action.payload;
     },
     updateLastSeenCourseVideoTime: (state, action) => {
-      const { courseVideoId, time } = action.payload;
+      const { courseVideoId, time, watchSessionId } = action.payload;
       if (!state.courseVideos[courseVideoId]) {
-        state.courseVideos[courseVideoId] = { lastSeenTime: 0 };
+        const { courseVideoId, time, watchSessionId } = action.payload;
+        state.courseVideos[courseVideoId] = {
+          lastSeenTime: 0,
+          watchSessionId: watchSessionId,
+        };
       }
       alert("inside redux");
       alert(JSON.stringify(state));

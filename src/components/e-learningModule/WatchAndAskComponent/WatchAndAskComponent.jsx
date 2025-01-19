@@ -13,16 +13,21 @@ import {
   setVideoTimeStoped,
   updateLastSeenCourseVideoTime,
 } from "../../../redux/slices/elearningSlice.js";
-import { startWatchCourseVideo } from "../../../services/courseService.js";
+import {
+  startWatchCourseVideo,
+  updateCourseVideoSession,
+} from "../../../services/courseService.js";
 import { useParams } from "react-router-dom";
 
 const WatchAndAskComponent = () => {
   const { courseVideoId } = useParams();
-  const videoData = useSelector((state) => {
-    alert("inside selector");
-    alert(JSON.stringify(state.elearningState.courseVideos[courseVideoId]));
-    return state.elearningState.courseVideos[courseVideoId];
+  const courseVideoData = useSelector((state) => {
+    const courseVideos = state.elearningState.courseVideos;
+    return courseVideos && courseVideos[courseVideoId]
+      ? courseVideos[courseVideoId]
+      : null;
   });
+  const courseVideoDataRef = useRef(courseVideoData);
 
   const dispatch = useDispatch();
   const videoTitle = "مبحث فیزیک صوت : جلسه اول";
@@ -32,13 +37,31 @@ const WatchAndAskComponent = () => {
   const [helpNeeded, setHelpNeeded] = useState(false);
   const [courseVideoWatchId, setCourseVideoWatchId] = useState(null);
   const timerRef = useRef({ timeElapsed: 0, intervalId: null });
-
+  const courseVideoWatchIdRef = useRef();
+  const [courseSessionWatchId, setCourseSessionWatchId] = useState(null);
+  const courseSessionWatchIdRef = useRef(null);
   // A separate ref for the element that displays the time
   const timeDisplayRef = useRef(null);
 
   useEffect(() => {
+    alert("inside courseSessionWatchId");
+    alert(courseSessionWatchId);
+    courseSessionWatchIdRef.current = courseSessionWatchId;
+  }, [courseSessionWatchId]);
+
+  useEffect(() => {
+    courseVideoDataRef.current = courseVideoData;
+  }, [courseVideoData]);
+
+  useEffect(() => {
+    courseVideoWatchIdRef.current = courseVideoWatchId;
+  }, [courseVideoWatchId]);
+
+  useEffect(() => {
     startWatchCourseVideo(courseVideoId)
       .then((res) => {
+        alert("startWatchCourseVideo");
+        alert(res.CourseVideoWatchId);
         setCourseVideoWatchId(res.CourseVideoWatchId);
         console.log("courseVideoWatch started");
       })
@@ -109,16 +132,33 @@ const WatchAndAskComponent = () => {
   };
 
   const createWatchSessionHandler = useCallback(() => {
-    setInterval(() => {
+    const intervalId = setInterval(() => {
       dispatch(
         updateLastSeenCourseVideoTime({
           courseVideoId: courseVideoId,
           time: currentTimeRef.current,
+          watchSessionId: courseVideoDataRef.current
+            ? courseVideoDataRef.current.watchSessionId
+            : null,
         })
       );
-      alert(JSON.stringify(videoData));
+
+      if (courseVideoWatchIdRef.current) {
+        updateCourseVideoSession(
+          courseVideoWatchIdRef.current,
+          currentTimeRef.current,
+          courseSessionWatchIdRef.current
+        )
+          .then((res) => {
+            alert(JSON.stringify(res));
+            setCourseSessionWatchId(res.CourseVideoWatchSessionId);
+          })
+          .catch((err) => {})
+          .finally(() => {});
+      }
     }, 5000);
-  });
+    return () => clearInterval(intervalId);
+  }, courseVideoWatchId);
 
   return (
     <div className="flex flex-col">

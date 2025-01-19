@@ -50,3 +50,52 @@ export const startWatchCourseVideo = async ({ courseVideoId }) => {
   //   });
   // return null;
 };
+
+export const updateCourseVideoSession = async (
+  courseWatchVideoId,
+  lastTimeSeen,
+  courseSessionWatchId
+) => {
+  if (courseSessionWatchId) {
+    alert("inside service real");
+    alert(courseSessionWatchId);
+    alert(courseWatchVideoId);
+    alert(JSON.stringify(lastTimeSeen));
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          CourseVideoWatchSessionId: "6545-123-3232-2323",
+        });
+      }, 1000);
+    });
+  } else {
+    alert("inside service real else");
+    alert(courseSessionWatchId);
+    alert(courseWatchVideoId);
+    alert(JSON.stringify(lastTimeSeen));
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve({
+          CourseVideoWatchSessionId: "6545-123-3232-2323",
+        });
+      }, 1000);
+    });
+  }
+  alert("inside service real");
+  alert(courseSessionWatchId);
+  alert(courseWatchVideoId);
+  alert(JSON.stringify(lastTimeSeen));
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        CourseVideoWatchSessionId: "6545-123-3232-2323",
+      });
+    }, 1000);
+  });
+  // const authHeaders = getJWTHeader();
+  // if (authHeaders)
+  //   return await axios.post(`${API_BASE_URL}/StartCourseVideoWatch`, courseId, {
+  //     authHeaders,
+  //   });
+  // return null;
+};
