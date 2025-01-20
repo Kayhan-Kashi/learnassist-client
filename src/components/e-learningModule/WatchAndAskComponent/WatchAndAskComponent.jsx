@@ -158,7 +158,7 @@ const WatchAndAskComponent = () => {
       }
     }, 20000);
     return () => clearInterval(intervalId);
-  }, courseVideoWatchId);
+  });
 
   return (
     <div className="flex flex-col">

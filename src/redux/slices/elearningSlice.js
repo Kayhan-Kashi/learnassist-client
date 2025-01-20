@@ -25,7 +25,8 @@ const elearningSlice = createSlice({
     setCourseVideoWatch: (state, action) => {
       const { courseVideoId, courseVideoWatchId } = action.payload;
       state.courseVideos[courseVideoId] = {
-        courseVideoWatchId: courseVideoWatchId,
+        ...state.courseVideos[courseVideoId], // Spread the existing properties
+        courseVideoWatchId, // Override or add the courseVideoWatchId property
       };
     },
     setCourseVideoSessionTime: (state, action) => {
@@ -39,6 +40,7 @@ const elearningSlice = createSlice({
       alert("inside redux");
       alert(JSON.stringify(state));
       state.courseVideos[courseVideoId] = {
+        ...state.courseVideos[courseVideoId],
         lastMomentSeen: lastMomentSeen,
         watchSessionId: watchSessionId,
       };
