@@ -61,7 +61,7 @@ const WatchAndAskComponent = () => {
   const courseSessionWatchIdRef = useRef(null);
   const [courseSessionWatchId, setCourseSessionWatchId] = useState(null);
 
-  const courseVideoStoreData = useSelector((state) => {
+  const courseVideoData = useSelector((state) => {
     console.log(JSON.stringify(state));
     const courseVideos = state.elearningState.courseVideos;
     if (courseVideos[courseVideoId]) {
@@ -74,10 +74,10 @@ const WatchAndAskComponent = () => {
       : null;
   });
 
-  const courseVideoDataRef = useRef(courseVideoStoreData);
+  const courseVideoDataRef = useRef(courseVideoData);
   useEffect(() => {
-    courseVideoDataRef.current = courseVideoStoreData;
-  }, [courseVideoStoreData]);
+    courseVideoDataRef.current = courseVideoData;
+  }, [courseVideoData]);
 
   useEffect(() => {
     courseVideoWatchId && (courseVideoWatchIdRef.current = courseVideoWatchId);
@@ -88,7 +88,6 @@ const WatchAndAskComponent = () => {
   }, [courseSessionWatchId]);
 
   const intervalIdRef = useRef(null);
-
   const createWatchSessionHandler = () => {
     intervalIdRef.current = setInterval(() => {
       if (!courseSessionWatchIdRef.current) {
