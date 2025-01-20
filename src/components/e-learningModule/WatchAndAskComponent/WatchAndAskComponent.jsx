@@ -87,6 +87,7 @@ const WatchAndAskComponent = () => {
   }, [courseSessionWatchId]);
 
   const intervalIdRef = useRef(null);
+
   const createWatchSessionHandler = () => {
     intervalIdRef.current = setInterval(() => {
       if (!courseSessionWatchIdRef.current) {
