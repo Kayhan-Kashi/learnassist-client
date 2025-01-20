@@ -57,10 +57,6 @@ const WatchAndAskComponent = () => {
   }, [courseVideoId]);
   //=======================================================================================================
 
-  //=============== CourseVideoData redux handling =======================================================
-
-  //=======================================================================================================
-
   //=============== courseSessionWatchId handling ========================================================
   const courseSessionWatchIdRef = useRef(null);
   const [courseSessionWatchId, setCourseSessionWatchId] = useState(null);
@@ -68,16 +64,16 @@ const WatchAndAskComponent = () => {
   const courseVideoData = useSelector((state) => {
     console.log(JSON.stringify(state));
     const courseVideos = state.elearningState.courseVideos;
-
     if (courseVideos[courseVideoId]) {
       courseSessionWatchIdRef.current =
-        courseVideos[courseVideoId].watchSessionId;
+        courseVideos[courseVideoId].watchSessionId; // by updating courseSessionWatchIdRef here from redux store it's not null when revisiting page
     }
 
     return courseVideos && courseVideos[courseVideoId]
       ? courseVideos[courseVideoId]
       : null;
   });
+
   const courseVideoDataRef = useRef(courseVideoData);
   useEffect(() => {
     courseVideoDataRef.current = courseVideoData;
@@ -97,7 +93,7 @@ const WatchAndAskComponent = () => {
       if (!courseSessionWatchIdRef.current) {
         createCourseVideoSession(
           courseVideoWatchIdRef.current,
-          `${currentTimeRef.current.minutes}:${currentTimeRef.current.seconds}`
+          currentTimeFormattedRef.current
         )
           .then((res) => {
             dispatch(
@@ -114,7 +110,7 @@ const WatchAndAskComponent = () => {
       } else {
         updateCourseVideoSession(
           courseVideoWatchIdRef.current,
-          currentTimeRef.current,
+          currentTimeFormattedRef.current,
           courseSessionWatchIdRef.current
         )
           .then((res) => {
