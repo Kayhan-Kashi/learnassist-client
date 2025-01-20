@@ -12,67 +12,136 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setVideoTimeStoped,
   setCourseVideoSessionTime,
-  setCourseVideoWatch,
+  setCourseVideoWatchData,
 } from "../../../redux/slices/elearningSlice.js";
 import {
+  createCourseVideoSession,
   startWatchCourseVideo,
   updateCourseVideoSession,
 } from "../../../services/courseService.js";
 import { useParams } from "react-router-dom";
 
 const WatchAndAskComponent = () => {
+  const videoTitle = "مبحث فیزیک صوت : جلسه اول";
+  const playerRef = useRef(null);
+  const playerOperationRef = useRef(null);
+  const currentTimeRef = useRef({ minutes: 0, seconds: 0 });
+  const currentTimeFormattedRef = useRef("");
+  const [helpNeeded, setHelpNeeded] = useState(false);
+  const timerRef = useRef({ timeElapsed: 0, intervalId: null });
+  const timeDisplayRef = useRef(null);
+
+  const dispatch = useDispatch();
+  //======== Getting courseVideoId from URL and call webAPI for Starting Watch ============================
   const { courseVideoId } = useParams();
+  const courseVideoWatchIdRef = useRef(null);
+  const [courseVideoWatchId, setCourseVideoWatchId] = useState(null);
+
+  useEffect(() => {
+    courseVideoId &&
+      startWatchCourseVideo(courseVideoId)
+        .then((res) => {
+          dispatch(
+            setCourseVideoWatchData({
+              courseVideoId: courseVideoId,
+              courseVideoWatchId: res.CourseVideoWatchId,
+            })
+          );
+          setCourseVideoWatchId(res.CourseVideoWatchId);
+          console.log(`courseVideoWatch started ${res.CourseVideoWatchId}`);
+        })
+        .catch((err) => {
+          console.log("course video can not be played");
+        })
+        .finally(() => {});
+  }, [courseVideoId]);
+  //=======================================================================================================
+
+  //=============== CourseVideoData redux handling =======================================================
+
+  //=======================================================================================================
+
+  //=============== courseSessionWatchId handling ========================================================
+  const courseSessionWatchIdRef = useRef(null);
+  const [courseSessionWatchId, setCourseSessionWatchId] = useState(null);
+
   const courseVideoData = useSelector((state) => {
+    console.log(JSON.stringify(state));
     const courseVideos = state.elearningState.courseVideos;
+
+    if (courseVideos[courseVideoId]) {
+      courseSessionWatchIdRef.current =
+        courseVideos[courseVideoId].watchSessionId;
+    }
+
     return courseVideos && courseVideos[courseVideoId]
       ? courseVideos[courseVideoId]
       : null;
   });
   const courseVideoDataRef = useRef(courseVideoData);
-
-  const dispatch = useDispatch();
-  const videoTitle = "مبحث فیزیک صوت : جلسه اول";
-  const playerRef = useRef(null);
-  const playerOperationRef = useRef(null);
-  const currentTimeRef = useRef({ minutes: 0, seconds: 0 });
-  const [helpNeeded, setHelpNeeded] = useState(false);
-  const [courseVideoWatchId, setCourseVideoWatchId] = useState(null);
-  const timerRef = useRef({ timeElapsed: 0, intervalId: null });
-  const courseVideoWatchIdRef = useRef();
-  const [courseSessionWatchId, setCourseSessionWatchId] = useState(null);
-  const courseSessionWatchIdRef = useRef(null);
-  // A separate ref for the element that displays the time
-  const timeDisplayRef = useRef(null);
-
-  useEffect(() => {
-    courseSessionWatchIdRef.current = courseSessionWatchId;
-  }, [courseSessionWatchId]);
-
   useEffect(() => {
     courseVideoDataRef.current = courseVideoData;
   }, [courseVideoData]);
 
   useEffect(() => {
-    courseVideoWatchIdRef.current = courseVideoWatchId;
+    courseVideoWatchId && (courseVideoWatchIdRef.current = courseVideoWatchId);
   }, [courseVideoWatchId]);
 
   useEffect(() => {
-    startWatchCourseVideo(courseVideoId)
-      .then((res) => {
-        dispatch(
-          setCourseVideoWatch({
-            courseVideoId: courseVideoId,
-            courseVideoWatchId: res.CourseVideoWatchId,
+    courseSessionWatchIdRef.current = courseSessionWatchId;
+  }, [courseSessionWatchId]);
+
+  const intervalIdRef = useRef(null);
+  const createWatchSessionHandler = () => {
+    intervalIdRef.current = setInterval(() => {
+      if (!courseSessionWatchIdRef.current) {
+        createCourseVideoSession(
+          courseVideoWatchIdRef.current,
+          `${currentTimeRef.current.minutes}:${currentTimeRef.current.seconds}`
+        )
+          .then((res) => {
+            dispatch(
+              setCourseVideoSessionTime({
+                courseVideoId: courseVideoId,
+                lastMomentSeen: currentTimeFormattedRef.current,
+                watchSessionId: res.courseVideoWatchSessionId,
+              })
+            );
+            setCourseSessionWatchId(res.courseVideoWatchSessionId);
           })
-        );
-        setCourseVideoWatchId(res.CourseVideoWatchId);
-        console.log(`courseVideoWatch started ${res.CourseVideoWatchId}`);
-      })
-      .catch((err) => {
-        console.log("course video can not be played");
-      })
-      .finally(() => {});
-  }, [courseVideoId]);
+          .catch((err) => {})
+          .finally(() => {});
+      } else {
+        updateCourseVideoSession(
+          courseVideoWatchIdRef.current,
+          currentTimeRef.current,
+          courseSessionWatchIdRef.current
+        )
+          .then((res) => {
+            dispatch(
+              setCourseVideoSessionTime({
+                courseVideoId: courseVideoId,
+                lastMomentSeen: currentTimeFormattedRef.current,
+                watchSessionId: res.courseVideoWatchSessionId,
+              })
+            );
+          })
+          .catch((err) => {})
+          .finally(() => {});
+      }
+    }, 20000);
+  };
+  useEffect(() => {
+    return () => {
+      if (intervalIdRef.current) {
+        clearInterval(intervalIdRef.current);
+        intervalIdRef.current = null;
+        playerRef.current.dispose();
+        playerRef.current = null;
+      }
+    };
+  }, []);
+  //====================================================================================================
 
   const videoJsOptions = useMemo(
     () => ({
@@ -88,7 +157,7 @@ const WatchAndAskComponent = () => {
       ],
     }),
     []
-  ); // Empty dependency array ensures the object is only created once
+  );
 
   const handlePlayerReady = useCallback((player) => {
     playerRef.current = player;
@@ -106,6 +175,7 @@ const WatchAndAskComponent = () => {
   const handleTimeUpdate = useCallback((currentTime) => {
     // Store the current time in the ref
     currentTimeRef.current = currentTime;
+    currentTimeFormattedRef.current = `${currentTimeRef.current.minutes}:${currentTimeRef.current.seconds}`;
 
     // Manually update the time display without causing a re-render
     if (timeDisplayRef.current) {
@@ -133,32 +203,6 @@ const WatchAndAskComponent = () => {
     });
     console.log(JSON.stringify(currentTimeRef.current));
   };
-
-  const createWatchSessionHandler = useCallback(() => {
-    const intervalId = setInterval(() => {
-      if (courseVideoWatchIdRef.current) {
-        updateCourseVideoSession(
-          courseVideoWatchIdRef.current,
-          currentTimeRef.current,
-          courseSessionWatchIdRef.current
-        )
-          .then((res) => {
-            alert(res.courseVideoWatchSessionId);
-            dispatch(
-              setCourseVideoSessionTime({
-                courseVideoId: courseVideoId,
-                lastMomentSeen: currentTimeRef.current,
-                watchSessionId: res.courseVideoWatchSessionId,
-              })
-            );
-            setCourseSessionWatchId(res.courseVideoWatchSessionId);
-          })
-          .catch((err) => {})
-          .finally(() => {});
-      }
-    }, 20000);
-    return () => clearInterval(intervalId);
-  });
 
   return (
     <div className="flex flex-col">

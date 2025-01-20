@@ -22,11 +22,11 @@ const elearningSlice = createSlice({
     setVideoTimeStoped: (state, action) => {
       state.timeClicked = action.payload;
     },
-    setCourseVideoWatch: (state, action) => {
+    setCourseVideoWatchData: (state, action) => {
       const { courseVideoId, courseVideoWatchId } = action.payload;
       state.courseVideos[courseVideoId] = {
-        ...state.courseVideos[courseVideoId], // Spread the existing properties
-        courseVideoWatchId, // Override or add the courseVideoWatchId property
+        ...state.courseVideos[courseVideoId],
+        courseVideoWatchId,
       };
     },
     setCourseVideoSessionTime: (state, action) => {
@@ -37,14 +37,11 @@ const elearningSlice = createSlice({
           watchSessionId: watchSessionId,
         };
       }
-      alert("inside redux");
-      alert(JSON.stringify(state));
       state.courseVideos[courseVideoId] = {
         ...state.courseVideos[courseVideoId],
         lastMomentSeen: lastMomentSeen,
         watchSessionId: watchSessionId,
       };
-      // state.courseVideos[courseVideoId].lastMomentSeen = lastMomentSeen;
     },
   },
 });
@@ -52,7 +49,7 @@ const elearningSlice = createSlice({
 export const {
   setSideBarState,
   setVideoTimeStoped,
-  setCourseVideoWatch,
+  setCourseVideoWatchData,
   setCourseVideoSessionTime,
 } = elearningSlice.actions;
 export default elearningSlice.reducer;

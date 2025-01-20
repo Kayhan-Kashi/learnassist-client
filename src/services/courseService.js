@@ -51,16 +51,33 @@ export const startWatchCourseVideo = async ({ courseVideoId }) => {
   // return null;
 };
 
+export const createCourseVideoSession = async (
+  courseWatchVideoId,
+  lastTimeSeen
+) => {
+  console.log("createCourseVideoSession");
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        courseVideoWatchSessionId: "watchSession-123-3232-2323",
+      });
+    }, 1000);
+  });
+  // const authHeaders = getJWTHeader();
+  // if (authHeaders)
+  //   return await axios.post(`${API_BASE_URL}/StartCourseVideoWatch`, courseId, {
+  //     authHeaders,
+  //   });
+  // return null;
+};
+
 export const updateCourseVideoSession = async (
   courseWatchVideoId,
   lastTimeSeen,
   courseSessionWatchId
 ) => {
   if (courseSessionWatchId) {
-    alert("inside service real");
-    alert(courseSessionWatchId);
-    alert(courseWatchVideoId);
-    alert(JSON.stringify(lastTimeSeen));
+    console.log("updateCourseVideoSession");
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
@@ -69,7 +86,6 @@ export const updateCourseVideoSession = async (
       }, 1000);
     });
   } else {
-    alert("inside service else");
     return new Promise((resolve) => {
       setTimeout(() => {
         resolve({
