@@ -57,11 +57,11 @@ const WatchAndAskComponent = () => {
   }, [courseVideoId]);
   //=======================================================================================================
 
-  //=============== courseSessionWatchId handling ========================================================
+  //=============== courseSessionWatchId handling =========================================================
   const courseSessionWatchIdRef = useRef(null);
   const [courseSessionWatchId, setCourseSessionWatchId] = useState(null);
 
-  const courseVideoData = useSelector((state) => {
+  const courseVideoStoreData = useSelector((state) => {
     console.log(JSON.stringify(state));
     const courseVideos = state.elearningState.courseVideos;
     if (courseVideos[courseVideoId]) {
@@ -74,10 +74,10 @@ const WatchAndAskComponent = () => {
       : null;
   });
 
-  const courseVideoDataRef = useRef(courseVideoData);
+  const courseVideoDataRef = useRef(courseVideoStoreData);
   useEffect(() => {
-    courseVideoDataRef.current = courseVideoData;
-  }, [courseVideoData]);
+    courseVideoDataRef.current = courseVideoStoreData;
+  }, [courseVideoStoreData]);
 
   useEffect(() => {
     courseVideoWatchId && (courseVideoWatchIdRef.current = courseVideoWatchId);
@@ -88,6 +88,7 @@ const WatchAndAskComponent = () => {
   }, [courseSessionWatchId]);
 
   const intervalIdRef = useRef(null);
+
   const createWatchSessionHandler = () => {
     intervalIdRef.current = setInterval(() => {
       if (!courseSessionWatchIdRef.current) {
@@ -127,6 +128,8 @@ const WatchAndAskComponent = () => {
       }
     }, 20000);
   };
+
+  // === Interval and player disposing ==============================
   useEffect(() => {
     return () => {
       if (intervalIdRef.current) {
@@ -137,7 +140,7 @@ const WatchAndAskComponent = () => {
       }
     };
   }, []);
-  //====================================================================================================
+  //=================================================================
 
   const videoJsOptions = useMemo(
     () => ({
