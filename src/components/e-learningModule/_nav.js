@@ -24,10 +24,11 @@ const _nav = [
     component: CNavTitle,
     name: "یادگیری آنلاین",
   },
+
   {
     component: CNavItem,
     name: "مشاهده دوره",
-    to: "/elearning/watch-course/1-1",
+    to: "/elearning/watch-course/1234-1234-3231-432",
     icon: <CIcon icon={cilMonitor} customClassName="nav-icon" />,
   },
   {
@@ -49,7 +50,7 @@ const _nav = [
       {
         component: CNavItem,
         name: "دوره مبانی مقدماتی موسیقی",
-        to: "/elearning/watch-course/1-1",
+        to: "/elearning/watch-course/1234-1234-3231-432",
       },
       // {
       //   component: CNavItem,

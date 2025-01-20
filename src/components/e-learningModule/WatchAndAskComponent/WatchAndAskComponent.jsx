@@ -11,7 +11,8 @@ import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setVideoTimeStoped,
-  updateLastSeenCourseVideoTime,
+  setCourseVideoSessionTime,
+  setCourseVideoWatch,
 } from "../../../redux/slices/elearningSlice.js";
 import {
   startWatchCourseVideo,
@@ -44,8 +45,6 @@ const WatchAndAskComponent = () => {
   const timeDisplayRef = useRef(null);
 
   useEffect(() => {
-    alert("inside courseSessionWatchId");
-    alert(courseSessionWatchId);
     courseSessionWatchIdRef.current = courseSessionWatchId;
   }, [courseSessionWatchId]);
 
@@ -60,10 +59,14 @@ const WatchAndAskComponent = () => {
   useEffect(() => {
     startWatchCourseVideo(courseVideoId)
       .then((res) => {
-        alert("startWatchCourseVideo");
-        alert(res.CourseVideoWatchId);
+        dispatch(
+          setCourseVideoWatch({
+            courseVideoId: courseVideoId,
+            courseVideoWatchId: res.CourseVideoWatchId,
+          })
+        );
         setCourseVideoWatchId(res.CourseVideoWatchId);
-        console.log("courseVideoWatch started");
+        console.log(`courseVideoWatch started ${res.CourseVideoWatchId}`);
       })
       .catch((err) => {
         console.log("course video can not be played");
@@ -133,16 +136,6 @@ const WatchAndAskComponent = () => {
 
   const createWatchSessionHandler = useCallback(() => {
     const intervalId = setInterval(() => {
-      dispatch(
-        updateLastSeenCourseVideoTime({
-          courseVideoId: courseVideoId,
-          time: currentTimeRef.current,
-          watchSessionId: courseVideoDataRef.current
-            ? courseVideoDataRef.current.watchSessionId
-            : null,
-        })
-      );
-
       if (courseVideoWatchIdRef.current) {
         updateCourseVideoSession(
           courseVideoWatchIdRef.current,
@@ -150,13 +143,20 @@ const WatchAndAskComponent = () => {
           courseSessionWatchIdRef.current
         )
           .then((res) => {
-            alert(JSON.stringify(res));
-            setCourseSessionWatchId(res.CourseVideoWatchSessionId);
+            alert(res.courseVideoWatchSessionId);
+            dispatch(
+              setCourseVideoSessionTime({
+                courseVideoId: courseVideoId,
+                lastMomentSeen: currentTimeRef.current,
+                watchSessionId: res.courseVideoWatchSessionId,
+              })
+            );
+            setCourseSessionWatchId(res.courseVideoWatchSessionId);
           })
           .catch((err) => {})
           .finally(() => {});
       }
-    }, 5000);
+    }, 20000);
     return () => clearInterval(intervalId);
   }, courseVideoWatchId);
 
