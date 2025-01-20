@@ -55,9 +55,8 @@ const WatchAndAskComponent = () => {
         })
         .finally(() => {});
   }, [courseVideoId]);
-  //=======================================================================================================
 
-  //=============== courseSessionWatchId handling =========================================================
+  //=============== CourseSessionWatchId handling =========================================================
   const courseSessionWatchIdRef = useRef(null);
   const [courseSessionWatchId, setCourseSessionWatchId] = useState(null);
 
