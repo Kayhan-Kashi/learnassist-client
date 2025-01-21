@@ -39,7 +39,7 @@ const WatchAndAskComponent = () => {
 
   useEffect(() => {
     courseVideoId &&
-      startWatchCourseVideo(courseVideoId)
+      startWatchCourseVideo({ courseVideoId })
         .then((res) => {
           dispatch(
             setCourseVideoWatchData({

@@ -19,7 +19,9 @@ const CourseCard = ({ id, image, title, price, isRegisterable }) => {
         const isCourseRegistered = res.isCourseRegistered;
         if (isCourseRegistered) {
           setLoading(false);
-          navigate("/elearning/watch-course/1234-1234-3231-432");
+          navigate(
+            "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9"
+          );
         } else {
           registerCourse(courseId).then((res) => {
             const { courseRegistrationId } = res;
@@ -31,7 +33,9 @@ const CourseCard = ({ id, image, title, price, isRegisterable }) => {
                 autoClose: 1000,
                 style: { fontSize: "14px", padding: "10px" },
                 onClose: () => {
-                  navigate("/elearning/watch-course/1234-1234-3231-432");
+                  navigate(
+                    "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9"
+                  );
                 },
               });
             } else {
