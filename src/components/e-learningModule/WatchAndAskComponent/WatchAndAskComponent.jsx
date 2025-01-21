@@ -10,7 +10,7 @@ import ChatBox from "../ChatBox/ChatBox";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import { useDispatch, useSelector } from "react-redux";
 import {
-  setVideoTimeStoped,
+  setHelpMeTime,
   setCourseVideoSessionTime,
   setCourseVideoWatchData,
 } from "../../../redux/slices/elearningSlice.js";
@@ -26,7 +26,7 @@ const WatchAndAskComponent = () => {
   const playerRef = useRef(null);
   const playerOperationRef = useRef(null);
   const currentTimeRef = useRef({ minutes: 0, seconds: 0 });
-  const currentTimeFormattedRef = useRef("");
+  const currentTimeFormattedRef = useRef("0:0");
   const [helpNeeded, setHelpNeeded] = useState(false);
   const timerRef = useRef({ timeElapsed: 0, intervalId: null });
   const timeDisplayRef = useRef(null);
@@ -88,8 +88,13 @@ const WatchAndAskComponent = () => {
 
   const intervalIdRef = useRef(null);
 
+  const isPlayingRef = useRef(false);
   const createWatchSessionHandler = () => {
     intervalIdRef.current = setInterval(() => {
+      if (!isPlayingRef.current) {
+        // if the player is paused the request wont be sent
+        return;
+      }
       if (!courseSessionWatchIdRef.current) {
         createCourseVideoSession(
           courseVideoWatchIdRef.current,
@@ -185,13 +190,17 @@ const WatchAndAskComponent = () => {
     }
   }, []);
 
-  const handleHelpButtonClick = useCallback(() => {
+  const handleHelpMeButtonClick = useCallback(() => {
     setHelpNeeded(true);
     document.getElementById("chat-box-section").scrollIntoView({
       behavior: "smooth",
     });
-
-    dispatch(setVideoTimeStoped(currentTimeRef.current));
+    dispatch(
+      setHelpMeTime({
+        courseVideoId,
+        helpMeTime: currentTimeFormattedRef.current,
+      })
+    );
     playerOperationRef.current.pause();
   }, [dispatch, currentTimeRef, setHelpNeeded]);
 
@@ -212,7 +221,7 @@ const WatchAndAskComponent = () => {
             options={videoJsOptions}
             onReady={handlePlayerReady}
             onTimeUpdate={handleTimeUpdate}
-            ref={playerOperationRef}
+            ref={{ playerOperationRef, isPlayingRef }}
             onPlay={createWatchSessionHandler}
           />
         </div>
@@ -220,7 +229,8 @@ const WatchAndAskComponent = () => {
         {/* Buttons Section */}
         <div className="flex flex-col">
           <button
-            onClick={handleHelpButtonClick}
+            onClick={handleHelpMeButtonClick}
+            disabled={!courseVideoWatchIdRef.current}
             className="transform -translate-y-1/2 bg-green-400 text-white px-6 py-3 ml-10 mb-4 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
           >
             کمکم کن
@@ -243,7 +253,11 @@ const WatchAndAskComponent = () => {
 
       {/* Chat Box Section */}
       <div id="chat-box-section" className="mt-8">
-        <ChatBox helpNeeded={helpNeeded} setHelpNeeded={setHelpNeeded} />
+        <ChatBox
+          helpNeeded={helpNeeded}
+          setHelpNeeded={setHelpNeeded}
+          ref={courseVideoWatchIdRef}
+        />
       </div>
     </div>
   );

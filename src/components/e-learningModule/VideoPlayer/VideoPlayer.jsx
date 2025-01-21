@@ -11,7 +11,7 @@ const VideoPlayer = React.memo(
   forwardRef(({ options, onReady, onTimeUpdate, onPlay, onPause }, ref) => {
     const videoRef = useRef(null);
     const playerRef = useRef(null);
-
+    const { playerOperationRef, isPlayingRef } = ref;
     useEffect(() => {
       if (!playerRef.current) {
         // Initialize Video.js player
@@ -29,12 +29,14 @@ const VideoPlayer = React.memo(
         ));
 
         player.on("play", () => {
+          isPlayingRef.current = true;
           if (onPlay) {
             onPlay();
           }
         });
 
         player.on("pause", () => {
+          isPlayingRef.current = false;
           if (onPause) {
             onPause();
           }
@@ -69,7 +71,7 @@ const VideoPlayer = React.memo(
       };
     }, []);
 
-    useImperativeHandle(ref, () => ({
+    useImperativeHandle(playerOperationRef, () => ({
       pause: () => {
         if (playerRef.current) {
           playerRef.current.pause();

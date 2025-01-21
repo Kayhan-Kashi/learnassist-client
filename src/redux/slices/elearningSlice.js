@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   sidebarShow: true,
   theme: "light",
+  helpMeTime: "0:0",
   courseVideos: {},
 };
 
@@ -19,8 +20,13 @@ const elearningSlice = createSlice({
           return state;
       }
     },
-    setVideoTimeStoped: (state, action) => {
-      state.timeClicked = action.payload;
+    setHelpMeTime: (state, action) => {
+      const { courseVideoId, helpMeTime } = action.payload;
+      state.currentVideoHelpMeTime = helpMeTime;
+      state.courseVideos[courseVideoId] = {
+        ...state.courseVideos[courseVideoId],
+        helpMeTime,
+      };
     },
     setCourseVideoWatchData: (state, action) => {
       const { courseVideoId, courseVideoWatchId } = action.payload;
@@ -48,7 +54,7 @@ const elearningSlice = createSlice({
 
 export const {
   setSideBarState,
-  setVideoTimeStoped,
+  setHelpMeTime,
   setCourseVideoWatchData,
   setCourseVideoSessionTime,
 } = elearningSlice.actions;
