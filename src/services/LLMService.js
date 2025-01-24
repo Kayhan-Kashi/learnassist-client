@@ -37,6 +37,10 @@ export const sendPrompt = async ({
   courseVideoWatchId,
 }) => {
   const authHeaders = getJWTHeader();
+<<<<<<< HEAD
+=======
+  console.log("Auth Headers:", authHeaders);
+>>>>>>> 5c4ae82ffd01383b0b03e420223cfbab36b2c66b
   if (authHeaders) {
     return await axios.post(
       `${CHAT_API_URL}/sendPrompt`,
@@ -52,6 +56,7 @@ export const sendPrompt = async ({
   }
 
   return null;
+<<<<<<< HEAD
 };
 
 export const GetChatDialogues = async ({ courseVideoWatchId }) => {
@@ -68,6 +73,16 @@ export const GetChatDialogues = async ({ courseVideoWatchId }) => {
     );
   }
   return null;
+=======
+
+  // return new Promise((resolve) => {
+  //   setTimeout(() => {
+  //     resolve({
+  //       answer: "این جواب است", // Simulating the C# object
+  //     });
+  //   }, 1000); // Simulate network delay
+  // });
+>>>>>>> 5c4ae82ffd01383b0b03e420223cfbab36b2c66b
 };
 
 export const HelpMe = async (time) => {};
