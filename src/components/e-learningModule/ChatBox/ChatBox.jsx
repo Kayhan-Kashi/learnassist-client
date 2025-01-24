@@ -45,12 +45,11 @@ const ChatBox = React.memo(
           const response = await sendPrompt({
             prompt: userPrompt,
             helpNeeded,
-            currentTime,
             courseVideoWatchId: courseVideoWatchIdRef.current,
           });
           const assistantMessageObj = {
             role: "assistant",
-            content: response.answer,
+            content: response.data.answer,
           };
 
           setConversation((prev) => [...prev, assistantMessageObj]);

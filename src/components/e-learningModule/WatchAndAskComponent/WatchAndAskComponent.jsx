@@ -44,11 +44,13 @@ const WatchAndAskComponent = () => {
           dispatch(
             setCourseVideoWatchData({
               courseVideoId: courseVideoId,
-              courseVideoWatchId: res.CourseVideoWatchId,
+              courseVideoWatchId: res.data.courseVideoWatchId,
             })
           );
-          setCourseVideoWatchId(res.CourseVideoWatchId);
-          console.log(`courseVideoWatch started ${res.CourseVideoWatchId}`);
+          setCourseVideoWatchId(res.data.courseVideoWatchId);
+          console.log(
+            `courseVideoWatch started ${res.data.courseVideoWatchId}`
+          );
         })
         .catch((err) => {
           console.log("course video can not be played");
@@ -61,7 +63,6 @@ const WatchAndAskComponent = () => {
   const [courseSessionWatchId, setCourseSessionWatchId] = useState(null);
 
   const courseVideoData = useSelector((state) => {
-    console.log(JSON.stringify(state));
     const courseVideos = state.elearningState.courseVideos;
     if (courseVideos[courseVideoId]) {
       courseSessionWatchIdRef.current =
@@ -86,44 +87,64 @@ const WatchAndAskComponent = () => {
     courseSessionWatchIdRef.current = courseSessionWatchId;
   }, [courseSessionWatchId]);
 
+  const pageSecondsPassRef = useRef(0);
+  const pageIntervalRef = useRef(null);
+  useEffect(() => {
+    pageIntervalRef.current = setInterval(() => {
+      pageSecondsPassRef.current += 2;
+    }, 2000);
+
+    return () => clearInterval(pageIntervalRef.current);
+  });
+
   const intervalIdRef = useRef(null);
 
   const isPlayingRef = useRef(false);
-  const createWatchSessionHandler = () => {
+  const createUpdateWatchSessionHandler = () => {
     intervalIdRef.current = setInterval(() => {
-      if (!isPlayingRef.current) {
-        // if the player is paused the request wont be sent
+      if (!courseVideoWatchIdRef || !isPlayingRef.current) {
+        // if courseVideoWatchId is not fetched from API Or the player is paused the request wont be sent
         return;
       }
       if (!courseSessionWatchIdRef.current) {
-        createCourseVideoSession(
-          courseVideoWatchIdRef.current,
-          currentTimeFormattedRef.current
-        )
+        createCourseVideoSession({
+          courseVideoWatchId: courseVideoWatchIdRef.current,
+          watchDurationInSeconds: pageSecondsPassRef.current,
+          lastMomentSeen: currentTimeFormattedRef.current,
+        })
           .then((res) => {
+            console.log(
+              `createCourseVideoSession : ${JSON.stringify(res.data)}`
+            );
             dispatch(
               setCourseVideoSessionTime({
                 courseVideoId: courseVideoId,
                 lastMomentSeen: currentTimeFormattedRef.current,
-                watchSessionId: res.courseVideoWatchSessionId,
+                watchSessionId: res.data.courseVideoWatchSessionId,
               })
             );
-            setCourseSessionWatchId(res.courseVideoWatchSessionId);
+            setCourseSessionWatchId(res.data.courseVideoWatchSessionId);
           })
-          .catch((err) => {})
+          .catch((err) => {
+            alert(err.message);
+          })
           .finally(() => {});
       } else {
-        updateCourseVideoSession(
-          courseVideoWatchIdRef.current,
-          currentTimeFormattedRef.current,
-          courseSessionWatchIdRef.current
-        )
+        updateCourseVideoSession({
+          courseVideoWatchId: courseVideoWatchIdRef.current,
+          watchDurationInSeconds: pageSecondsPassRef.current,
+          lastMomentSeen: currentTimeFormattedRef.current,
+          courseSessionWatchId: courseSessionWatchIdRef.current,
+        })
           .then((res) => {
+            console.log(
+              `updateCourseVideoSession : ${JSON.stringify(res.data)}`
+            );
             dispatch(
               setCourseVideoSessionTime({
                 courseVideoId: courseVideoId,
                 lastMomentSeen: currentTimeFormattedRef.current,
-                watchSessionId: res.courseVideoWatchSessionId,
+                watchSessionId: res.data.courseVideoWatchSessionId,
               })
             );
           })
@@ -222,7 +243,7 @@ const WatchAndAskComponent = () => {
             onReady={handlePlayerReady}
             onTimeUpdate={handleTimeUpdate}
             ref={{ playerOperationRef, isPlayingRef }}
-            onPlay={createWatchSessionHandler}
+            onPlay={createUpdateWatchSessionHandler}
           />
         </div>
 

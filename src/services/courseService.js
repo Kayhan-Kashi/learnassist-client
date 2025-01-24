@@ -1,9 +1,8 @@
 import axios from "axios";
 import { getJWTHeader } from "./authService";
+import { API_BASE_URL } from "./baseUrl";
 
-// const API_BASE_URL = "https://learnassist.ir/api/v1/CourseRegistration";
-const API_BASE_URL = "http://192.168.1.101:5000/v1";
-//const API_BASE_URL = "https://learnassist.ir/api/v1/";
+const COURSE_API_URL = `${API_BASE_URL}/CourseWatch`;
 
 export const isCourseRegistered = async ({ courseId }) => {
   return new Promise((resolve) => {
@@ -20,7 +19,6 @@ export const isCourseRegistered = async ({ courseId }) => {
   //     });
   //   return null;
 };
-
 export const registerCourse = async ({ courseId }) => {
   return new Promise((resolve) => {
     setTimeout(() => {
@@ -49,7 +47,7 @@ export const startWatchCourseVideo = async ({ courseVideoId }) => {
   console.log("Auth Headers:", authHeaders);
   if (authHeaders)
     return await axios.post(
-      `${API_BASE_URL}/CourseWatch/StartCourseVideoWatch`,
+      `${COURSE_API_URL}/StartCourseVideoWatch`,
       { courseVideoId },
       {
         headers: authHeaders,
@@ -58,53 +56,49 @@ export const startWatchCourseVideo = async ({ courseVideoId }) => {
   return null;
 };
 
-export const createCourseVideoSession = async (
-  courseWatchVideoId,
-  lastTimeSeen
-) => {
-  console.log("createCourseVideoSession");
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        courseVideoWatchSessionId: "watchSession-123-3232-2323",
-      });
-    }, 1000);
-  });
-  // const authHeaders = getJWTHeader();
-  // if (authHeaders)
-  //   return await axios.post(`${API_BASE_URL}/StartCourseVideoWatch`, courseId, {
-  //     authHeaders,
-  //   });
-  // return null;
+export const createCourseVideoSession = async ({
+  courseVideoWatchId,
+  watchDurationInSeconds,
+  lastMomentSeen,
+}) => {
+  const authHeaders = getJWTHeader();
+  if (authHeaders)
+    return await axios.post(
+      `${COURSE_API_URL}/CreateWatchSession`,
+      {
+        courseVideoWatchId,
+        watchDurationInSeconds,
+        lastMomentSeen,
+      },
+      {
+        headers: authHeaders,
+      }
+    );
+  return null;
 };
 
-export const updateCourseVideoSession = async (
-  courseWatchVideoId,
-  lastTimeSeen,
-  courseSessionWatchId
-) => {
+export const updateCourseVideoSession = async ({
+  courseVideoWatchId,
+  watchDurationInSeconds,
+  lastMomentSeen,
+  courseSessionWatchId,
+}) => {
   if (courseSessionWatchId) {
-    console.log("updateCourseVideoSession");
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          courseVideoWatchSessionId: "watchSession-123-3232-2323",
-        });
-      }, 1000);
-    });
-  } else {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          courseVideoWatchSessionId: "watchSession-123-3232-2323",
-        });
-      }, 1000);
-    });
+    const authHeaders = getJWTHeader();
+    if (authHeaders) {
+      return await axios.put(
+        `${COURSE_API_URL}/UpdateWatchSession`,
+        {
+          courseVideoWatchId: courseVideoWatchId,
+          CourseVideoSessionId: courseSessionWatchId,
+          watchDurationInSeconds,
+          lastMomentSeen,
+        },
+        {
+          headers: authHeaders,
+        }
+      );
+    }
   }
-  // const authHeaders = getJWTHeader();
-  // if (authHeaders)
-  //   return await axios.post(`${API_BASE_URL}/StartCourseVideoWatch`, courseId, {
-  //     authHeaders,
-  //   });
-  // return null;
+  return null;
 };
