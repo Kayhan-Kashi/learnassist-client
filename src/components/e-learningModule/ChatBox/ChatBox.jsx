@@ -12,6 +12,7 @@ const ChatBox = React.memo(
     ({ helpNeeded, setHelpNeeded, courseVideoWatchId }, ref) => {
       const [userPrompt, setUserPrompt] = useState("");
       const [conversation, setConversation] = useState([]);
+      const [isAnyDialogueAdded, setIsAnyDialogueAdded] = useState(false);
       const [loading, setLoading] = useState(false);
       const textAreaRef = useRef(null);
       const lastMessageRef = useRef(null);
@@ -32,15 +33,11 @@ const ChatBox = React.memo(
         if (courseVideoWatchId) {
           GetChatDialogues({ courseVideoWatchId }).then((res) => {
             const data = res.data;
-            for (let i = 0; i < data.length; i++) {
-              setConversation((prev) => {
-                return [
-                  ...prev,
-                  { role: "user", content: data[i].prompt },
-                  { role: "assistant", content: data[i].answer },
-                ];
-              });
-            }
+            const formattedData = data.flatMap((item) => [
+              { role: "user", content: item.prompt },
+              { role: "assistant", content: item.answer },
+            ]);
+            setConversation((prev) => [...prev, ...formattedData]);
           });
         }
       }, [courseVideoWatchId]);
@@ -52,6 +49,7 @@ const ChatBox = React.memo(
       }, [helpNeeded, userPrompt]);
 
       const handleSendMessage = async () => {
+        setIsAnyDialogueAdded(true);
         if (!userPrompt.trim()) return;
         const userMessageObj = { role: "user", content: userPrompt };
         setConversation((prev) => [...prev, userMessageObj]);
@@ -100,7 +98,7 @@ const ChatBox = React.memo(
       };
 
       useEffect(() => {
-        if (lastMessageRef.current) {
+        if (lastMessageRef.current && isAnyDialogueAdded) {
           lastMessageRef.current.scrollIntoView({ behavior: "smooth" });
         }
       }, [conversation]);
