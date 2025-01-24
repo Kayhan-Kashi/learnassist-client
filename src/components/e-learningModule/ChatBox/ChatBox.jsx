@@ -1,11 +1,15 @@
 import React, { useRef, useState, useEffect, memo } from "react";
-import { callChatGPT, sendPrompt } from "../../../services/LLMService.js";
+import {
+  GetChatDialogues,
+  callChatGPT,
+  sendPrompt,
+} from "../../../services/LLMService.js";
 import { useSelector } from "react-redux";
 import { current } from "@reduxjs/toolkit";
 
 const ChatBox = React.memo(
   React.forwardRef(
-    ({ helpNeeded, setHelpNeeded }, ref) => {
+    ({ helpNeeded, setHelpNeeded, courseVideoWatchId }, ref) => {
       const [userPrompt, setUserPrompt] = useState("");
       const [conversation, setConversation] = useState([]);
       const [loading, setLoading] = useState(false);
@@ -23,6 +27,23 @@ const ChatBox = React.memo(
           );
         }
       }, [helpNeeded]);
+
+      useEffect(() => {
+        if (courseVideoWatchId) {
+          GetChatDialogues({ courseVideoWatchId }).then((res) => {
+            const data = res.data;
+            for (let i = 0; i < data.length; i++) {
+              setConversation((prev) => {
+                return [
+                  ...prev,
+                  { role: "user", content: data[i].prompt },
+                  { role: "assistant", content: data[i].answer },
+                ];
+              });
+            }
+          });
+        }
+      }, [courseVideoWatchId]);
 
       useEffect(() => {
         if (helpNeeded && userPrompt.trim()) {
@@ -45,12 +66,11 @@ const ChatBox = React.memo(
           const response = await sendPrompt({
             prompt: userPrompt,
             helpNeeded,
-            currentTime,
             courseVideoWatchId: courseVideoWatchIdRef.current,
           });
           const assistantMessageObj = {
             role: "assistant",
-            content: response.answer,
+            content: response.data.answer,
           };
 
           setConversation((prev) => [...prev, assistantMessageObj]);

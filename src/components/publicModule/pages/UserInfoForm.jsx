@@ -63,7 +63,6 @@ const UserInfoForm = () => {
         });
       })
       .catch((err) => {
-        alert(JSON.stringify(err.message));
         setLoading(false);
         toast.error("ثبت نام انجام نشد", {
           position: "top-center",

@@ -1,6 +1,8 @@
 import axios from "axios";
+import { API_BASE_URL } from "./baseUrl";
+import { getJWTHeader } from "./authService";
 
-const API_BASE_URL = "https://learnassist.ir/api/v1";
+const CHAT_API_URL = `${API_BASE_URL}/Chat`;
 
 // Configure your API endpoint and headers
 const API_URL = "https://api.openai.com/v1/chat/completions"; // Update this based on the specific endpoint
@@ -32,25 +34,40 @@ export const callChatGPT = async (messages) => {
 export const sendPrompt = async ({
   prompt,
   helpNeeded,
-  currentTime,
   courseVideoWatchId,
 }) => {
-  alert(
-    JSON.stringify({
-      prompt,
-      helpNeeded,
-      currentTime,
-      courseVideoWatchId,
-    })
-  );
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        answer: "این جواب است", // Simulating the C# object
-      });
-    }, 1000); // Simulate network delay
-  });
-  // return await axios.post(`${API_BASE_URL}/sendPrompt`, prompt);
+  const authHeaders = getJWTHeader();
+  if (authHeaders) {
+    return await axios.post(
+      `${CHAT_API_URL}/sendPrompt`,
+      {
+        prompt,
+        helpNeeded,
+        courseVideoWatchId,
+      },
+      {
+        headers: authHeaders,
+      }
+    );
+  }
+
+  return null;
+};
+
+export const GetChatDialogues = async ({ courseVideoWatchId }) => {
+  const authHeaders = getJWTHeader();
+  if (authHeaders) {
+    return await axios.post(
+      `${CHAT_API_URL}/GetUserDialogues`,
+      {
+        CourseVideoWatchId: courseVideoWatchId,
+      },
+      {
+        headers: authHeaders,
+      }
+    );
+  }
+  return null;
 };
 
 export const HelpMe = async (time) => {};

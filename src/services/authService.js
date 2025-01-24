@@ -1,11 +1,12 @@
 import axios from "axios";
+import { API_BASE_URL } from "./baseUrl";
 
-// const API_BASE_URL = "https://learnassist.ir/api/v1/Users";
-const API_BASE_URL = "http://192.168.1.101:5000/v1/Users";
+const AUTH_BASE_URL = `${API_BASE_URL}/Users`;
+
 //const API_BASE_URL = "http://82.115.19.79:5000/v1/Users";
 
 const isUsernameValid = async (userData) => {
-  return await axios.post(`${API_BASE_URL}/posts`, {
+  return await axios.post(`${AUTH_BASE_URL}/posts`, {
     title: "foo",
     body: "bar",
     userId: 1,
@@ -13,7 +14,7 @@ const isUsernameValid = async (userData) => {
 };
 
 export const loginUser = async (userData) => {
-  return await axios.post(`${API_BASE_URL}/login`, {
+  return await axios.post(`${AUTH_BASE_URL}/login`, {
     username: userData.username,
     password: userData.password,
   });
@@ -39,8 +40,7 @@ export const logoutFromStorage = () => {
 };
 
 export const isUserExisted = async (username) => {
-  alert(JSON.stringify(username));
-  return await axios.post(`${API_BASE_URL}/IsUserExisted`, username);
+  return await axios.post(`${AUTH_BASE_URL}/IsUserExisted`, username);
   // return new Promise((resolve) => {
   //   setTimeout(() => {
   //     resolve({
@@ -52,8 +52,7 @@ export const isUserExisted = async (username) => {
 
 export const registerUser = async (registerData) => {
   console.log(JSON.stringify({ registerData }));
-  alert(JSON.stringify({ registerData }));
-  return await axios.post(`${API_BASE_URL}/register`, registerData);
+  return await axios.post(`${AUTH_BASE_URL}/register`, registerData);
   // return new Promise((resolve) => {
   //   setTimeout(() => {
   //     resolve({
@@ -65,7 +64,6 @@ export const registerUser = async (registerData) => {
 
 export const getJWTHeader = () => {
   const jwtToken = getAccessToken();
-  alert(jwtToken);
   if (jwtToken) {
     const headers = {
       Authorization: `Bearer ${jwtToken}`,
