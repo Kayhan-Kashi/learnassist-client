@@ -23,6 +23,7 @@ const ChatBox = React.memo(
 
       useEffect(() => {
         if (helpNeeded) {
+          setIsAnyDialogueAdded(true);
           setUserPrompt(
             "دقیقه" + ` ${currentTime} ` + "ویدیو آموزشی را بیشتر توضیح بده"
           );

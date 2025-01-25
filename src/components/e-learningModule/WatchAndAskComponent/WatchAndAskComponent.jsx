@@ -251,7 +251,7 @@ const WatchAndAskComponent = () => {
         <div className="flex flex-col">
           <button
             onClick={handleHelpMeButtonClick}
-            disabled={!courseVideoWatchIdRef.current}
+            disabled={!courseVideoWatchId}
             className="transform -translate-y-1/2 bg-green-400 text-white px-6 py-3 ml-10 mb-4 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
           >
             کمکم کن
