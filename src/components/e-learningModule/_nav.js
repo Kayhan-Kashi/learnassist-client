@@ -12,6 +12,16 @@ import React from "react";
 const _nav = [
   {
     component: CNavItem,
+    name: "مهندسی پرسش",
+    to: "/elearning/prompt-engineering",
+    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    // badge: {
+    //   color: "info",
+    //   text: "NEW",
+    // },
+  },
+  {
+    component: CNavItem,
     name: "داشبورد",
     to: "/elearning/dashboard",
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
@@ -28,7 +38,7 @@ const _nav = [
   {
     component: CNavItem,
     name: "مشاهده دوره",
-    to: "/elearning/watch-course/1234-1234-3231-432",
+    to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
     icon: <CIcon icon={cilMonitor} customClassName="nav-icon" />,
   },
   {

@@ -12,6 +12,7 @@ import WatchAndAskComponent from "./components/e-learningModule/WatchAndAskCompo
 import Assessment from "./components/e-learningModule/Assessment/Assessment";
 import Dashboard from "./components/e-learningModule/Dashboard/Dashboard";
 import Profile from "./components/e-learningModule/Profile/Profile";
+import PromptEngineeringGeneral from "./components/e-learningModule/PromptEngineering/General/PromptEngineeringGeneral";
 
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
@@ -36,6 +37,10 @@ function App() {
             element={<Assessment />}
           ></Route>
           <Route path="/elearning/Dashboard" element={<Dashboard />}></Route>
+          <Route
+            path="/elearning/prompt-engineering"
+            element={<PromptEngineeringGeneral />}
+          ></Route>
           <Route path="/elearning/profile/1" element={<Profile />}></Route>
         </Route>
       </Routes>
