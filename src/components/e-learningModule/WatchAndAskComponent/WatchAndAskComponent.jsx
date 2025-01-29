@@ -19,7 +19,10 @@ import {
   startWatchCourseVideo,
   updateCourseVideoSession,
 } from "../../../services/courseService.js";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { getUserInfo } from "../../../services/authService.js";
+
+const userInfo = getUserInfo();
 
 const WatchAndAskComponent = () => {
   const videoTitle = "مبحث فیزیک صوت : جلسه اول";
@@ -30,6 +33,7 @@ const WatchAndAskComponent = () => {
   const [helpNeeded, setHelpNeeded] = useState(false);
   const timerRef = useRef({ timeElapsed: 0, intervalId: null });
   const timeDisplayRef = useRef(null);
+  const navigate = useNavigate();
 
   const dispatch = useDispatch();
   //======== Getting courseVideoId from URL and call webAPI for Starting Watch ============================
@@ -232,6 +236,10 @@ const WatchAndAskComponent = () => {
     console.log(JSON.stringify(currentTimeRef.current));
   };
 
+  const handlePromptEngineeringButtonClick = () => {
+    navigate(`/elearning/prompt-engineering/${courseVideoId}`);
+  };
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-row justify-center items-center h-full">
@@ -248,7 +256,7 @@ const WatchAndAskComponent = () => {
         </div>
 
         {/* Buttons Section */}
-        <div className="flex flex-col">
+        <div className="flex flex-col mt-10">
           <button
             onClick={handleHelpMeButtonClick}
             disabled={!courseVideoWatchId}
@@ -261,6 +269,15 @@ const WatchAndAskComponent = () => {
             className="transform -translate-y-1/2 bg-yellow-400 text-white px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
           >
             سوال دارم
+          </button>
+          <button
+            onClick={handlePromptEngineeringButtonClick}
+            style={{
+              display: userInfo.username != "kayhan.kashi" ? "none" : "",
+            }}
+            className="transform -translate-y-1/2 bg-blue-800 text-white mt-4 px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+          >
+            مهندسی پرسش
           </button>
         </div>
       </div>
