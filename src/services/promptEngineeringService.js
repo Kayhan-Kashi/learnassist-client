@@ -14,12 +14,29 @@ export const GetGeneralPromptEngineering = async () => {
   return null;
 };
 
-export const createPromptEngineering = async ({ prompt, orderNo }) => {
+export const GetCourseVideoPromptEngineering = async ({ courseVideoId }) => {
+  const authHeaders = getJWTHeader();
+  if (authHeaders) {
+    return await axios.get(
+      `${PROMPT_API_URL}/GetCourseVideoPromptEngineering/${courseVideoId}`,
+      {
+        headers: authHeaders,
+      }
+    );
+  }
+  return null;
+};
+
+export const createPromptEngineering = async ({
+  prompt,
+  orderNo,
+  courseVideoId,
+}) => {
   const authHeaders = getJWTHeader();
   if (authHeaders) {
     return await axios.post(
       `${PROMPT_API_URL}/CreatePromptEngineering`,
-      { prompt, orderNo },
+      { prompt, orderNo, courseVideoId },
       {
         headers: authHeaders,
       }

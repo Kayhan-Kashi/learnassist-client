@@ -13,7 +13,7 @@ import Assessment from "./components/e-learningModule/Assessment/Assessment";
 import Dashboard from "./components/e-learningModule/Dashboard/Dashboard";
 import Profile from "./components/e-learningModule/Profile/Profile";
 import PromptEngineeringGeneral from "./components/e-learningModule/PromptEngineering/General/PromptEngineeringGeneral";
-import PromptEngineeringCourseSpecific from "./components/e-learningModule/PromptEngineering/CourseSpecific/PromptEngineeringCourseSpecific";
+import PromptEngineeringCourseSpecific from "./components/e-learningModule/PromptEngineering/CourseVideoSpecific/PromptEngineeringCourseSpecific";
 
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 

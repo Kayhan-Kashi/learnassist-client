@@ -46,7 +46,7 @@ const PromptEngineeringGeneral = () => {
             response.data.map((item, index) => ({
               Id: item.promptEngineeringId,
               Prompt: item.prompt,
-              OrderNo: item.orderNo + 1,
+              OrderNo: item.orderNo,
               editText: item.prompt,
             }))
           );
@@ -130,12 +130,13 @@ const PromptEngineeringGeneral = () => {
         orderNo: currentItem.OrderNo,
       });
       if (response?.data) {
+        console.log(JSON.stringify(response.data));
         const updatedList = textList.map((item, i) =>
           i === index
             ? {
                 ...item,
-                Id: response.data.PromptEngineeringId,
-                Prompt: response.data.Prompt,
+                Id: response.data.promptEngineeringId,
+                Prompt: response.data.prompt,
               }
             : item
         );

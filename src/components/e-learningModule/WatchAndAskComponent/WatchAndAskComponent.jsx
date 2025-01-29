@@ -25,7 +25,7 @@ import { getUserInfo } from "../../../services/authService.js";
 const userInfo = getUserInfo();
 
 const WatchAndAskComponent = () => {
-  const videoTitle = "مبحث فیزیک صوت : جلسه اول";
+  const videoTitle = "مبحث آمار مقدماتی : جلسه اول";
   const playerRef = useRef(null);
   const playerOperationRef = useRef(null);
   const currentTimeRef = useRef({ minutes: 0, seconds: 0 });
@@ -273,11 +273,13 @@ const WatchAndAskComponent = () => {
           <button
             onClick={handlePromptEngineeringButtonClick}
             style={{
-              display: userInfo.username != "kayhan.kashi" ? "none" : "",
+              display: userInfo?.username != "kayhan.kashi" ? "none" : "",
             }}
             className="transform -translate-y-1/2 bg-blue-800 text-white mt-4 px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
           >
             مهندسی پرسش
+            <br />
+            ویدیو آموزشی
           </button>
         </div>
       </div>
