@@ -47,7 +47,9 @@ const AppSidebar = () => {
         <CCloseButton
           className="d-lg-none"
           dark
-          onClick={() => dispatch({ type: "set", sidebarShow: false })}
+          onClick={() =>
+            dispatch(setSideBarState({ type: "set", sidebarShow: false }))
+          }
         />
       </CSidebarHeader>
       <AppSidebarNav items={navigation} />

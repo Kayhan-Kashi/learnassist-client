@@ -20,13 +20,19 @@ import { getUserInfo } from "../../../services/authService.js";
 import { NavLink } from "react-router-dom";
 import AppBreadcrumb from "../AppBreadcrumb/AppBreadcrumb.jsx";
 import AppHeaderDropdown from "../AppHeaderDropdown/AppHeaderDropdown.jsx";
+import { setSideBarState } from "../../../redux/slices/elearningSlice.js";
 
 const AppHeader = () => {
   const headerRef = useRef();
   const { colorMode, setColorMode } = useColorModes("learnAssist_theme");
 
   const dispatch = useDispatch();
-  const sidebarShow = useSelector((state) => state.sidebarShow);
+  const sidebarShow = useSelector((state) => {
+    return state.elearningState.setSideBarState;
+  });
+  const unfoldable = useSelector((state) => {
+    return state.elearningState.sidebarUnfoldable;
+  });
 
   const firstname = getUserInfo().firstname;
 
@@ -45,7 +51,14 @@ const AppHeader = () => {
     <CHeader position="sticky" className="mb-4 p-0" ref={headerRef}>
       <CContainer className="border-bottom px-4" fluid>
         <CHeaderToggler
-          onClick={() => dispatch({ type: "set", sidebarShow: !sidebarShow })}
+          onClick={() => {
+            dispatch(
+              setSideBarState({ type: "set", sidebarShow: !sidebarShow })
+            );
+            // dispatch(
+            //   setSideBarState({ type: "set", sidebarUnfoldable: unfoldable })
+            // );
+          }}
           style={{ marginInlineStart: "-14px" }}
         >
           <CIcon icon={cilMenu} size="lg" />
