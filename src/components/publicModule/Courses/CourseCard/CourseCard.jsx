@@ -58,7 +58,7 @@ const CourseCard = ({ id, image, title, price, isRegisterable }) => {
   return (
     <div className="flex justify-center items-center mx-8 my-0 mt-16">
       <ToastContainer />
-      <div className="bg-gray-100 p-4 md:p-6 lg:p-8 w-full sm:w-[220px] md:w-[180px] lg:w-[300px] rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
+      <div className="bg-gray-100 p-4 md:p-6 lg:p-8 w-full sm:w-[220px] md:w-[180px] lg:w-[385px] rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105">
         <Link
           to={`/`}
           //   onClick={() => dispatch(singleProduct(id))}
@@ -68,11 +68,11 @@ const CourseCard = ({ id, image, title, price, isRegisterable }) => {
             <img
               loading="lazy"
               src={image}
-              className="object-cover w-full h-40 sm:h-48 rounded-md transition-opacity duration-300 opacity-100 group-hover:opacity-0"
+              className="object-cover w-full h-40 sm:h-52 rounded-md transition-opacity duration-300 opacity-100 group-hover:opacity-0"
             />
             <img
               src={image}
-              className="object-cover w-full h-40 sm:h-48 rounded-md absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
+              className="object-cover w-full h-40 sm:h-52 rounded-md absolute top-0 left-0 transition-opacity duration-300 opacity-0 group-hover:opacity-100"
             />
           </div>
           <div className="flex flex-col justify-center mt-4">

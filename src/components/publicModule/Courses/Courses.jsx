@@ -1,29 +1,29 @@
 import React, { useEffect } from "react";
 import CourseCard from "./CourseCard/CourseCard";
-import eLearningCarousel from "../../../assets/course-music.png";
-import courseHarmonyImage from "../../../assets/course-2.webp";
-import advancedTheoryImage from "../../../assets/course-3.png";
+import eLearningCarousel from "../../../assets/course_basic_statistics.jpg";
+import courseHarmonyImage from "../../../assets/course_pro_statistics.jpg";
+import advancedTheoryImage from "../../../assets/inferential_statistic.jpg";
 import { useSelector } from "react-redux";
 
 const courses = [
   {
     id: "1234-12343-123432-12343243-111",
     image: eLearningCarousel,
-    title: "آموزش مقدماتی تئوری موسیقی",
+    title: "آموزش مقدماتی آمار ",
     price: 0,
     isRegisterable: true,
   },
   {
     id: "1234-12343-123432-12343243-222",
     image: advancedTheoryImage,
-    title: " آموزش تئوری موسیقی پیشرفته",
+    title: " آموزش آمار پیشرفته",
     price: 0,
     isRegisterable: false,
   },
   {
     id: "1234-12343-123432-12343243-333",
     image: courseHarmonyImage,
-    title: "آموزش هارمونی",
+    title: "آموزش آمار استنباطی",
     price: "به زودی",
     isRegisterable: false,
   },
