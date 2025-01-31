@@ -6,7 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 import image from "../../../assets/login-vector-transformed.jpeg";
 
 import { login as loginAction } from "../../../redux/slices/loginSlice";
-import { loginUser } from "../../../services/authService";
+import { loginUser, getUserInfo } from "../../../services/authService";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Helmet } from "react-helmet";
@@ -65,15 +65,8 @@ const Login = () => {
         console.log(JSON.stringify(accessToken));
         console.log(JSON.stringify(response.data));
         localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem(
-          "userInfo",
-          JSON.stringify({
-            username,
-            firstname: firstName,
-            lastname: lastName,
-            isLoggedIn: true,
-          })
-        );
+        const userInfo = getUserInfo();
+        //dispatch(loginAction(userInfo));
         dispatch(loginAction(formData));
 
         toast.success("ورود با موفقیت انجام شد", {

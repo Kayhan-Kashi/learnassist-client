@@ -1,19 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import ImageBoys1 from "../../../../../assets/logo-boys1.jpg";
 import ImageBoys2 from "../../../../../assets/logo-boys2.jpg";
 
 import { FaRegUser } from "react-icons/fa";
 
 import { useState } from "react";
-import { useSelector } from "react-redux";
-import { getUserInfo } from "../../../../../services/authService";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getUserInfo,
+  isTokenExpired,
+  logoutFromStorage,
+} from "../../../../../services/authService";
 import NavAccountButton from "./NavAccountButton/NavAccountButton";
 import NavBarLink from "./NavBarLink/NavBarLink";
 import NavImageIcon from "./NavImageIcon/NavImageIcon";
+import { logout as logoutAction } from "../../../../../redux/slices/loginSlice";
+
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [drop, setDrop] = useState(false);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const links = [
     { name: "خانه", link: "/" },
@@ -23,11 +32,22 @@ const Navbar = () => {
 
   const userInfo = getUserInfo();
   const isLogged = useSelector((state) => state.login.isLoggedIn);
+
   //alert(isLogged);
 
   // useEffect(() => {
   //   alert(userInfo);
   // },[userInfo]);
+  useEffect(() => {
+    if (isTokenExpired) {
+      const isExpired = isTokenExpired();
+      if (isExpired) {
+        dispatch(logoutAction());
+        logoutFromStorage();
+        navigate("/login");
+      }
+    }
+  }, [isLogged]);
 
   return (
     <div className="sticky items-center z-50 shadow-md w-full top-0 left-0 \">

@@ -14,7 +14,8 @@ const _nav = [
     component: CNavItem,
     name: "مهندسی پرسش",
     to: "/elearning/prompt-engineering",
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    role: "learnassist_admin",
     // badge: {
     //   color: "info",
     //   text: "NEW",
@@ -25,6 +26,7 @@ const _nav = [
     name: "داشبورد",
     to: "/elearning/dashboard",
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+    role: "all",
     // badge: {
     //   color: "info",
     //   text: "NEW",
@@ -40,12 +42,14 @@ const _nav = [
     name: "مشاهده دوره",
     to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
     icon: <CIcon icon={cilMonitor} customClassName="nav-icon" />,
+    role: "all",
   },
   {
     component: CNavItem,
     name: "ارزیابی دوره جاری",
     to: "/elearning/assessment/1-1",
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
+    role: "all",
   },
   {
     component: CNavTitle,
@@ -56,11 +60,12 @@ const _nav = [
     name: "دوره های ثبت نام شده",
     to: "/base",
     icon: <CIcon icon={cibCodepen} customClassName="nav-icon" />,
+    role: "all",
     items: [
       {
         component: CNavItem,
         name: "دوره مبانی مقدماتی موسیقی",
-        to: "/elearning/watch-course/1234-1234-3231-432",
+        to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
       },
       // {
       //   component: CNavItem,

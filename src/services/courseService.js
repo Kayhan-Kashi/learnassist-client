@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getJWTHeader } from "./authService";
+import { getJWTHeader, getUserInfoFromJWT } from "./authService";
 import { API_BASE_URL } from "./baseUrl";
 
 const COURSE_API_URL = `${API_BASE_URL}/CourseWatch`;

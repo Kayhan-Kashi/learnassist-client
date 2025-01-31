@@ -154,7 +154,7 @@ const PromptEngineeringGeneral = () => {
       {textList.map((item, index) => (
         <div key={item.Id || index} className="space-y-2">
           <div className="border p-2 rounded bg-gray-100 text-right w-36">
-            {"متن شماره  " + item.OrderNo}
+            {" پرامپت شماره  " + item.OrderNo}
           </div>
           <div className="flex items-center space-x-2 space-x-reverse">
             <textarea

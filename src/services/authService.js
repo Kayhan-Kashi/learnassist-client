@@ -1,9 +1,12 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 import { API_BASE_URL } from "./baseUrl";
 
 const AUTH_BASE_URL = `${API_BASE_URL}/Users`;
 
 //const API_BASE_URL = "http://82.115.19.79:5000/v1/Users";
+
+const COURSE_EDITOR_ROLE = "learnassist_course_editor";
 
 const isUsernameValid = async (userData) => {
   return await axios.post(`${AUTH_BASE_URL}/posts`, {
@@ -26,17 +29,64 @@ export const getAccessToken = () => {
 };
 
 export const getUserInfo = () => {
-  const userInfo = localStorage.getItem("userInfo");
-  if (userInfo) {
-    return JSON.parse(userInfo);
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    console.log(JSON.stringify(decodedToken));
+    const userRoles = decodedToken.realm_access.roles;
+    const firstname = decodedToken.given_name;
+    const lastname = decodedToken.family_name;
+    const username = decodedToken.preferred_username;
+    const isLoggedIn = true;
+    return { firstname, lastname, username, userRoles, isLoggedIn };
   }
+
+  return null;
+
+  // const userInfo = localStorage.getItem("userInfo");
+  // if (userInfo) {
+  //   return JSON.parse(userInfo);
+  // }
+  // return null;
+};
+
+export const is_User_course_editor = () => {
+  const roles = getUserRoles();
+  if (roles) {
+    return roles.includes(COURSE_EDITOR_ROLE);
+  }
+
+  return null;
+};
+
+export const getUserRoles = () => {
+  const token = localStorage.getItem("accessToken");
+  if (token) {
+    const decodedToken = jwtDecode(token);
+    const userRoles = decodedToken.realm_access.roles;
+    return userRoles;
+  }
+
   return null;
 };
 
 export const logoutFromStorage = () => {
   localStorage.removeItem("userInfo");
   localStorage.removeItem("accessToken");
-  window.location.href = "/";
+  window.location.href = "/login";
+};
+
+export const isTokenExpired = () => {
+  const token = localStorage.getItem("accessToken");
+  if (!token) {
+    return null;
+  }
+  const decodedToken = jwtDecode(token);
+  const currentTime = Math.floor(Date.now() / 1000); // Convert milliseconds to seconds
+  //const currentTime = Math.floor(Date.now() * 1000); // Convert milliseconds to seconds
+
+  const isTokenExpired = decodedToken.exp < currentTime;
+  return isTokenExpired;
 };
 
 export const isUserExisted = async (username) => {
@@ -64,13 +114,14 @@ export const registerUser = async (registerData) => {
 
 export const getJWTHeader = () => {
   const jwtToken = getAccessToken();
-  if (jwtToken) {
+  if (jwtToken && !isTokenExpired()) {
     const headers = {
       Authorization: `Bearer ${jwtToken}`,
       "Content-Type": "application/json", // Adjust content type as needed
     };
     return headers;
   }
+  logoutFromStorage();
   return null;
 };
 

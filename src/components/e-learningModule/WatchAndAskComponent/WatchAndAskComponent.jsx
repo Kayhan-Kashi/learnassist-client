@@ -20,7 +20,10 @@ import {
   updateCourseVideoSession,
 } from "../../../services/courseService.js";
 import { useNavigate, useParams } from "react-router-dom";
-import { getUserInfo } from "../../../services/authService.js";
+import {
+  getUserInfo,
+  is_User_course_editor,
+} from "../../../services/authService.js";
 
 const userInfo = getUserInfo();
 
@@ -34,12 +37,25 @@ const WatchAndAskComponent = () => {
   const timerRef = useRef({ timeElapsed: 0, intervalId: null });
   const timeDisplayRef = useRef(null);
   const navigate = useNavigate();
+  const [isCourseEditor, setIsCourseEditor] = useState(null);
 
   const dispatch = useDispatch();
   //======== Getting courseVideoId from URL and call webAPI for Starting Watch ============================
   const { courseVideoId } = useParams();
   const courseVideoWatchIdRef = useRef(null);
   const [courseVideoWatchId, setCourseVideoWatchId] = useState(null);
+
+  useEffect(() => {
+    const is_user_course_editor = is_User_course_editor();
+    setIsCourseEditor(is_user_course_editor);
+  }, []);
+
+  // useEffect(() => {
+  //   alert(is_user_course_editor);
+  //   if (is_user_course_editor != null || is_user_course_editor != undefined) {
+  //     setIsCourseEditor(is_user_course_editor);
+  //   }
+  // }, [is_user_course_editor]);
 
   useEffect(() => {
     courseVideoId &&
@@ -273,7 +289,7 @@ const WatchAndAskComponent = () => {
           <button
             onClick={handlePromptEngineeringButtonClick}
             style={{
-              display: userInfo?.username != "kayhan.kashi" ? "none" : "",
+              display: isCourseEditor ? "" : "none",
             }}
             className="transform -translate-y-1/2 bg-blue-800 text-white mt-4 px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
           >
