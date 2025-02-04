@@ -18,6 +18,7 @@ import {
   createCourseVideoSession,
   startWatchCourseVideo,
   updateCourseVideoSession,
+  getCourseVideoById,
 } from "../../../services/courseService.js";
 import { useNavigate, useParams } from "react-router-dom";
 import {
@@ -57,6 +58,8 @@ const WatchAndAskComponent = () => {
   //   }
   // }, [is_user_course_editor]);
 
+  const [courseVideoIdState, setCourseVideoId] = useState(null);
+
   useEffect(() => {
     courseVideoId &&
       startWatchCourseVideo({ courseVideoId })
@@ -76,6 +79,7 @@ const WatchAndAskComponent = () => {
           console.log("course video can not be played");
         })
         .finally(() => {});
+    setCourseVideoId(courseVideoId);
   }, [courseVideoId]);
 
   //=============== CourseSessionWatchId handling =========================================================
@@ -180,30 +184,48 @@ const WatchAndAskComponent = () => {
       if (intervalIdRef.current) {
         clearInterval(intervalIdRef.current);
         intervalIdRef.current = null;
-        playerRef.current.dispose();
-        playerRef.current = null;
+        // if (playerRef.current) {
+        //   playerRef.current.dispose();
+        //   playerRef.current = null;
+        //   console.log("player disposed");
+
+        // }
+        // playerRef.current.dispose();
+        // playerRef.current = null;
+        // console.log("player disposed");
+        // alert("player disposed");
       }
     };
-  }, []);
+  }, [navigate]);
   //=================================================================
+
+  const [courseVideoInfo, setCourseVideoInfo] = useState(null);
+  useEffect(() => {
+    getCourseVideoById({ courseVideoId }).then((res) => {
+      setCourseVideoInfo(res.data);
+    });
+  }, [courseVideoId]);
 
   const videoJsOptions = useMemo(
     () => ({
       autoplay: true,
       controls: true,
       responsive: true,
+      autoplay: false,
       fluid: true,
       sources: [
         {
-          src: "/sample_video.mp4",
+          //src: "/sample_video.mp4",
+          src: courseVideoInfo ? courseVideoInfo.path : "",
           type: "video/mp4",
         },
       ],
     }),
-    []
+    [courseVideoInfo]
   );
 
   const handlePlayerReady = useCallback((player) => {
+    if (!player) return; // Ensure player is not null
     playerRef.current = player;
 
     // Handle player events if needed
@@ -262,13 +284,15 @@ const WatchAndAskComponent = () => {
         {/* Video Player Section */}
         <div className="w-3/5 relative ">
           <h2 className="text-center pb-3 ">{videoTitle}</h2>
-          <VideoPlayer
-            options={videoJsOptions}
-            onReady={handlePlayerReady}
-            onTimeUpdate={handleTimeUpdate}
-            ref={{ playerOperationRef, isPlayingRef }}
-            onPlay={createUpdateWatchSessionHandler}
-          />
+          {courseVideoInfo && (
+            <VideoPlayer
+              options={videoJsOptions}
+              onReady={handlePlayerReady}
+              onTimeUpdate={handleTimeUpdate}
+              ref={{ playerOperationRef, isPlayingRef }}
+              onPlay={createUpdateWatchSessionHandler}
+            />
+          )}
         </div>
 
         {/* Buttons Section */}
@@ -310,9 +334,11 @@ const WatchAndAskComponent = () => {
       {/* Chat Box Section */}
       <div id="chat-box-section" className="mt-8">
         <ChatBox
+          key={courseVideoIdState}
           helpNeeded={helpNeeded}
           setHelpNeeded={setHelpNeeded}
           courseVideoWatchId={courseVideoWatchId}
+          courseVideoId={courseVideoIdState}
           ref={courseVideoWatchIdRef}
         />
       </div>

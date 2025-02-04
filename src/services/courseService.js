@@ -102,3 +102,16 @@ export const updateCourseVideoSession = async ({
   }
   return null;
 };
+
+export const getCourseVideoById = async ({ courseVideoId }) => {
+  const authHeaders = getJWTHeader();
+  if (authHeaders) {
+    return await axios.get(
+      `${API_BASE_URL}/ELearning/GetCourseVideoById/${courseVideoId}`,
+      {
+        headers: authHeaders,
+      }
+    );
+  }
+  return null;
+};

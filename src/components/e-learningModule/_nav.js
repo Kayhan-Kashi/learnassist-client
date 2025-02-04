@@ -37,13 +37,53 @@ const _nav = [
     name: "یادگیری آنلاین",
   },
 
+  // {
+  //   component: CNavItem,
+  //   name: "مشاهده دوره",
+  //   to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
+  //   icon: <CIcon icon={cilMonitor} customClassName="nav-icon" />,
+  //   role: "all",
+  // },
   {
-    component: CNavItem,
+    component: CNavGroup,
     name: "مشاهده دوره",
-    to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
-    icon: <CIcon icon={cilMonitor} customClassName="nav-icon" />,
+    to: "/base",
+    icon: <CIcon icon={cibCodepen} customClassName="nav-icon" />,
     role: "all",
+    items: [
+      {
+        component: CNavItem,
+        name: "جلسه اول",
+        to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
+      },
+      {
+        component: CNavItem,
+        name: "جلسه دوم",
+        to: "/elearning/watch-course/f468bc34-d72c-4e3b-b478-4874832eea8a",
+      },
+      {
+        component: CNavItem,
+        name: "جلسه سوم",
+        to: "/elearning/watch-course/9025c918-ae7d-4134-ae85-7f2ac082926a",
+      },
+      {
+        component: CNavItem,
+        name: "جلسه چهارم",
+        to: "/elearning/watch-course/7bb0ab77-d947-4c76-8641-9ffd47e06f33",
+      },
+      {
+        component: CNavItem,
+        name: "جلسه پنجم",
+        to: "/elearning/watch-course/ae50d14e-bbd4-4a29-9f14-bb22a2127e8a",
+      },
+      {
+        component: CNavItem,
+        name: "جلسه ششم",
+        to: "/elearning/watch-course/99e16ea8-6327-4cf4-a292-a7d171e0d2c7",
+      },
+    ],
   },
+
   {
     component: CNavItem,
     name: "ارزیابی دوره جاری",
