@@ -67,7 +67,6 @@ const VideoPlayer = React.memo(
         if (player && !player.isDisposed()) {
           player.dispose();
           playerRef.current = null;
-          alert("disposing inside player")
         }
       };
     }, []);
