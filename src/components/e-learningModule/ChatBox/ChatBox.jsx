@@ -3,7 +3,7 @@ import { GetChatDialogues, sendPrompt } from "../../../services/LLMService.js";
 import { useSelector } from "react-redux";
 
 const ChatBox = forwardRef(
-  ({ helpNeeded, setHelpNeeded, courseVideoId, courseVideoWatchId }, ref) => {
+  ({ helpNeeded, setHelpNeeded, courseVideoWatchId }, ref) => {
     const [userPrompt, setUserPrompt] = useState("");
     const [conversation, setConversation] = useState([]);
     const [isAnyDialogueAdded, setIsAnyDialogueAdded] = useState(false);

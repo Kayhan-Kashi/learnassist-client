@@ -283,7 +283,7 @@ const WatchAndAskComponent = () => {
       <div className="flex flex-row justify-center items-center h-full">
         {/* Video Player Section */}
         <div className="w-3/5 relative ">
-          <h2 className="text-center pb-3 ">{courseVideoInfo.title}</h2>
+          <h2 className="text-center pb-3 ">{courseVideoInfo?.title}</h2>
           {courseVideoInfo && (
             <VideoPlayer
               options={videoJsOptions}
@@ -334,11 +334,9 @@ const WatchAndAskComponent = () => {
       {/* Chat Box Section */}
       <div id="chat-box-section" className="mt-8">
         <ChatBox
-          key={courseVideoIdState}
           helpNeeded={helpNeeded}
           setHelpNeeded={setHelpNeeded}
           courseVideoWatchId={courseVideoWatchId}
-          courseVideoId={courseVideoIdState}
           ref={courseVideoWatchIdRef}
         />
       </div>
