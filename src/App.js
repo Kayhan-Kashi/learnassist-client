@@ -9,11 +9,11 @@ import Login from "./components/publicModule/pages/Login";
 import Register from "./components/publicModule/pages/Register";
 import UserInfoForm from "./components/publicModule/pages/UserInfoForm";
 import WatchAndAskComponent from "./components/e-learningModule/WatchAndAskComponent/WatchAndAskComponent";
-import Assessment from "./components/e-learningModule/Assessment/Assessment";
 import Dashboard from "./components/e-learningModule/Dashboard/Dashboard";
 import Profile from "./components/e-learningModule/Profile/Profile";
 import PromptEngineeringGeneral from "./components/e-learningModule/PromptEngineering/General/PromptEngineeringGeneral";
 import PromptEngineeringCourseSpecific from "./components/e-learningModule/PromptEngineering/CourseVideoSpecific/PromptEngineeringCourseSpecific";
+import UserCourseAssessment from "./components/e-learningModule/Assessment/UserCourseAssessment";
 
 // const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))
 
@@ -34,8 +34,8 @@ function App() {
             element={<WatchAndAskComponent />}
           ></Route>
           <Route
-            path="/elearning/assessment/1-1"
-            element={<Assessment />}
+            path="/elearning/user-course-assessment/:courseAssessmentId"
+            element={<UserCourseAssessment />}
           ></Route>
           <Route path="/elearning/Dashboard" element={<Dashboard />}></Route>
           <Route
