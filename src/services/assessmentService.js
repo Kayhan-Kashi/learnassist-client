@@ -19,12 +19,6 @@ export const createCourseAssessment = async ({
   CourseAssessmentId,
   QuestionAnswer,
 }) => {
-  alert(
-    JSON.stringify({
-      CourseAssessmentId,
-      QuestionAnswer,
-    })
-  );
   const authHeaders = getJWTHeader();
   if (authHeaders)
     return await axios.post(
@@ -37,5 +31,14 @@ export const createCourseAssessment = async ({
         headers: authHeaders,
       }
     );
+  return null;
+};
+
+export const checkUserAssessment = async ({ courseAssessmentId }) => {
+  const authHeaders = getJWTHeader();
+  if (authHeaders)
+    return await axios.get(`${USER_ASSESSMENT_API_URL}/${courseAssessmentId}`, {
+      headers: authHeaders,
+    });
   return null;
 };

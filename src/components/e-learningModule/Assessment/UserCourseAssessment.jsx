@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import {
   CCard,
   CCardBody,
@@ -10,7 +10,8 @@ import {
 import {
   createCourseAssessment,
   getCourseAssessment,
-} from "../../../services/assessment.js";
+  checkUserAssessment,
+} from "../../../services/assessmentService.js";
 
 export default function UserCourseAssessment() {
   const { courseAssessmentId } = useParams();
@@ -18,13 +19,26 @@ export default function UserCourseAssessment() {
   const [questions, setQuestions] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [assessmentCompleted, setAssessmentCompleted] = useState(false);
   const [isButtonFocused, setIsButtonFocused] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
-    getCourseAssessment({ courseAssessmentId })
+
+    // Check if the user has already completed the assessment
+    checkUserAssessment({ courseAssessmentId })
       .then((response) => {
-        setQuestions(response.data.questions || []);
+        if (response.data.courseUserAssessmentId) {
+          setAssessmentCompleted(true);
+        } else {
+          return getCourseAssessment({ courseAssessmentId });
+        }
+      })
+      .then((response) => {
+        if (!assessmentCompleted) {
+          setQuestions(response?.data?.questions || []);
+        }
         setLoading(false);
       })
       .catch((error) => {
@@ -39,26 +53,22 @@ export default function UserCourseAssessment() {
   };
 
   const handleSubmit = async () => {
-    // Validate: Ensure all questions have answers
     if (Object.keys(selectedAnswers).length !== questions.length) {
       alert("لطفاً تمامی سوالات را پاسخ دهید.");
       return;
     }
 
-    // Ask for confirmation before sending
     const isConfirmed = window.confirm(
       "آیا مطمئن هستید که می‌خواهید آزمون را ارسال کنید؟"
     );
     if (!isConfirmed) return;
 
-    // Format the payload to send
     const requestBody = {
       CourseAssessmentId: courseAssessmentId,
       QuestionAnswer: Object.keys(selectedAnswers).reduce((acc, questionId) => {
-        const answerId = selectedAnswers[questionId];
         acc[questionId] = {
-          AnswerId: answerId,
-          Value: null, // you can set Value to null or handle if there's a value for the answer
+          AnswerId: selectedAnswers[questionId],
+          Value: null,
         };
         return acc;
       }, {}),
@@ -68,19 +78,14 @@ export default function UserCourseAssessment() {
       .then((res) => {
         console.log("Submitted Successfully:", res.data);
         alert("آزمون با موفقیت ارسال شد.");
+        navigate(
+          "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9"
+        );
       })
       .catch((error) => {
         console.error("Error submitting assessment:", error);
         alert("مشکلی در ارسال اطلاعات رخ داده است.");
       });
-  };
-
-  const handleFocus = () => {
-    setIsButtonFocused(true);
-  };
-
-  const handleBlur = () => {
-    setIsButtonFocused(false);
   };
 
   if (loading) {
@@ -97,10 +102,10 @@ export default function UserCourseAssessment() {
     );
   }
 
-  if (!questions.length) {
+  if (assessmentCompleted) {
     return (
-      <h2 className="text-xl font-bold text-right text-gray-600">
-        سوالی یافت نشد.
+      <h2 className="text-xl font-bold text-center p-4 border-cyan-600 border-2 text-green-600">
+        شما قبلاً این آزمون را تکمیل کرده‌اید
       </h2>
     );
   }
@@ -147,10 +152,10 @@ export default function UserCourseAssessment() {
         <CButton
           className="transition-transform duration-300 ease-in-out transform focus:scale-110 bg-blue-600 text-white"
           onClick={handleSubmit}
-          onFocus={handleFocus}
-          onBlur={handleBlur}
+          onFocus={() => setIsButtonFocused(true)}
+          onBlur={() => setIsButtonFocused(false)}
           style={{
-            backgroundColor: isButtonFocused ? "#1D4ED8" : "#2563EB", // Change color on focus
+            backgroundColor: isButtonFocused ? "#1D4ED8" : "#2563EB",
             color: "white",
           }}
         >

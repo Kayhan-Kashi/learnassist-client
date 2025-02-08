@@ -87,7 +87,7 @@ const _nav = [
   {
     component: CNavItem,
     name: "ارزیابی دوره جاری",
-    to: "/elearning/user-course-assessment/d06f845a-9d69-46b5-9d7d-7ea11a159ce1",
+    to: "/elearning/user-course-assessment/922a1b8f-803a-48d1-bc75-310514a1856d",
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
     role: "all",
   },
