@@ -24,6 +24,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import {
   getUserInfo,
   is_User_course_editor,
+  is_control_group,
 } from "../../../services/authService.js";
 
 const userInfo = getUserInfo();
@@ -39,6 +40,7 @@ const WatchAndAskComponent = () => {
   const timeDisplayRef = useRef(null);
   const navigate = useNavigate();
   const [isCourseEditor, setIsCourseEditor] = useState(null);
+  const [isControlGroup, setIsControlGroup] = useState(null);
 
   const dispatch = useDispatch();
   //======== Getting courseVideoId from URL and call webAPI for Starting Watch ============================
@@ -49,6 +51,8 @@ const WatchAndAskComponent = () => {
   useEffect(() => {
     const is_user_course_editor = is_User_course_editor();
     setIsCourseEditor(is_user_course_editor);
+    const isControl = is_control_group();
+    setIsControlGroup(isControl);
   }, []);
 
   // useEffect(() => {
@@ -297,19 +301,23 @@ const WatchAndAskComponent = () => {
 
         {/* Buttons Section */}
         <div className="flex flex-col mt-10">
-          <button
-            onClick={handleHelpMeButtonClick}
-            disabled={!courseVideoWatchId}
-            className="transform -translate-y-1/2 bg-green-400 text-white px-6 py-3 ml-10 mb-4 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
-          >
-            کمکم کن
-          </button>
-          <button
-            onClick={handleAskButtonClick}
-            className="transform -translate-y-1/2 bg-yellow-400 text-white px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
-          >
-            سوال دارم
-          </button>
+          {!isControlGroup && (
+            <button
+              onClick={handleHelpMeButtonClick}
+              disabled={!courseVideoWatchId}
+              className="transform -translate-y-1/2 bg-green-400 text-white px-6 py-3 ml-10 mb-4 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+            >
+              کمکم کن
+            </button>
+          )}
+          {!isControlGroup && (
+            <button
+              onClick={handleAskButtonClick}
+              className="transform -translate-y-1/2 bg-yellow-400 text-white px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+            >
+              سوال دارم
+            </button>
+          )}
           <button
             onClick={handlePromptEngineeringButtonClick}
             style={{
@@ -333,12 +341,14 @@ const WatchAndAskComponent = () => {
 
       {/* Chat Box Section */}
       <div id="chat-box-section" className="mt-8">
-        <ChatBox
-          helpNeeded={helpNeeded}
-          setHelpNeeded={setHelpNeeded}
-          courseVideoWatchId={courseVideoWatchId}
-          ref={courseVideoWatchIdRef}
-        />
+        {!isControlGroup && (
+          <ChatBox
+            helpNeeded={helpNeeded}
+            setHelpNeeded={setHelpNeeded}
+            courseVideoWatchId={courseVideoWatchId}
+            ref={courseVideoWatchIdRef}
+          />
+        )}
       </div>
     </div>
   );

@@ -7,6 +7,7 @@ const AUTH_BASE_URL = `${API_BASE_URL}/Users`;
 //const API_BASE_URL = "http://82.115.19.79:5000/v1/Users";
 
 const COURSE_EDITOR_ROLE = "learnassist_course_editor";
+const CONTROL_GROUP_ROLE = "control_group";
 
 const isUsernameValid = async (userData) => {
   return await axios.post(`${AUTH_BASE_URL}/posts`, {
@@ -54,6 +55,15 @@ export const is_User_course_editor = () => {
   const roles = getUserRoles();
   if (roles) {
     return roles.includes(COURSE_EDITOR_ROLE);
+  }
+
+  return null;
+};
+
+export const is_control_group = () => {
+  const roles = getUserRoles();
+  if (roles) {
+    return roles.includes(CONTROL_GROUP_ROLE);
   }
 
   return null;
