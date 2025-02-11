@@ -26,6 +26,7 @@ import {
   is_User_course_editor,
   is_control_group,
 } from "../../../services/authService.js";
+import loadingGif from "../../../assets/loadings/loading2.gif";
 
 const userInfo = getUserInfo();
 
@@ -212,10 +213,10 @@ const WatchAndAskComponent = () => {
 
   const videoJsOptions = useMemo(
     () => ({
-      autoplay: true,
       controls: true,
       responsive: true,
-      autoplay: false,
+      autoplay: true,
+      poster: loadingGif,
       fluid: true,
       sources: [
         {
@@ -288,7 +289,7 @@ const WatchAndAskComponent = () => {
         {/* Video Player Section */}
         <div className="w-3/5 relative ">
           <h2 className="text-center pb-3 ">{courseVideoInfo?.title}</h2>
-          {courseVideoInfo && (
+          {
             <VideoPlayer
               options={videoJsOptions}
               onReady={handlePlayerReady}
@@ -296,7 +297,7 @@ const WatchAndAskComponent = () => {
               ref={{ playerOperationRef, isPlayingRef }}
               onPlay={createUpdateWatchSessionHandler}
             />
-          )}
+          }
         </div>
 
         {/* Buttons Section */}

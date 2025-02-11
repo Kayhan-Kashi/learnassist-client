@@ -12,6 +12,19 @@ const VideoPlayer = React.memo(
     const videoRef = useRef(null);
     const playerRef = useRef(null);
     const { playerOperationRef, isPlayingRef } = ref;
+
+    // Add CSS rule to hide the error display
+    useEffect(() => {
+      const style = document.createElement("style");
+      style.innerHTML = ".vjs-error-display { display: none !important; }";
+      document.head.appendChild(style);
+
+      // Clean up on unmount
+      return () => {
+        document.head.removeChild(style);
+      };
+    }, []);
+
     useEffect(() => {
       if (!playerRef.current) {
         // Initialize Video.js player
