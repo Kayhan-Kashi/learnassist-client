@@ -24,7 +24,6 @@ const VideoPlayer = React.memo(
         document.head.removeChild(style);
       };
     }, []);
-
     useEffect(() => {
       if (!playerRef.current) {
         // Initialize Video.js player

@@ -15,7 +15,7 @@
 
 body {
   font-family: "B Koodak", sans-serif;
-  min-width: 615px;
+  /* min-width: 615px; */
 }
 
 @media (max-width: 615px) {

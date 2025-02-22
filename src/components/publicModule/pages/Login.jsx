@@ -102,13 +102,17 @@ const Login = () => {
         />
       </Helmet>
       <div
-        className="bg-cover bg-center h-screen flex justify-center items-center"
+        className="bg-cover bg-center h-screen flex justify-center justify-items-start"
         style={{ backgroundImage: `url(${image})` }}
       >
-        <div className="w-3/5 bg-slate-800 border border-slate-400 rounded-md md:p-20 sm:shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative ">
+        <div
+          className={`m-5  w-3/5 h-4/6  bg-slate-800 border
+             border-slate-400 rounded-md md:p-20 
+             sm:shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative `}
+        >
           <ToastContainer />
           <div>
-            <h1 className="text-5xl font-bold text-white mb-6 text-center mt-5">
+            <h1 className="text-4xl font-bold text-white mb-6 text-center mt-5">
               ورود
             </h1>
             <form
@@ -125,7 +129,7 @@ const Login = () => {
                 <input
                   {...register("username")}
                   type="text"
-                  className={`flex-[1_1_60%] py-2.3 px-2 
+                  className={`flex-[1_1_60%] py-2.3 px-2 mt-3
                     text-sm sm:text-xl !text-white font-bold
                     bg-transparent !border-0 !border-b-2 !border-gray-300 
                     appearance-none dark:focus:!border-blue-500 
@@ -148,7 +152,7 @@ const Login = () => {
                 <input
                   type={passToggle ? "text" : "password"}
                   {...register("password")}
-                  className={`flex-[4_1_50%] py-2.3 px-2 
+                  className={`flex-[4_1_50%] py-2.3 px-2 mt-3
                       text-sm sm:text-xl text-white font-bold
                       bg-transparent !border-0 !border-b-2 !border-gray-300 
                       appearance-none dark:focus:!border-blue-500 
