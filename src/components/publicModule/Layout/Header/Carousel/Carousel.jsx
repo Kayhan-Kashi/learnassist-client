@@ -8,15 +8,12 @@ const Carousel = () => {
   const [currentBrandIndex, setCurrentBrandIndex] = useState(0);
 
   return (
-    <div className="w-full relative overflow-hidden z-40">
-      {/* <Link to="/product"> */}
-      <img
-        src={image}
-        alt={`Brand ${currentBrandIndex + 1}`}
-        className="z-40 w-full h-full bg-cover bg-center sm:h-screen object-cover md:object-cover md:w-[100%]"
-      />
-      {/* </Link> */}
-    </div>
+    <>
+      <div
+        className="bg-cover bg-center h-screen flex justify-center justify-items-start"
+        style={{ backgroundImage: `url(${image})` }}
+      ></div>
+    </>
   );
 };
 

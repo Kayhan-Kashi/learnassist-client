@@ -129,7 +129,7 @@ const Login = () => {
                 <input
                   {...register("username")}
                   type="text"
-                  className={`flex-[1_1_60%] py-2.3 px-2 mt-3
+                  className={`flex-[1_1_60%] py-2.3 px-2 
                     text-sm sm:text-xl !text-white font-bold
                     bg-transparent !border-0 !border-b-2 !border-gray-300 
                     appearance-none dark:focus:!border-blue-500 
@@ -152,7 +152,7 @@ const Login = () => {
                 <input
                   type={passToggle ? "text" : "password"}
                   {...register("password")}
-                  className={`flex-[4_1_50%] py-2.3 px-2 mt-3
+                  className={`flex-[4_1_50%] py-2.3 px-2
                       text-sm sm:text-xl text-white font-bold
                       bg-transparent !border-0 !border-b-2 !border-gray-300 
                       appearance-none dark:focus:!border-blue-500 
@@ -178,7 +178,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`block w-2/5 h-12 text-2xl mb-4 text-center items-center mx-auto
+                className={`block w-2/5 h-12 text-lg mb-4 text-center items-center mx-auto
                   mt-6 rounded-full bg-white text-emerald-800
                    hover:!bg-amber-600 hover:!text-white py-2 transition-colors duration-300`}
               >

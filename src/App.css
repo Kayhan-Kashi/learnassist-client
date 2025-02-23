@@ -20,7 +20,7 @@ body {
 
 @media (max-width: 615px) {
   body {
-    overflow-x: auto; /* Allow scrolling if content is wider */
+    /* overflow-x: auto;  */
   }
 }
 input:-webkit-autofill {

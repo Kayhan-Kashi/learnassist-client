@@ -91,11 +91,15 @@ const UserInfoForm = () => {
       </Helmet>
       <div>
         <div
-          className="bg-cover bg-center h-screen flex justify-center items-center"
+          className="bg-cover bg-center h-screen flex justify-center justify-items-start"
           style={{ backgroundImage: `url(${image})` }}
         >
           <ToastContainer />
-          <div className="w-2/3 bg-slate-800 border border-slate-400 rounded-md p-5 shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-50 relative">
+          <div
+            className={`m-3  w-3/5  bg-slate-800 border
+             border-slate-400 rounded-md md:p-20 
+             sm:shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative `}
+          >
             <div>
               <h1 className="text-4xl font-bold text-white mb-6 text-center">
                 ورود اطلاعات
@@ -207,7 +211,7 @@ const UserInfoForm = () => {
                     </label>
                     <textarea
                       {...register("interests")}
-                      className={`flex-[1_1_80%] py-2.3 px-2 !w-[600px] !h-32
+                      className={`flex-[1_1_80%] py-2.3 px-2 w-[220px] sm:!w-[600px] !h-32
                         text-sm sm:text-xl text-white font-bold text-right
                         bg-transparent !border-2 !border-blue-300 
                         appearance-none dark:focus:!border-blue-500 
@@ -225,7 +229,7 @@ const UserInfoForm = () => {
                     </label>
                     <textarea
                       {...register("description")}
-                      className={`flex-[1_1_80%] py-2.3 px-2 !w-[600px] !h-32
+                      className={`flex-[1_1_80%] py-2.3 px-2 w-[220px] sm:!w-[600px] !h-32
                         text-sm sm:text-xl text-white font-bold text-right
                         bg-transparent !border-2 !border-blue-300 
                         appearance-none dark:focus:!border-blue-500 
@@ -236,7 +240,7 @@ const UserInfoForm = () => {
                 </div>
                 <button
                   type="submit"
-                  className={`block mx-auto mb-4 text-[18px] mt-6 rounded-full text-center w-2/5
+                  className={`block mx-auto mb-4 text-[16px] mt-6 rounded-full text-center w-3/5
                      bg-white !text-emerald-800
                       hover:!bg-amber-600 hover:!text-white py-2 transition-colors duration-300`}
                 >

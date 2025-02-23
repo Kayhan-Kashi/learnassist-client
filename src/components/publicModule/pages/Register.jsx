@@ -109,11 +109,11 @@ const Register = () => {
       </Helmet>
       <div>
         <div
-          className="bg-cover bg-center h-screen flex justify-center items-center"
+          className="bg-cover bg-center h-screen flex justify-center justify-items-start"
           style={{ backgroundImage: `url(${image})` }}
         >
           <ToastContainer />
-          <div className="w-3/5 bg-slate-800 border border-slate-400 rounded-md md:p-20 sm:shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative ">
+          <div className="m-5 pt-5 w-3/5 h-4/6 bg-slate-800 border border-slate-400 rounded-md md:p-20 sm:shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative ">
             <div>
               <h1 className="text-4xl font-bold text-white mb-6 text-center">
                 ثبت نام

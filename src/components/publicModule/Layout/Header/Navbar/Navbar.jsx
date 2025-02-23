@@ -81,9 +81,10 @@ const Navbar = () => {
           </li>
           {userInfo?.isLoggedIn && (
             <li>
-              <p className="text-red-500 mb-2">
+              {/* <p className="text-red-500 mb-2">
                 سلام {userInfo.firstname} خوش آمدی
-              </p>
+              </p> */}
+              <p className="text-red-500 mb-2">سلام {userInfo.firstname}</p>
             </li>
           )}
         </ul>
