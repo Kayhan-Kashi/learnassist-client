@@ -106,7 +106,7 @@ const Login = () => {
         style={{ backgroundImage: `url(${image})` }}
       >
         <div
-          className={`m-5  w-3/5 h-4/6  bg-slate-800 border
+          className={`m-5  w-3/5 custom-height  bg-slate-800 border
              border-slate-400 rounded-md md:p-20 
              sm:shadow-lg backdrop-filter backdrop-blur-sm bg-opacity-30 relative `}
         >
@@ -129,8 +129,8 @@ const Login = () => {
                 <input
                   {...register("username")}
                   type="text"
-                  className={`flex-[1_1_60%] py-2.3 px-2 
-                    text-sm sm:text-xl !text-white font-bold
+                  className={`flex-[1_1_60%] py-2.3 px-2 custom-margin
+                    text-sm sm:text-xl !text-white font-bold text-center
                     bg-transparent !border-0 !border-b-2 !border-gray-300 
                     appearance-none dark:focus:!border-blue-500 
                     focus:outline-none focus:ring-0 focus:text-white focus:!border-blue-600 peer `}
