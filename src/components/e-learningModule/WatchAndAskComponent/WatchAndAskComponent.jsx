@@ -254,6 +254,7 @@ const WatchAndAskComponent = () => {
           ? `0${currentTime.seconds}`
           : currentTime.seconds
       }`;
+      console.log(JSON.stringify(currentTime.seconds))
     }
   }, []);
 
@@ -284,9 +285,8 @@ const WatchAndAskComponent = () => {
 
   return (
     <div className="flex flex-col">
-      <div className="flex flex-row justify-center items-center h-full">
-        {/* Video Player Section */}
-        <div className="w-3/5 relative ">
+      <div className="flex flex-col justify-center items-center h-full">
+        <div className="video-width">
           <h2 className="text-center pb-3 ">
             {courseVideoInfo ? courseVideoInfo.title : "جلسه"}
           </h2>
@@ -300,14 +300,12 @@ const WatchAndAskComponent = () => {
             />
           }
         </div>
-
-        {/* Buttons Section */}
-        <div className="flex flex-col mt-10">
+        <div className="flex flex-row mt-10">
           {!isControlGroup && (
             <button
               onClick={handleHelpMeButtonClick}
               disabled={!courseVideoWatchId}
-              className="transform -translate-y-1/2 bg-green-400 text-white px-6 py-3 ml-10 mb-4 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+              className="transform text-sm sm:text-lg p-2 -translate-y-1/2 bg-green-400 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
             >
               کمکم کن
             </button>
@@ -315,7 +313,7 @@ const WatchAndAskComponent = () => {
           {!isControlGroup && (
             <button
               onClick={handleAskButtonClick}
-              className="transform -translate-y-1/2 bg-yellow-400 text-white px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+              className="transform text-sm sm:text-lg ml-5 p-2 -translate-y-1/2 bg-yellow-400 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
             >
               سوال دارم
             </button>
@@ -325,10 +323,10 @@ const WatchAndAskComponent = () => {
             style={{
               display: isCourseEditor ? "" : "none",
             }}
-            className="transform -translate-y-1/2 bg-blue-800 text-white mt-4 px-6 py-3 ml-10 rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
+            className="transform text-sm sm:text-lg ml-5 p-2 -translate-y-1/2 bg-blue-800 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
           >
             مهندسی پرسش
-            <br />
+            
             ویدیو آموزشی
           </button>
         </div>
@@ -341,8 +339,7 @@ const WatchAndAskComponent = () => {
         </span>
       </div> */}
 
-      {/* Chat Box Section */}
-      <div id="chat-box-section" className="mt-8">
+      <div id="chat-box-section">
         {!isControlGroup && (
           <ChatBox
             helpNeeded={helpNeeded}

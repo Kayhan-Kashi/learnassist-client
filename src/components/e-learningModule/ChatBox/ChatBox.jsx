@@ -123,7 +123,7 @@ const ChatBox = forwardRef(
               dir="rtl"
             >
               <div
-                className={`max-w-[75%] p-3 rounded-lg ${
+                className={`max-w-[75%] p-3 rounded-lg text-sm sm:text-lg ${
                   msg.role === "user"
                     ? "bg-blue-500 text-white"
                     : "bg-gray-200 text-gray-800"

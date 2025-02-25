@@ -74,7 +74,7 @@ const Navbar = () => {
               </li>
             );
           })}
-          <li className="md:ml-8 text-xl md:my-0 my-7 mx-8 relative">
+          <li className="md:ml-8 text-xl md:my-0 my-7 ml-2 mr-2 relative">
             <NavAccountButton onDropHandler={setDrop} drop={drop}>
               <FaRegUser />
             </NavAccountButton>
@@ -84,7 +84,11 @@ const Navbar = () => {
               {/* <p className="text-red-500 mb-2">
                 سلام {userInfo.firstname} خوش آمدی
               </p> */}
-              <p className="text-red-500 mb-2">سلام {userInfo.firstname}</p>
+              <p className="text-red-500 mb-1 text-xs">سلام {userInfo.firstname}</p>
+{/* <p className="text-red-500 mb-1 !text-xs">
+  {` خوش آمدین`}
+</p> */}
+
             </li>
           )}
         </ul>

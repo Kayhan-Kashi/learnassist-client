@@ -139,10 +139,10 @@ const AppHeader = () => {
           </CDropdown>
 
           <h5 className="flex flex-row text-right mt-2 mr-10 text-cyan-700">
-            <span className="pr-1"> خوش آمدی</span>
-            <span className="pr-1"> LearnAssist </span>
-            <span className="pr-1"> به </span>
-            <span className="pr-1"> {firstname} </span>
+            <span className="pr-1 text-sm sm:text-lg"> خوش آمدی</span>
+            <span className="pr-1 hidden sm:inline sm:text-lg" > LearnAssist </span>
+            <span className="pr-1 hidden sm:inline sm:text-lg"> به </span>
+            <span className="pr-1 text-sm sm:text-lg"> {firstname} </span>
           </h5>
           <li className="nav-item py-1">
             <div className="vr h-100 mx-2 text-body text-opacity-75 mb-2"></div>

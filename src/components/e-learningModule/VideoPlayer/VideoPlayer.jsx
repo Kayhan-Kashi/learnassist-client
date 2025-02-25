@@ -61,6 +61,7 @@ const VideoPlayer = React.memo(
             const minutes = Math.floor(timeInSeconds / 60);
             const seconds = Math.floor(timeInSeconds % 60);
             onTimeUpdate && onTimeUpdate({ minutes, seconds });
+            // console.log(JSON.stringify({ minutes, seconds }))
           }
         });
       } else {

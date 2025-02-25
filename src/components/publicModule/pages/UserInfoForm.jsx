@@ -91,7 +91,7 @@ const UserInfoForm = () => {
       </Helmet>
       <div>
         <div
-          className="bg-cover bg-center h-screen flex justify-center justify-items-start"
+          className="bg-cover bg-center h-full flex justify-center justify-items-start"
           style={{ backgroundImage: `url(${image})` }}
         >
           <ToastContainer />
