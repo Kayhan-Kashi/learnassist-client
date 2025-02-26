@@ -254,7 +254,7 @@ const WatchAndAskComponent = () => {
           ? `0${currentTime.seconds}`
           : currentTime.seconds
       }`;
-      console.log(JSON.stringify(currentTime.seconds))
+      //console.log(JSON.stringify(currentTime.seconds));
     }
   }, []);
 
@@ -283,6 +283,14 @@ const WatchAndAskComponent = () => {
     navigate(`/elearning/prompt-engineering/${courseVideoId}`);
   };
 
+  if (!courseVideoInfo) {
+    return (
+      <h2 className="text-xl font-bold text-center text-blue-600">
+        ...در حال بارگذاری
+      </h2>
+    );
+  }
+
   return (
     <div className="flex flex-col">
       <div className="flex flex-col justify-center items-center h-full">
@@ -290,7 +298,7 @@ const WatchAndAskComponent = () => {
           <h2 className="text-center pb-3 ">
             {courseVideoInfo ? courseVideoInfo.title : "جلسه"}
           </h2>
-          {
+          {courseVideoInfo && (
             <VideoPlayer
               options={videoJsOptions}
               onReady={handlePlayerReady}
@@ -298,7 +306,7 @@ const WatchAndAskComponent = () => {
               ref={{ playerOperationRef, isPlayingRef }}
               onPlay={createUpdateWatchSessionHandler}
             />
-          }
+          )}
         </div>
         <div className="flex flex-row mt-10">
           {!isControlGroup && (
@@ -325,9 +333,7 @@ const WatchAndAskComponent = () => {
             }}
             className="transform text-sm sm:text-lg ml-5 p-2 -translate-y-1/2 bg-blue-800 text-white rounded-lg shadow-lg hover:bg-blue-600 transition duration-300"
           >
-            مهندسی پرسش
-            
-            ویدیو آموزشی
+            مهندسی پرسش ویدیو آموزشی
           </button>
         </div>
       </div>

@@ -90,8 +90,8 @@ export default function UserCourseAssessment() {
 
   if (loading) {
     return (
-      <h2 className="text-xl font-bold text-right text-blue-600">
-        در حال بارگذاری...
+      <h2 className="text-xl font-bold text-center text-blue-600">
+        ...در حال بارگذاری
       </h2>
     );
   }

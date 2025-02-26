@@ -29,10 +29,10 @@ const AppHeaderDropdown = () => {
         <CDropdownHeader className="bg-body-secondary fw-semibold mb-2">
           حساب کاربری
         </CDropdownHeader>
-        <CDropdownItem href="#">
+        {/* <CDropdownItem href="#">
           <CIcon icon={cilUser} className="me-2 text-success" />
           <Link to={"/elearning/profile/1"}>مشاهده پروفایل</Link>
-        </CDropdownItem>
+        </CDropdownItem> */}
         <CDropdownItem href="#" onClick={() => logoutFromStorage()}>
           <CIcon icon={cilAccountLogout} className="me-2 text-primary" />
           خروج

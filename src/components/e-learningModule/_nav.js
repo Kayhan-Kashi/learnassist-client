@@ -21,17 +21,17 @@ const _nav = [
     //   text: "NEW",
     // },
   },
-  {
-    component: CNavItem,
-    name: "داشبورد",
-    to: "/elearning/dashboard",
-    icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    role: "all",
-    // badge: {
-    //   color: "info",
-    //   text: "NEW",
-    // },
-  },
+  // {
+  //   component: CNavItem,
+  //   name: "داشبورد",
+  //   to: "/elearning/dashboard",
+  //   icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
+  //   role: "all",
+  //   // badge: {
+  //   //   color: "info",
+  //   //   text: "NEW",
+  //   // },
+  // },
   {
     component: CNavTitle,
     name: "یادگیری آنلاین",
