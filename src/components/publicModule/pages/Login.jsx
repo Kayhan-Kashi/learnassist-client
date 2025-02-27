@@ -178,7 +178,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className={`block w-2/5 h-12 text-lg mb-4 text-center items-center mx-auto
+                className={`block w-3/5 sm:w-3/5 h-12 text-lg mb-4 text-center items-center mx-auto
                   mt-6 rounded-full bg-white text-emerald-800
                    hover:!bg-amber-600 hover:!text-white py-2 transition-colors duration-300`}
               >
