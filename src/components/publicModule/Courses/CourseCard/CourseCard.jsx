@@ -28,7 +28,7 @@ const CourseCard = ({ id, image, title, price, isRegisterable }) => {
 
             if (courseRegistrationId) {
               setLoading(false);
-              toast.success("ثبت نام با موفقیت انجام شد", {
+              toast.success("تا لحظاتی دیگر وارد دوره می شوید", {
                 position: "top-center",
                 autoClose: 1000,
                 style: { fontSize: "14px", padding: "10px" },

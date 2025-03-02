@@ -153,7 +153,7 @@ const Login = () => {
                   type={passToggle ? "text" : "password"}
                   {...register("password")}
                   className={`flex-[4_1_50%] py-2.3 px-2
-                      text-sm sm:text-xl text-white font-bold
+                      text-sm sm:text-xl text-white font-bold text-center
                       bg-transparent !border-0 !border-b-2 !border-gray-300 
                       appearance-none dark:focus:!border-blue-500 
                       focus:outline-none focus:ring-0 focus:text-white focus:border-blue-600 peer`}
