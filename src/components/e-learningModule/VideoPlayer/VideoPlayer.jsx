@@ -13,17 +13,22 @@ const VideoPlayer = React.memo(
     const playerRef = useRef(null);
     const { playerOperationRef, isPlayingRef } = ref;
 
-    // Add CSS rule to hide the error display
+    // Add CSS to hide remaining time and show only current time
     useEffect(() => {
       const style = document.createElement("style");
-      style.innerHTML = ".vjs-error-display { display: none !important; }";
+      style.innerHTML = `
+        .vjs-error-display { display: none !important; }
+        .video-js .vjs-time-control { display: block !important; }
+        .video-js .vjs-remaining-time { display: none !important; }
+        .video-js .vjs-current-time { display: block !important; }
+      `;
       document.head.appendChild(style);
 
-      // Clean up on unmount
       return () => {
         document.head.removeChild(style);
       };
     }, []);
+
     useEffect(() => {
       if (!playerRef.current) {
         // Initialize Video.js player
@@ -37,6 +42,23 @@ const VideoPlayer = React.memo(
           () => {
             videojs.log("player is ready");
             onReady && onReady(player);
+
+            // Ensure only one current time display
+            const controlBar = player.controlBar;
+            if (controlBar) {
+              const currentTimeDisplay =
+                controlBar.getChild("currentTimeDisplay");
+              const remainingTimeDisplay = controlBar.getChild(
+                "remainingTimeDisplay"
+              );
+
+              if (!currentTimeDisplay) {
+                controlBar.addChild("currentTimeDisplay", {}, 4);
+              }
+              if (remainingTimeDisplay) {
+                controlBar.removeChild("remainingTimeDisplay");
+              }
+            }
           }
         ));
 
@@ -61,12 +83,10 @@ const VideoPlayer = React.memo(
             const minutes = Math.floor(timeInSeconds / 60);
             const seconds = Math.floor(timeInSeconds % 60);
             onTimeUpdate && onTimeUpdate({ minutes, seconds });
-            // console.log(JSON.stringify({ minutes, seconds }))
           }
         });
       } else {
         const player = playerRef.current;
-
         player.autoplay(options.autoplay);
         player.src(options.sources);
       }
@@ -75,7 +95,6 @@ const VideoPlayer = React.memo(
     // Dispose the Video.js player when the component unmounts
     useEffect(() => {
       const player = playerRef.current;
-
       return () => {
         if (player && !player.isDisposed()) {
           player.dispose();
