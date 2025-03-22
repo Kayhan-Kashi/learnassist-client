@@ -72,22 +72,40 @@ const WatchAndAskComponent = () => {
 
   const [showAnswerBox, setShowAnswerBox] = useState(false);
 
-  const questionDataRef = useRef([
-    {
-      questionNo: 1,
-      numOfTry: 0,
-      isAnswered: false,
-      askingMinute: 13,
-      isClosed: false,
-    },
-    {
-      questionNo: 2,
-      numOfTry: 0,
-      isAnswered: false,
-      askingMinute: 3,
-      isClosed: false,
-    },
-  ]);
+  const questionDataRef = useRef({
+    "52ac170f-3b38-486b-aba3-f63b20d44ea9": [
+      {
+        questionNo: 1,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 2,
+        isClosed: false,
+      },
+      {
+        questionNo: 2,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 8,
+        isClosed: false,
+      },
+    ],
+    "f468bc34-d72c-4e3b-b478-4874832eea8a": [
+      {
+        questionNo: 1,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 13,
+        isClosed: false,
+      },
+      {
+        questionNo: 2,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 3,
+        isClosed: false,
+      },
+    ],
+  });
 
   useEffect(() => {
     courseVideoId &&
@@ -247,7 +265,12 @@ const WatchAndAskComponent = () => {
       sources: [
         {
           //src: "/sample_video.mp4",
-          src: courseVideoInfo ? courseVideoInfo.path : "",
+          src: courseVideoInfo
+            ? !isControlGroup
+              ? courseVideoInfo.path
+              : "/control_group_" +
+                courseVideoInfo.path.substr(1, courseVideoInfo.path.length)
+            : "",
           type: "video/mp4",
         },
       ],
@@ -274,8 +297,10 @@ const WatchAndAskComponent = () => {
     currentTimeRef.current = currentTime;
     currentTimeFormattedRef.current = `${currentTimeRef.current.minutes}:${currentTimeRef.current.seconds}`;
 
-    if (questionDataRef.current) {
-      const matchingQuestion = questionDataRef.current.find(
+    const questionsArray = questionDataRef.current[courseVideoId];
+
+    if (questionsArray) {
+      const matchingQuestion = questionsArray.find(
         (q) =>
           (q.askingMinute === currentTimeRef.current.minutes ||
             q.askingMinute + 1 === currentTimeRef.current.minutes) &&
@@ -284,7 +309,7 @@ const WatchAndAskComponent = () => {
           q.numOfTry < 3
       );
 
-      console.log(JSON.stringify(questionDataRef.current));
+      console.log(JSON.stringify(questionsArray));
 
       if (matchingQuestion) {
         setQuestionToShow(matchingQuestion);
@@ -338,30 +363,34 @@ const WatchAndAskComponent = () => {
   };
 
   const handleUpdateQuestionCloseState = useCallback((questionNo) => {
-    questionDataRef.current = questionDataRef.current.map((q) =>
-      q.questionNo === questionNo ? { ...q, isClosed: true } : q
-    );
-    console.log(JSON.stringify(questionDataRef));
+    questionDataRef.current[courseVideoId] = questionDataRef.current[
+      courseVideoId
+    ].map((q) => (q.questionNo === questionNo ? { ...q, isClosed: true } : q));
     setShowAnswerBox(false);
   }, []);
 
   const handleUpdateQuestionTryState = useCallback((questionNo) => {
-    questionDataRef.current = questionDataRef.current.map((q) =>
+    questionDataRef.current[courseVideoId] = questionDataRef.current[
+      courseVideoId
+    ].map((q) =>
       q.questionNo === questionNo ? { ...q, numOfTry: q.numOfTry + 1 } : q
     );
-    console.log(JSON.stringify(questionDataRef));
     setShowAnswerBox(false);
   }, []);
 
   const handleGetAnswer = async (answer, question) => {
-    const response = await sendAnswer({
-      prompt: answer,
-      helpNeeded,
-      courseVideoWatchId,
-      question,
-      // courseVideoWatchId: courseVideoWatchIdRef.current,
-    });
-    return response.data.answer;
+    try {
+      const response = await sendAnswer({
+        prompt: answer,
+        helpNeeded,
+        courseVideoWatchId,
+        question,
+        // courseVideoWatchId: courseVideoWatchIdRef.current,
+      });
+      return response.data.answer;
+    } catch {
+      return "مشکل در ارتباط با سرور";
+    }
   };
 
   if (!courseVideoInfo) {
@@ -388,21 +417,23 @@ const WatchAndAskComponent = () => {
               onPlay={createUpdateWatchSessionHandler}
             />
           )}
-          <AnimatePresence>
-            {showAnswerBox && questionToShow && (
-              <AnswerBox
-                onSubmit={handleGetAnswer}
-                question={questionToShow}
-                //onClose={(q) => {}}
-                onClose={() =>
-                  handleUpdateQuestionCloseState(questionToShow.questionNo)
-                }
-                onAnswerIncorrect={() =>
-                  handleUpdateQuestionTryState(questionToShow.questionNo)
-                }
-              />
-            )}
-          </AnimatePresence>
+          {!isControlGroup && (
+            <AnimatePresence>
+              {showAnswerBox && questionToShow && (
+                <AnswerBox
+                  onSubmit={handleGetAnswer}
+                  question={questionToShow}
+                  //onClose={(q) => {}}
+                  onClose={() =>
+                    handleUpdateQuestionCloseState(questionToShow.questionNo)
+                  }
+                  onAnswerIncorrect={() =>
+                    handleUpdateQuestionTryState(questionToShow.questionNo)
+                  }
+                />
+              )}
+            </AnimatePresence>
+          )}
         </div>
         <div className="flex flex-row mt-10">
           {!isControlGroup && (

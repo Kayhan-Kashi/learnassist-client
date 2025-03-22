@@ -77,6 +77,7 @@ export const sendAnswer = async ({
         prompt: finalAnswer,
         helpNeeded,
         courseVideoWatchId,
+        isAnswer: true,
       },
       {
         headers: authHeaders,

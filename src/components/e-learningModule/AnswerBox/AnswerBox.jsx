@@ -13,6 +13,10 @@ const AnswerBox = ({ onSubmit, onClose, question, onAnswerIncorrect }) => {
         setTimeout(() => {
           onClose();
         }, 3000);
+      } else if (feedback.includes("مشکل")) {
+        setTimeout(() => {
+          onClose();
+        }, 3000);
       } else {
         onAnswerIncorrect();
       }
