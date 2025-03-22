@@ -209,3 +209,8 @@ input:-webkit-autofill:focus {
   -webkit-text-fill-color: white !important;
   font-size: 25px !important;
 }
+
+.answer-box {
+  z-index: 99999 !important;
+  position: fixed !important;
+}

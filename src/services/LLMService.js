@@ -54,6 +54,40 @@ export const sendPrompt = async ({
   return null;
 };
 
+export const sendAnswer = async ({
+  prompt,
+  helpNeeded,
+  courseVideoWatchId,
+  question,
+}) => {
+  const finalAnswer =
+    "جواب سوال " +
+    " با شماره " +
+    question.questionNo +
+    " " +
+    "می شود : " +
+    ' " ' +
+    prompt +
+    '" ';
+  const authHeaders = getJWTHeader();
+  if (authHeaders) {
+    return await axios.post(
+      `${CHAT_API_URL}/sendPrompt`,
+      {
+        prompt: finalAnswer,
+        helpNeeded,
+        courseVideoWatchId,
+        isAnswer: true,
+      },
+      {
+        headers: authHeaders,
+      }
+    );
+  }
+
+  return null;
+};
+
 export const GetChatDialogues = async ({ courseVideoWatchId }) => {
   const authHeaders = getJWTHeader();
   if (authHeaders) {

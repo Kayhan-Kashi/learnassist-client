@@ -9,6 +9,7 @@ import videojs from "video.js";
 import ChatBox from "../ChatBox/ChatBox";
 import VideoPlayer from "../VideoPlayer/VideoPlayer";
 import { useDispatch, useSelector } from "react-redux";
+import { AnimatePresence } from "framer-motion";
 import {
   setHelpMeTime,
   setCourseVideoSessionTime,
@@ -27,6 +28,8 @@ import {
   is_control_group,
 } from "../../../services/authService.js";
 import loadingGif from "../../../assets/loadings/loading2.gif";
+import AnswerBox from "../AnswerBox/AnswerBox.jsx";
+import { sendAnswer } from "../../../services/LLMService.js";
 
 const userInfo = getUserInfo();
 
@@ -42,6 +45,8 @@ const WatchAndAskComponent = () => {
   const navigate = useNavigate();
   const [isCourseEditor, setIsCourseEditor] = useState(null);
   const [isControlGroup, setIsControlGroup] = useState(null);
+
+  const [questionToShow, setQuestionToShow] = useState(null);
 
   const dispatch = useDispatch();
   //======== Getting courseVideoId from URL and call webAPI for Starting Watch ============================
@@ -64,6 +69,43 @@ const WatchAndAskComponent = () => {
   // }, [is_user_course_editor]);
 
   const [courseVideoIdState, setCourseVideoId] = useState(null);
+
+  const [showAnswerBox, setShowAnswerBox] = useState(false);
+
+  const questionDataRef = useRef({
+    "52ac170f-3b38-486b-aba3-f63b20d44ea9": [
+      {
+        questionNo: 1,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 2,
+        isClosed: false,
+      },
+      {
+        questionNo: 2,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 8,
+        isClosed: false,
+      },
+    ],
+    "f468bc34-d72c-4e3b-b478-4874832eea8a": [
+      {
+        questionNo: 1,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 13,
+        isClosed: false,
+      },
+      {
+        questionNo: 2,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 3,
+        isClosed: false,
+      },
+    ],
+  });
 
   useEffect(() => {
     courseVideoId &&
@@ -214,13 +256,21 @@ const WatchAndAskComponent = () => {
   const videoJsOptions = useMemo(
     () => ({
       controls: true,
+      // controlBar: {
+      //   remainingTimeDisplay: true,
+      // },
       responsive: true,
       autoplay: true,
       fluid: true,
       sources: [
         {
           //src: "/sample_video.mp4",
-          src: courseVideoInfo ? courseVideoInfo.path : "",
+          src: courseVideoInfo
+            ? !isControlGroup
+              ? courseVideoInfo.path
+              : "/control_group_" +
+                courseVideoInfo.path.substr(1, courseVideoInfo.path.length)
+            : "",
           type: "video/mp4",
         },
       ],
@@ -246,6 +296,35 @@ const WatchAndAskComponent = () => {
     // Store the current time in the ref
     currentTimeRef.current = currentTime;
     currentTimeFormattedRef.current = `${currentTimeRef.current.minutes}:${currentTimeRef.current.seconds}`;
+
+    const questionsArray = questionDataRef.current[courseVideoId];
+
+    if (questionsArray) {
+      const matchingQuestion = questionsArray.find(
+        (q) =>
+          (q.askingMinute === currentTimeRef.current.minutes ||
+            q.askingMinute + 1 === currentTimeRef.current.minutes) &&
+          q.askingMinute + 1 <= q.isAnswered === false &&
+          !q.isClosed &&
+          q.numOfTry < 3
+      );
+
+      console.log(JSON.stringify(questionsArray));
+
+      if (matchingQuestion) {
+        setQuestionToShow(matchingQuestion);
+        setShowAnswerBox(true);
+      } else {
+        setQuestionToShow(null);
+        setShowAnswerBox(false);
+      }
+    }
+
+    // if (currentTimeRef.current.minutes === 8) {
+    //   setQuestionNo(4);
+    //   console.log(currentTimeRef.current.minutes);
+    //   setShowAnswerBox(true);
+    // }
 
     // Manually update the time display without causing a re-render
     if (timeDisplayRef.current) {
@@ -283,6 +362,37 @@ const WatchAndAskComponent = () => {
     navigate(`/elearning/prompt-engineering/${courseVideoId}`);
   };
 
+  const handleUpdateQuestionCloseState = useCallback((questionNo) => {
+    questionDataRef.current[courseVideoId] = questionDataRef.current[
+      courseVideoId
+    ].map((q) => (q.questionNo === questionNo ? { ...q, isClosed: true } : q));
+    setShowAnswerBox(false);
+  }, []);
+
+  const handleUpdateQuestionTryState = useCallback((questionNo) => {
+    questionDataRef.current[courseVideoId] = questionDataRef.current[
+      courseVideoId
+    ].map((q) =>
+      q.questionNo === questionNo ? { ...q, numOfTry: q.numOfTry + 1 } : q
+    );
+    setShowAnswerBox(false);
+  }, []);
+
+  const handleGetAnswer = async (answer, question) => {
+    try {
+      const response = await sendAnswer({
+        prompt: answer,
+        helpNeeded,
+        courseVideoWatchId,
+        question,
+        // courseVideoWatchId: courseVideoWatchIdRef.current,
+      });
+      return response.data.answer;
+    } catch {
+      return "مشکل در ارتباط با سرور";
+    }
+  };
+
   if (!courseVideoInfo) {
     return (
       <h2 className="text-xl font-bold text-center text-blue-600">
@@ -306,6 +416,23 @@ const WatchAndAskComponent = () => {
               ref={{ playerOperationRef, isPlayingRef }}
               onPlay={createUpdateWatchSessionHandler}
             />
+          )}
+          {!isControlGroup && (
+            <AnimatePresence>
+              {showAnswerBox && questionToShow && (
+                <AnswerBox
+                  onSubmit={handleGetAnswer}
+                  question={questionToShow}
+                  //onClose={(q) => {}}
+                  onClose={() =>
+                    handleUpdateQuestionCloseState(questionToShow.questionNo)
+                  }
+                  onAnswerIncorrect={() =>
+                    handleUpdateQuestionTryState(questionToShow.questionNo)
+                  }
+                />
+              )}
+            </AnimatePresence>
           )}
         </div>
         <div className="flex flex-row mt-10">
