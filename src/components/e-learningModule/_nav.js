@@ -46,11 +46,16 @@ const _nav = [
   // },
   {
     component: CNavGroup,
-    name: "مشاهده دوره",
+    name: "مشاهده جلسات",
     to: "/base",
     icon: <CIcon icon={cibCodepen} customClassName="nav-icon" />,
     role: "all",
     items: [
+      {
+        component: CNavItem,
+        name: "جلسه صفر ( آمادگی )",
+        to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
+      },
       {
         component: CNavItem,
         name: "جلسه اول",
