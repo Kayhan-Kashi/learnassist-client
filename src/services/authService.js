@@ -33,7 +33,7 @@ export const getUserInfo = () => {
   const token = localStorage.getItem("accessToken");
   if (token) {
     const decodedToken = jwtDecode(token);
-    console.log(JSON.stringify(decodedToken));
+    //console.log(JSON.stringify(decodedToken));
     const userRoles = decodedToken.realm_access.roles;
     const firstname = decodedToken.given_name;
     const lastname = decodedToken.family_name;
@@ -111,7 +111,7 @@ export const isUserExisted = async (username) => {
 };
 
 export const registerUser = async (registerData) => {
-  console.log(JSON.stringify({ registerData }));
+  //console.log(JSON.stringify({ registerData }));
   return await axios.post(`${AUTH_BASE_URL}/register`, registerData);
   // return new Promise((resolve) => {
   //   setTimeout(() => {

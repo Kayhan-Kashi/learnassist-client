@@ -51,6 +51,7 @@ const WatchAndAskComponent = () => {
   const dispatch = useDispatch();
   //======== Getting courseVideoId from URL and call webAPI for Starting Watch ============================
   const { courseVideoId } = useParams();
+  const courseVideoIdRef = useRef(null);
   const courseVideoWatchIdRef = useRef(null);
   const [courseVideoWatchId, setCourseVideoWatchId] = useState(null);
 
@@ -127,6 +128,7 @@ const WatchAndAskComponent = () => {
         })
         .finally(() => {});
     setCourseVideoId(courseVideoId);
+    courseVideoIdRef.current = courseVideoId;
   }, [courseVideoId]);
 
   //=============== CourseSessionWatchId handling =========================================================
@@ -296,9 +298,11 @@ const WatchAndAskComponent = () => {
     // Store the current time in the ref
     currentTimeRef.current = currentTime;
     currentTimeFormattedRef.current = `${currentTimeRef.current.minutes}:${currentTimeRef.current.seconds}`;
-
-    const questionsArray = questionDataRef.current[courseVideoId];
-
+    //console.log(courseVideoIdRef.current);
+    const questionsArray = questionDataRef.current[courseVideoIdRef.current];
+    if (questionsArray == undefined) {
+      setShowAnswerBox(false);
+    }
     if (questionsArray) {
       const matchingQuestion = questionsArray.find(
         (q) =>
@@ -309,7 +313,7 @@ const WatchAndAskComponent = () => {
           q.numOfTry < 3
       );
 
-      console.log(JSON.stringify(questionsArray));
+      // console.log(JSON.stringify(questionsArray));
 
       if (matchingQuestion) {
         setQuestionToShow(matchingQuestion);

@@ -44,7 +44,7 @@ export const startWatchCourseVideo = async ({ courseVideoId }) => {
   //   }, 1000);
   // });
   const authHeaders = getJWTHeader();
-  console.log("Auth Headers:", authHeaders);
+  //console.log("Auth Headers:", authHeaders);
   if (authHeaders)
     return await axios.post(
       `${COURSE_API_URL}/StartCourseVideoWatch`,

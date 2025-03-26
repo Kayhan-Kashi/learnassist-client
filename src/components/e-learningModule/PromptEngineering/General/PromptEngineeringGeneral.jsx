@@ -130,7 +130,7 @@ const PromptEngineeringGeneral = () => {
         orderNo: currentItem.OrderNo,
       });
       if (response?.data) {
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(response.data));
         const updatedList = textList.map((item, i) =>
           i === index
             ? {

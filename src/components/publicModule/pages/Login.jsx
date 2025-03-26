@@ -62,8 +62,8 @@ const Login = () => {
     loginUser({ username: formData.username, password: formData.password })
       .then((response) => {
         const { accessToken, firstName, lastName, username } = response.data;
-        console.log(JSON.stringify(accessToken));
-        console.log(JSON.stringify(response.data));
+        //console.log(JSON.stringify(accessToken));
+        //console.log(JSON.stringify(response.data));
         localStorage.setItem("accessToken", accessToken);
         const userInfo = getUserInfo();
         //dispatch(loginAction(userInfo));

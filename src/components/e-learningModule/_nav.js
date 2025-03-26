@@ -44,6 +44,7 @@ const _nav = [
   //   icon: <CIcon icon={cilMonitor} customClassName="nav-icon" />,
   //   role: "all",
   // },
+
   {
     component: CNavGroup,
     name: "مشاهده جلسات",
@@ -54,7 +55,7 @@ const _nav = [
       {
         component: CNavItem,
         name: "جلسه صفر ( آمادگی )",
-        to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
+        to: "/elearning/watch-course/43e62369-6255-44f5-aebb-bdde51bd2f52",
       },
       {
         component: CNavItem,
@@ -96,145 +97,145 @@ const _nav = [
     icon: <CIcon icon={cilPencil} customClassName="nav-icon" />,
     role: "all",
   },
-  {
-    component: CNavTitle,
-    name: "دوره های آموزشی",
-  },
-  {
-    component: CNavGroup,
-    name: "دوره های ثبت نام شده",
-    to: "/base",
-    icon: <CIcon icon={cibCodepen} customClassName="nav-icon" />,
-    role: "all",
-    items: [
-      {
-        component: CNavItem,
-        name: "دوره مبانی مقدماتی موسیقی",
-        to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
-      },
-      // {
-      //   component: CNavItem,
-      //   name: "Breadcrumb",
-      //   to: "/base/breadcrumbs",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: (
-      //     <React.Fragment>
-      //       {"Calendar"}
-      //       <CIcon icon={cilExternalLink} size="sm" className="ms-2" />
-      //     </React.Fragment>
-      //   ),
-      //   href: "https://coreui.io/react/docs/components/calendar/",
-      //   badge: {
-      //     color: "danger",
-      //     text: "PRO",
-      //   },
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Cards",
-      //   to: "/base/cards",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Carousel",
-      //   to: "/base/carousels",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Collapse",
-      //   to: "/base/collapses",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "List group",
-      //   to: "/base/list-groups",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Navs & Tabs",
-      //   to: "/base/navs",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Pagination",
-      //   to: "/base/paginations",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Placeholders",
-      //   to: "/base/placeholders",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Popovers",
-      //   to: "/base/popovers",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Progress",
-      //   to: "/base/progress",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Smart Pagination",
-      //   href: "https://coreui.io/react/docs/components/smart-pagination/",
-      //   badge: {
-      //     color: "danger",
-      //     text: "PRO",
-      //   },
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: (
-      //     <React.Fragment>
-      //       {"Smart Table"}
-      //       <CIcon icon={cilExternalLink} size="sm" className="ms-2" />
-      //     </React.Fragment>
-      //   ),
-      //   href: "https://coreui.io/react/docs/components/smart-table/",
-      //   badge: {
-      //     color: "danger",
-      //     text: "PRO",
-      //   },
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Spinners",
-      //   to: "/base/spinners",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Tables",
-      //   to: "/base/tables",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Tabs",
-      //   to: "/base/tabs",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: "Tooltips",
-      //   to: "/base/tooltips",
-      // },
-      // {
-      //   component: CNavItem,
-      //   name: (
-      //     <React.Fragment>
-      //       {"Virtual Scroller"}
-      //       <CIcon icon={cilExternalLink} size="sm" className="ms-2" />
-      //     </React.Fragment>
-      //   ),
-      //   href: "https://coreui.io/react/docs/components/virtual-scroller/",
-      //   badge: {
-      //     color: "danger",
-      //     text: "PRO",
-      //   },
-      // },
-    ],
-  },
+  // {
+  //   component: CNavTitle,
+  //   name: "دوره های آموزشی",
+  // },
+  // {
+  //   component: CNavGroup,
+  //   name: "دوره های ثبت نام شده",
+  //   to: "/base",
+  //   icon: <CIcon icon={cibCodepen} customClassName="nav-icon" />,
+  //   role: "all",
+  //   items: [
+  //     {
+  //       component: CNavItem,
+  //       name: "دوره مبانی مقدماتی موسیقی",
+  //       to: "/elearning/watch-course/52ac170f-3b38-486b-aba3-f63b20d44ea9",
+  //     },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Breadcrumb",
+  //     //   to: "/base/breadcrumbs",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: (
+  //     //     <React.Fragment>
+  //     //       {"Calendar"}
+  //     //       <CIcon icon={cilExternalLink} size="sm" className="ms-2" />
+  //     //     </React.Fragment>
+  //     //   ),
+  //     //   href: "https://coreui.io/react/docs/components/calendar/",
+  //     //   badge: {
+  //     //     color: "danger",
+  //     //     text: "PRO",
+  //     //   },
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Cards",
+  //     //   to: "/base/cards",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Carousel",
+  //     //   to: "/base/carousels",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Collapse",
+  //     //   to: "/base/collapses",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "List group",
+  //     //   to: "/base/list-groups",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Navs & Tabs",
+  //     //   to: "/base/navs",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Pagination",
+  //     //   to: "/base/paginations",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Placeholders",
+  //     //   to: "/base/placeholders",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Popovers",
+  //     //   to: "/base/popovers",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Progress",
+  //     //   to: "/base/progress",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Smart Pagination",
+  //     //   href: "https://coreui.io/react/docs/components/smart-pagination/",
+  //     //   badge: {
+  //     //     color: "danger",
+  //     //     text: "PRO",
+  //     //   },
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: (
+  //     //     <React.Fragment>
+  //     //       {"Smart Table"}
+  //     //       <CIcon icon={cilExternalLink} size="sm" className="ms-2" />
+  //     //     </React.Fragment>
+  //     //   ),
+  //     //   href: "https://coreui.io/react/docs/components/smart-table/",
+  //     //   badge: {
+  //     //     color: "danger",
+  //     //     text: "PRO",
+  //     //   },
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Spinners",
+  //     //   to: "/base/spinners",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Tables",
+  //     //   to: "/base/tables",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Tabs",
+  //     //   to: "/base/tabs",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: "Tooltips",
+  //     //   to: "/base/tooltips",
+  //     // },
+  //     // {
+  //     //   component: CNavItem,
+  //     //   name: (
+  //     //     <React.Fragment>
+  //     //       {"Virtual Scroller"}
+  //     //       <CIcon icon={cilExternalLink} size="sm" className="ms-2" />
+  //     //     </React.Fragment>
+  //     //   ),
+  //     //   href: "https://coreui.io/react/docs/components/virtual-scroller/",
+  //     //   badge: {
+  //     //     color: "danger",
+  //     //     text: "PRO",
+  //     //   },
+  //     // },
+  //   ],
+  // },
   // {
   //   component: CNavGroup,
   //   name: "Buttons",
