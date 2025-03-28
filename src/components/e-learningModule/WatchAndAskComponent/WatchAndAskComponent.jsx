@@ -79,14 +79,28 @@ const WatchAndAskComponent = () => {
         questionNo: 1,
         numOfTry: 0,
         isAnswered: false,
-        askingMinute: 2,
+        askingMinute: 20,
         isClosed: false,
       },
       {
         questionNo: 2,
         numOfTry: 0,
         isAnswered: false,
-        askingMinute: 8,
+        askingMinute: 22,
+        isClosed: false,
+      },
+      {
+        questionNo: 3,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 25,
+        isClosed: false,
+      },
+      {
+        questionNo: 4,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 30,
         isClosed: false,
       },
     ],
@@ -258,6 +272,9 @@ const WatchAndAskComponent = () => {
   const videoJsOptions = useMemo(
     () => ({
       controls: true,
+      controlBar: {
+        pictureInPictureToggle: false,
+      },
       // controlBar: {
       //   remainingTimeDisplay: true,
       // },
@@ -367,8 +384,8 @@ const WatchAndAskComponent = () => {
   };
 
   const handleUpdateQuestionCloseState = useCallback((questionNo) => {
-    questionDataRef.current[courseVideoId] = questionDataRef.current[
-      courseVideoId
+    questionDataRef.current[courseVideoIdRef.current] = questionDataRef.current[
+      courseVideoIdRef.current
     ].map((q) => (q.questionNo === questionNo ? { ...q, isClosed: true } : q));
     setShowAnswerBox(false);
   }, []);
@@ -421,23 +438,6 @@ const WatchAndAskComponent = () => {
               onPlay={createUpdateWatchSessionHandler}
             />
           )}
-          {!isControlGroup && (
-            <AnimatePresence>
-              {showAnswerBox && questionToShow && (
-                <AnswerBox
-                  onSubmit={handleGetAnswer}
-                  question={questionToShow}
-                  //onClose={(q) => {}}
-                  onClose={() =>
-                    handleUpdateQuestionCloseState(questionToShow.questionNo)
-                  }
-                  onAnswerIncorrect={() =>
-                    handleUpdateQuestionTryState(questionToShow.questionNo)
-                  }
-                />
-              )}
-            </AnimatePresence>
-          )}
         </div>
         <div className="flex flex-row mt-10">
           {!isControlGroup && (
@@ -470,11 +470,25 @@ const WatchAndAskComponent = () => {
       </div>
 
       {/* Display Current Time Beneath the Video */}
-      {/* <div className="text-center mt-4">
-        <span ref={timeDisplayRef} className="text-xl font-medium">
-          0:00
-        </span>
-      </div> */}
+      <div className="text-center mt-4">
+        {!isControlGroup && (
+          <AnimatePresence>
+            {showAnswerBox && questionToShow && (
+              <AnswerBox
+                onSubmit={handleGetAnswer}
+                question={questionToShow}
+                //onClose={(q) => {}}
+                onClose={() =>
+                  handleUpdateQuestionCloseState(questionToShow.questionNo)
+                }
+                onAnswerIncorrect={() =>
+                  handleUpdateQuestionTryState(questionToShow.questionNo)
+                }
+              />
+            )}
+          </AnimatePresence>
+        )}
+      </div>
 
       <div id="chat-box-section">
         {!isControlGroup && (

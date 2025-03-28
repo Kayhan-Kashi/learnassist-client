@@ -18,7 +18,7 @@ const VideoPlayer = React.memo(
       const style = document.createElement("style");
       style.innerHTML = `
         .vjs-error-display { display: none !important; }
-        .video-js .vjs-time-control { display: block !important; }
+        .video-js .vjs-time-control { display: none !important; }
         .video-js .vjs-remaining-time { display: none !important; }
         .video-js .vjs-current-time { display: block !important; }
       `;
