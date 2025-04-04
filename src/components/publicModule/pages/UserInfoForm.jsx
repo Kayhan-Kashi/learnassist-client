@@ -177,10 +177,10 @@ const UserInfoForm = () => {
                         انتخاب کنید
                       </option>
                       <option className="rounded-full" value={1}>
-                        اول تا پنجم
+                        اول الی ششم
                       </option>
-                      <option value={2}> ششم تا دهم</option>
-                      <option value={3}> یازدهم تا دوازدهم </option>
+                      <option value={2}> هفتم الی نهم</option>
+                      <option value={3}> دهم الی دوازدهم </option>
                     </select>
                   </div>
                 </div>

@@ -3,7 +3,16 @@ import { GetChatDialogues, sendPrompt } from "../../../services/LLMService.js";
 import { useSelector } from "react-redux";
 
 const ChatBox = forwardRef(
-  ({ helpNeeded, setHelpNeeded, courseVideoWatchId }, ref) => {
+  (
+    {
+      helpNeeded,
+      setHelpNeeded,
+      courseVideoWatchId,
+      currentTimeRef,
+      playerOperationRef,
+    },
+    ref
+  ) => {
     const [userPrompt, setUserPrompt] = useState("");
     const [conversation, setConversation] = useState([]);
     const [isAnyDialogueAdded, setIsAnyDialogueAdded] = useState(false);
@@ -49,12 +58,14 @@ const ChatBox = forwardRef(
         ...prev,
         { role: "user", content: userPrompt },
       ]);
+      playerOperationRef.current.pause();
       setLoading(true);
       try {
         const response = await sendPrompt({
           prompt: userPrompt,
           helpNeeded,
           courseVideoWatchId,
+          time: currentTimeRef.current,
           // courseVideoWatchId: courseVideoWatchIdRef.current,
         });
         setConversation((prev) => [
@@ -99,7 +110,14 @@ const ChatBox = forwardRef(
                 : "bg-green-500 text-white hover:bg-blue-600 transition-colors"
             }`}
           >
-            {loading ? "..." : "ارسال"}
+            {loading ? (
+              <div className="flex items-center space-x-2">
+                <span>در حال ارسال</span>
+                <span className="loading-dots"></span>
+              </div>
+            ) : (
+              "ارسال"
+            )}
           </button>
           <textarea
             ref={textAreaRef}

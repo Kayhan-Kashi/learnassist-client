@@ -9,7 +9,7 @@ const courses = [
   {
     id: "1234-12343-123432-12343243-111",
     image: eLearningCarousel,
-    title: "آموزش مقدماتی آمار ",
+    title: "آموزش آمار برای کودکان و نوجوانان ",
     price: 0,
     isRegisterable: true,
   },

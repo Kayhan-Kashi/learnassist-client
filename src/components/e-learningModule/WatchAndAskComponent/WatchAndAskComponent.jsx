@@ -497,6 +497,8 @@ const WatchAndAskComponent = () => {
             setHelpNeeded={setHelpNeeded}
             courseVideoWatchId={courseVideoWatchId}
             ref={courseVideoWatchIdRef}
+            currentTimeRef={currentTimeFormattedRef}
+            playerOperationRef={playerOperationRef}
           />
         )}
       </div>

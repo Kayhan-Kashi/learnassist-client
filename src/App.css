@@ -214,3 +214,23 @@ input:-webkit-autofill:focus {
   z-index: 99999 !important;
   position: fixed !important;
 }
+
+@keyframes dots {
+  0% {
+    content: "";
+  }
+  33% {
+    content: ".";
+  }
+  66% {
+    content: "..";
+  }
+  100% {
+    content: "...";
+  }
+}
+
+.loading-dots::after {
+  content: "";
+  animation: dots 1.5s steps(3, end) infinite;
+}

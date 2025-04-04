@@ -35,6 +35,7 @@ export const sendPrompt = async ({
   prompt,
   helpNeeded,
   courseVideoWatchId,
+  time,
 }) => {
   const authHeaders = getJWTHeader();
   if (authHeaders) {
@@ -44,6 +45,7 @@ export const sendPrompt = async ({
         prompt,
         helpNeeded,
         courseVideoWatchId,
+        time,
       },
       {
         headers: authHeaders,
