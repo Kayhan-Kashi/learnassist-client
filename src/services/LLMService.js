@@ -61,6 +61,7 @@ export const sendAnswer = async ({
   helpNeeded,
   courseVideoWatchId,
   question,
+  time,
 }) => {
   const finalAnswer =
     "جواب سوال " +
@@ -80,6 +81,7 @@ export const sendAnswer = async ({
         helpNeeded,
         courseVideoWatchId,
         isAnswer: true,
+        time,
       },
       {
         headers: authHeaders,

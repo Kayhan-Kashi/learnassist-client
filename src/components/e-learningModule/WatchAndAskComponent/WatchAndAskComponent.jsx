@@ -109,14 +109,37 @@ const WatchAndAskComponent = () => {
         questionNo: 1,
         numOfTry: 0,
         isAnswered: false,
-        askingMinute: 13,
+        askingMinute: 9,
         isClosed: false,
       },
       {
         questionNo: 2,
         numOfTry: 0,
         isAnswered: false,
-        askingMinute: 3,
+        askingMinute: 13,
+        isClosed: false,
+      },
+      {
+        questionNo: 3,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 25,
+        isClosed: false,
+      },
+      {
+        questionNo: 4,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 30,
+        isClosed: false,
+      },
+    ],
+    "9025c918-ae7d-4134-ae85-7f2ac082926a": [
+      {
+        questionNo: 1,
+        numOfTry: 0,
+        isAnswered: false,
+        askingMinute: 2,
         isClosed: false,
       },
     ],
@@ -406,6 +429,7 @@ const WatchAndAskComponent = () => {
         helpNeeded,
         courseVideoWatchId,
         question,
+        time: currentTimeFormattedRef.current,
         // courseVideoWatchId: courseVideoWatchIdRef.current,
       });
       return response.data.answer;
