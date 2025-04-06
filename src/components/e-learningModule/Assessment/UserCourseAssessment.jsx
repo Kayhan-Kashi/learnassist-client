@@ -13,6 +13,8 @@ import {
   checkUserAssessment,
 } from "../../../services/assessmentService.js";
 
+import question1 from "../../../assets/questions/question1.jpg";
+
 export default function UserCourseAssessment() {
   const { courseAssessmentId } = useParams();
   const [selectedAnswers, setSelectedAnswers] = useState({});
@@ -145,6 +147,9 @@ export default function UserCourseAssessment() {
                 />
               </div>
             ))}
+            {question.picturePath && (
+              <img src={`/questions/${question.picturePath}.jpg`} />
+            )}
           </CCardBody>
         </CCard>
       ))}
